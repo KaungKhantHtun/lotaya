@@ -1,0 +1,4 @@
+#Mon Sep 04 08:39:28 MMT 2023
+base.0=/Users/eizinhtun/Documents/hakathon_service/build/app/intermediates/dex/debug/mergeDexDebug/classes.dex
+renamed.0=classes.dex
+path.0=classes.dex

@@ -1,0 +1,8 @@
+version: "Apple Swift version 5.8.1 (swiftlang-5.8.0.124.5 clang-1403.0.22.11.100)"
+options: "0bb436a51688395e3744484074cfdd8c50326bf2f91ebd901081a59d18fb4c8f"
+build_start_time: [1693793305, 502510000]
+build_end_time: [1693793305, 649329000]
+inputs:
+  "/Users/eizinhtun/Documents/hakathon_service/macos/Flutter/GeneratedPluginRegistrant.swift": !private [1693793266, 474527760]
+  "/Users/eizinhtun/Documents/hakathon_service/macos/Runner/AppDelegate.swift": !private [1666216637, 0]
+  "/Users/eizinhtun/Documents/hakathon_service/macos/Runner/MainFlutterWindow.swift": !private [1666216637, 0]
