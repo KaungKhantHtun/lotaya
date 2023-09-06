@@ -14,6 +14,12 @@
       "languageVersion": "2.18"
     },
     {
+      "name": "bloc",
+      "rootUri": "file:///Users/eizinhtun/.pub-cache/hosted/pub.dev/bloc-8.1.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "boolean_selector",
       "rootUri": "file:///Users/eizinhtun/.pub-cache/hosted/pub.dev/boolean_selector-2.1.1",
       "packageUri": "lib/",
@@ -128,6 +134,12 @@
       "languageVersion": "2.17"
     },
     {
+      "name": "intl",
+      "rootUri": "file:///Users/eizinhtun/.pub-cache/hosted/pub.dev/intl-0.18.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "js",
       "rootUri": "file:///Users/eizinhtun/.pub-cache/hosted/pub.dev/js-0.6.5",
       "packageUri": "lib/",
@@ -224,7 +236,7 @@
       "languageVersion": "2.19"
     }
   ],
-  "generated": "2023-09-04T14:54:11.742078Z",
+  "generated": "2023-09-06T16:51:50.839701Z",
   "generator": "pub",
   "generatorVersion": "2.19.2"
 }
