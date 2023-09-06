@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hakathon_service/presentation/pages/location_screen.dart';
 import 'package:hakathon_service/utils/constants.dart';
 import 'package:intl/intl.dart';
 
@@ -392,8 +393,24 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
   }
 
   Widget _buildLocationWidget() {
-    return Container();
+    return TextField(
+      controller: _noteController,
+      maxLines: 1,
+      keyboardType: TextInputType.multiline,
+      decoration: InputDecoration(
+        hintText: 'Your Address',
+        border: const OutlineInputBorder(),
+        suffixIcon: IconButton(
+          icon: const Icon(Icons.gps_fixed),
+          onPressed: () {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => const LocationScreen()));
+          },
+        ),
+      ),
+    );
   }
+
   TextEditingController _noteController = TextEditingController();
   Widget _buildNotefieldWidget() {
     return TextField(
@@ -401,7 +418,7 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
       maxLines: 4, // Allows unlimited lines of text
       keyboardType: TextInputType.multiline,
       decoration: const InputDecoration(
-        hintText: 'Add Note for service',
+        hintText: 'Note for service (optional)',
         border: OutlineInputBorder(),
       ),
     );
@@ -427,6 +444,4 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
       ),
     );
   }
-
-
 }
