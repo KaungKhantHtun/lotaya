@@ -428,7 +428,11 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
     return SizedBox(
       width: MediaQuery.of(context).size.width - 32,
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+               Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => const LocationScreen()));
+          
+        },
         style: ElevatedButton.styleFrom(
           backgroundColor: colorPrimary,
         ),
