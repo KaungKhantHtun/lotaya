@@ -2,6 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hakathon_service/domain/entities/booking_entity.dart';
 import 'package:hakathon_service/presentation/pages/location_screen.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:hakathon_service/services/location_service.dart';
+import 'package:hakathon_service/services/map_service.dart';
 import 'package:hakathon_service/utils/constants.dart';
 import 'package:intl/intl.dart';
 
@@ -35,6 +38,8 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
   );
   List<DateTime> hourList = [];
 
+  BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
+
   @override
   void initState() {
     super.initState();
@@ -46,6 +51,7 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
     ];
     selectedServiceName = "General Service";
     selectedServiceTime = hourList.first;
+    addCustomIcon();
   }
 
   @override
@@ -89,6 +95,19 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
           ],
         ),
       ),
+    );
+  }
+
+  void addCustomIcon() {
+    BitmapDescriptor.fromAssetImage(
+      const ImageConfiguration(),
+      "assets/laundry.png",
+    ).then(
+      (icon) {
+        setState(() {
+          markerIcon = icon;
+        });
+      },
     );
   }
 
@@ -160,6 +179,39 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
             Expanded(
               flex: 2,
               child: Container(),
+            ),
+            IconButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MapSample(
+                        markers: [
+                          Marker(
+                            markerId: MarkerId("1"),
+                            position: LatLng(16.844171, 96.085055),
+                            icon: markerIcon,
+                          ),
+                          Marker(
+                            markerId: MarkerId("2"),
+                            position: LatLng(16.845986, 96.087491),
+                            icon: markerIcon,
+                          ),
+                          Marker(
+                            markerId: MarkerId("3"),
+                            position: LatLng(16.840941, 96.087332),
+                            icon: markerIcon,
+                          ),
+                          Marker(
+                            markerId: MarkerId("4"),
+                            position: LatLng(16.840868, 96.085035),
+                            icon: markerIcon,
+                          )
+                        ],
+                      ),
+                    ));
+              },
+              icon: Image.asset("assets/map.png"),
             ),
           ],
         ),
@@ -467,16 +519,36 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
   Widget _buildLocationWidget() {
     return TextField(
       controller: _addressController,
+      readOnly: true,
       maxLines: 1,
       keyboardType: TextInputType.multiline,
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) {
+              return LocationPage();
+            },
+          ),
+        ).then((value) => _addressController.text = value);
+      },
       decoration: InputDecoration(
         hintText: 'Your Address',
         border: const OutlineInputBorder(),
         suffixIcon: IconButton(
           icon: const Icon(Icons.gps_fixed),
           onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => const LocationScreen()));
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return LocationPage();
+                },
+              ),
+            ).then((value) {
+              print("@>value: $value");
+              _addressController.text = value;
+            });
           },
         ),
       ),
