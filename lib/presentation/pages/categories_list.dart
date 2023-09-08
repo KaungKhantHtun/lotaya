@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hakathon_service/presentation/pages/booking_info_screen.dart';
+import 'package:hakathon_service/presentation/pages/electronic_service/electronic_service_screen.dart';
 
+import '../../domain/entities/service_provider_entity.dart';
+import '../../domain/entities/service_provider_type.dart';
 import '../../utils/constants.dart';
 
 class CategoriesListScreen extends StatefulWidget {
@@ -62,6 +64,14 @@ class _CategoriesListScreenState extends State<CategoriesListScreen> {
     super.initState();
   }
 
+  ServiceProviderEntity serviceProviderEntity = ServiceProviderEntity(
+      serviceId: "1",
+      serviceName: "Home Appliance Repair",
+      about: "We offer professional reparing service on-demand",
+      priceRate: 5000,
+      serviceType: ServiceProviderType.electronic,
+      rating: 5);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,7 +92,9 @@ class _CategoriesListScreenState extends State<CategoriesListScreen> {
           return InkWell(
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const BookingInfoScreen()));
+                  builder: (context) => ElectronicServiceScreen(
+                        serviceProvider: serviceProviderEntity,
+                      )));
             },
             child: Card(
               elevation: 5.0, // Card elevation (shadow)

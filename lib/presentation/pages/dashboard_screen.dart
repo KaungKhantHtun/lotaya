@@ -23,6 +23,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             children: <Widget>[
               Image.asset(
                 "assets/clean.png",
+                fit: BoxFit.fill,
                 height: MediaQuery.of(context).size.height * 0.4,
               ),
               Container(

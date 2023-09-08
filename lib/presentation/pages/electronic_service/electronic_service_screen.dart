@@ -1,9 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:hakathon_service/domain/entities/booking_entity.dart';
 import 'package:hakathon_service/presentation/pages/location_screen.dart';
 import 'package:hakathon_service/utils/constants.dart';
 import 'package:intl/intl.dart';
 
 import '../../../domain/entities/service_provider_entity.dart';
+import '../home/home_screen.dart';
 
 class ElectronicServiceScreen extends StatefulWidget {
   const ElectronicServiceScreen({super.key, required this.serviceProvider});
@@ -15,8 +18,11 @@ class ElectronicServiceScreen extends StatefulWidget {
 }
 
 class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
+  String selectedServiceName = "";
+  DateTime selectedServiceDate = DateTime.now();
+  DateTime selectedServiceTime = DateTime.now();
   int selectedDevice = 1;
-  int selectdType = 0;
+  int selectIdType = 0;
   int selectedDay = 0;
   int selectedTime = 0;
 
@@ -33,11 +39,13 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
   void initState() {
     super.initState();
     hourList = [
-      day.add(const Duration(hours: 11)),
-      day.add(const Duration(hours: 12, minutes: 10)),
-      day.add(const Duration(hours: 13, minutes: 10)),
-      day.add(const Duration(hours: 14, minutes: 10)),
+      DateTime(day.year, day.month, day.day, 11),
+      DateTime(day.year, day.month, day.day, 12, 10),
+      DateTime(day.year, day.month, day.day, 13, 10),
+      DateTime(day.year, day.month, day.day, 14, 10),
     ];
+    selectedServiceName = "General Service";
+    selectedServiceTime = hourList.first;
   }
 
   @override
@@ -207,14 +215,16 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
               child: _buildServiceType(
                   name: "General Service",
                   index: 0,
-                  isSelected: selectdType == 0),
+                  isSelected: selectIdType == 0),
             ),
             const SizedBox(
               width: 16,
             ),
             Expanded(
               child: _buildServiceType(
-                  name: "Gas Recharge", index: 1, isSelected: selectdType == 1),
+                  name: "Gas Recharge",
+                  index: 1,
+                  isSelected: selectIdType == 1),
             ),
           ],
         ),
@@ -270,7 +280,8 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
     return InkWell(
       onTap: () {
         setState(() {
-          selectdType = index;
+          selectIdType = index;
+          selectedServiceName = name;
         });
       },
       child: Container(
@@ -315,7 +326,14 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
                     InkWell(
                       onTap: () {
                         setState(() {
+                          selectedServiceDate = day;
                           selectedDay = index;
+                          hourList = [
+                            DateTime(day.year, day.month, day.day, 11),
+                            DateTime(day.year, day.month, day.day, 12, 10),
+                            DateTime(day.year, day.month, day.day, 13, 10),
+                            DateTime(day.year, day.month, day.day, 14, 10),
+                          ];
                         });
                       },
                       child: Container(
@@ -339,6 +357,10 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
                               textAlign: TextAlign.center,
                             ),
                             Text(
+                              DateFormat.E().format(day),
+                              textAlign: TextAlign.center,
+                            ),
+                            Text(
                               DateFormat.MMM().format(day),
                               textAlign: TextAlign.center,
                             ),
@@ -357,44 +379,94 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
     );
   }
 
+  int priorOrderHour = 2;
   Widget _buildTimePicker() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: hourList.map(
-        (e) {
-          int index = hourList.indexOf(e);
-          return InkWell(
-            onTap: () {
+    List<Widget> widgetList = [];
+    for (int index = 0; index < hourList.length; index++) {
+      bool canBook = hourList[index].difference(DateTime.now()) >
+          Duration(hours: priorOrderHour);
+      widgetList.add(
+        InkWell(
+          onTap: () {
+            if (canBook) {
               setState(() {
+                selectedServiceTime = hourList[index];
                 selectedTime = index;
               });
-            },
-            child: Container(
-              width: (MediaQuery.of(context).size.width -
-                      (8 * (hourList.length - 1)) -
-                      40) /
-                  hourList.length,
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color:
-                    selectedTime == index ? colorSecondaryVariant : colorGrey,
-                borderRadius: BorderRadius.circular(8.0),
-              ),
-              child: Text(
-                DateFormat('h:mm a').format(e),
-                textAlign: TextAlign.center,
-                style: const TextStyle(fontWeight: FontWeight.w300),
-              ),
+            }
+          },
+          child: Container(
+            width: (MediaQuery.of(context).size.width -
+                    (8 * (hourList.length - 1)) -
+                    40) /
+                hourList.length,
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: !canBook
+                  ? Colors.grey[800]
+                  : selectedTime == index
+                      ? colorSecondaryVariant
+                      : colorGrey,
+              borderRadius: BorderRadius.circular(8.0),
             ),
-          );
-        },
-      ).toList(),
+            child: Text(
+              DateFormat('h:mm a').format(hourList[index]),
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontWeight: FontWeight.w300,
+                  color: !canBook ? Colors.white : Colors.black),
+            ),
+          ),
+        ),
+      );
+    }
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [...widgetList],
+      // children: hourListMap.map(
+      //   (index, e) {
+      //     bool canBook =
+      //         e.difference(DateTime.now()) > Duration(hours: priorOrderHour);
+      //     return InkWell(
+      //       onTap: () {
+      //         if (canBook) {
+      //           setState(() {
+      //             selectedServiceTime = e;
+      //             selectedTime = index;
+      //           });
+      //         }
+      //       },
+      //       child: Container(
+      //         width: (MediaQuery.of(context).size.width -
+      //                 (8 * (hourList.length - 1)) -
+      //                 40) /
+      //             hourList.length,
+      //         padding: const EdgeInsets.all(12),
+      //         decoration: BoxDecoration(
+      //           color: !canBook
+      //               ? Colors.grey[800]
+      //               : selectedTime == index
+      //                   ? colorSecondaryVariant
+      //                   : colorGrey,
+      //           borderRadius: BorderRadius.circular(8.0),
+      //         ),
+      //         child: Text(
+      //           DateFormat('h:mm a').format(e),
+      //           textAlign: TextAlign.center,
+      //           style: TextStyle(
+      //               fontWeight: FontWeight.w300,
+      //               color: !canBook ? Colors.white : Colors.black),
+      //         ),
+      //       ),
+      //     );
+      //   },
+      // ).toList(),
     );
   }
 
   Widget _buildLocationWidget() {
     return TextField(
-      controller: _noteController,
+      controller: _addressController,
       maxLines: 1,
       keyboardType: TextInputType.multiline,
       decoration: InputDecoration(
@@ -411,6 +483,7 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
     );
   }
 
+  TextEditingController _addressController = TextEditingController();
   TextEditingController _noteController = TextEditingController();
   Widget _buildNotefieldWidget() {
     return TextField(
@@ -428,10 +501,8 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
     return SizedBox(
       width: MediaQuery.of(context).size.width - 32,
       child: ElevatedButton(
-        onPressed: () {
-               Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => const LocationScreen()));
-          
+        onPressed: () async {
+          await doBooking();
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: colorPrimary,
@@ -447,5 +518,41 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
         ),
       ),
     );
+  }
+
+  double lat = 12.345;
+  double long = 13.456;
+  double price = 5000;
+  Future<void> doBooking() async {
+    final CollectionReference bookingList =
+        FirebaseFirestore.instance.collection(bookingTable);
+    BookingEntity booking = BookingEntity(
+      name: widget.serviceProvider.serviceName,
+      serviceType: widget.serviceProvider.serviceType,
+      serviceProviderId: widget.serviceProvider.serviceId,
+      serviceName: selectedServiceName,
+      serviceTime: DateTime(
+        selectedServiceDate.year,
+        selectedServiceDate.month,
+        selectedServiceDate.day,
+        selectedServiceTime.hour,
+        selectedServiceTime.minute,
+      ),
+      bookingCreatedTime: DateTime.now(),
+      address: _addressController.text,
+      lat: lat,
+      long: long,
+      price: price,
+      note: _noteController.text,
+    );
+    try {
+      await bookingList.add(booking.toJson());
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => const HomeScreen(
+                initialIndex: 1,
+              )));
+    } catch (e) {
+      print('Error retrieving data: $e');
+    }
   }
 }
