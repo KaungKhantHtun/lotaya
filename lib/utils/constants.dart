@@ -17,3 +17,5 @@ const TextStyle regularStyle = TextStyle(
   fontSize: 13,
   // fontWeight: FontWeight.w600,
 );
+
+const String mapApiKey = "AIzaSyBcQNwTBaKpuGRkJWDCytVvG0v7nqZRrwc";

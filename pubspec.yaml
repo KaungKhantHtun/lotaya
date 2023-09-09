@@ -35,13 +35,15 @@ dependencies:
   firebase_messaging: ^14.6.7
   flutter:
     sdk: flutter
-  google_maps_flutter: 
+  flutter_polyline_points: null
+  flutter_svg: null
+  geocoding: null
+  gmaps_by_road_distance_calculator: null
+  google_geocoding_api: null
+  google_maps_flutter: null
   intl: ^0.18.1
-  map_picker: 
-  geocoding:
-  flutter_svg:
-  google_geocoding_api:
-
+  map_picker: null
+  dio:
 
 dev_dependencies:
   flutter_lints: ^2.0.0

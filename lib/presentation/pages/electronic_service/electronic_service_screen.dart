@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:hakathon_service/presentation/pages/location_screen.dart';
 import 'package:hakathon_service/services/location_service.dart';
 import 'package:hakathon_service/services/map_service.dart';
 import 'package:hakathon_service/utils/constants.dart';
@@ -457,7 +458,7 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
               return LocationPage();
             },
           ),
-        ).then((value) => _addressController.text = value);
+        ).then((value) => _addressController.text = value[0]);
       },
       decoration: InputDecoration(
         hintText: 'Your Address',
@@ -501,9 +502,8 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
       width: MediaQuery.of(context).size.width - 32,
       child: ElevatedButton(
         onPressed: () {
-               Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => const LocationScreen()));
-          
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => const LocationScreen()));
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: colorPrimary,
