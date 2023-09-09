@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hakathon_service/domain/entities/service_provider_entity.dart';
+import 'package:hakathon_service/presentation/pages/booking/bookings_screen.dart';
 
 import 'domain/entities/service_provider_type.dart';
 import 'presentation/pages/laundry_service/laundry_service_screen.dart';
@@ -45,14 +46,8 @@ class _MyAppState extends State<MyApp> {
       // home: const HomeScreen(
       //   initialIndex: 0,
       // ),
-      // home: const KiloTaxiScreen(),
-      home: LaundryServiceScreen(
-        serviceProvider: serviceProviderEntity,
-      ),
-      // home: LaundryOrderConfirmScreen(
-      //   serviceProvider: serviceProviderEntity,
-      // ),
-      // home: BookingsScreen(),
+      //home: const KiloTaxiScreen(),
+      home: BookingsScreen(),
       // home: const HomeScreen(
       //   initialIndex: 0,
       // ),

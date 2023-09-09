@@ -56,7 +56,7 @@ class _KiloTaxiScreenState extends State<KiloTaxiScreen> {
         body: SingleChildScrollView(
           child: Container(
               margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-              height: MediaQuery.of(context).size.height,
+              height: MediaQuery.of(context).size.height - kToolbarHeight - 48,
               child: Column(
                 children: [
                   _buildFromLocationWidget(),
