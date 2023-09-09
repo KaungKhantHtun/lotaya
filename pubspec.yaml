@@ -43,7 +43,10 @@ dependencies:
   google_maps_flutter: null
   intl: ^0.18.1
   map_picker: null
-  dio:
+  dio: null
+  faker: ^2.1.0
+  multiselect: null
+
 
 dev_dependencies:
   flutter_lints: ^2.0.0

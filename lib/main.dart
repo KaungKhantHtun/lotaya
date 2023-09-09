@@ -9,7 +9,7 @@ import 'services/firebase_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  FirebaseService().init();
+  await FirebaseService().init();
   runApp(const MyApp());
 }
 
@@ -27,6 +27,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   ServiceProviderEntity serviceProviderEntity = ServiceProviderEntity(
+      serviceId: "1",
       serviceName: "Home Appliance Repair",
       about: "We offer professional reparing service on-demand",
       priceRate: 5000,
@@ -46,7 +47,11 @@ class _MyAppState extends State<MyApp> {
       // home: const HomeScreen(
       //   initialIndex: 0,
       // ),
-      home: const KiloTaxiScreen(),
+      //home: const KiloTaxiScreen(),
+      // home: BookingsScreen(),
+      home: const HomeScreen(
+        initialIndex: 0,
+      ),
     );
   }
 }

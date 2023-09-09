@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 const String testTable = "test";
+const String bookingTable = "booking";
 const Color colorPrimary = Color(0xff1f467d);
 const Color headerSectionColor = Color(0xfff0ffff);
 const Color colorSecondary = Color(0xffffba00);
