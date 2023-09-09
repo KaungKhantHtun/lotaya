@@ -530,7 +530,7 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
               return LocationPage();
             },
           ),
-        ).then((value) => _addressController.text = value);
+        ).then((value) => _addressController.text = value[0]);
       },
       decoration: InputDecoration(
         hintText: 'Your Address',

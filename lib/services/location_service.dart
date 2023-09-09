@@ -25,8 +25,7 @@ class _LocationPageState extends State<LocationPage> {
   var textController = TextEditingController();
 
   getAddress() async {
-    final api = GoogleGeocodingApi("AIzaSyBcQNwTBaKpuGRkJWDCytVvG0v7nqZRrwc",
-        isLogged: kDebugMode);
+    final api = GoogleGeocodingApi(mapApiKey, isLogged: kDebugMode);
     final reversedSearchResults = await api.reverse(
       '${cameraPosition.target.latitude},${cameraPosition.target.longitude}',
       language: 'en',
@@ -121,7 +120,13 @@ class _LocationPageState extends State<LocationPage> {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.pop(context, textController.text);
+                  Navigator.pop(
+                    context,
+                    [
+                      textController.text,
+                      cameraPosition.target,
+                    ],
+                  );
                 },
                 style: ButtonStyle(
                   backgroundColor:

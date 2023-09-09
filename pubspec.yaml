@@ -35,12 +35,12 @@ dependencies:
   firebase_messaging: ^14.6.7
   flutter:
     sdk: flutter
-  google_maps_flutter: 
+  google_maps_flutter: ^2.3.0
   intl: ^0.17.0
-  map_picker: 
-  geocoding:
-  flutter_svg:
-  google_geocoding_api:
+  map_picker: ^0.0.3
+  geocoding: ^2.1.0
+  flutter_svg: ^2.0.5
+  google_geocoding_api: ^1.4.1
   faker: ^2.1.0
   multiselect: ^0.1.0
   expandable: ^5.0.1
