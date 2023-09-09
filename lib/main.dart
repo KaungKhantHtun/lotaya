@@ -3,9 +3,7 @@ import 'package:hakathon_service/domain/entities/service_provider_entity.dart';
 import 'package:hakathon_service/presentation/pages/booking/bookings_screen.dart';
 
 import 'domain/entities/service_provider_type.dart';
-import 'presentation/pages/electronic_service/electronic_service_screen.dart';
-import 'presentation/pages/home/home_screen.dart';
-import 'presentation/pages/kilo_taxi/kilo_taxi_screen.dart';
+import 'presentation/pages/laundry_service/laundry_service_screen.dart';
 import 'services/firebase_service.dart';
 
 void main() async {

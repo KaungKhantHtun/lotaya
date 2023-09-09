@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hakathon_service/domain/entities/cloth_entity.dart';
+import 'package:hakathon_service/domain/entities/wear_type.dart';
 
 const String testTable = "test";
 const String bookingTable = "booking";
@@ -22,5 +24,29 @@ const TextStyle regularStyle = TextStyle(
 );
 
 const String mapApiKey = "AIzaSyBcQNwTBaKpuGRkJWDCytVvG0v7nqZRrwc";
-
-
+List<ClothEntity> originalClothList = [
+  ClothEntity(
+      id: "1",
+      name: "Coat",
+      imgUrl: "assets/jacket.png",
+      wearType: WearType.outWear,
+      dryCleanPrice: 500,
+      washAndIconPrice: 250,
+      ironPrice: 200),
+  ClothEntity(
+      id: "2",
+      name: "Coat",
+      imgUrl: "assets/jacket.png",
+      wearType: WearType.outWear,
+      dryCleanPrice: 500,
+      washAndIconPrice: 250,
+      ironPrice: 200),
+  ClothEntity(
+      id: "3",
+      name: "Coat",
+      imgUrl: "assets/jacket.png",
+      wearType: WearType.outWear,
+      dryCleanPrice: 500,
+      washAndIconPrice: 250,
+      ironPrice: 200),
+];

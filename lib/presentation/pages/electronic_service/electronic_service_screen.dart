@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hakathon_service/domain/entities/booking_entity.dart';
 import 'package:hakathon_service/domain/entities/booking_status.dart';
-import 'package:hakathon_service/services/location_service.dart';
+import 'package:hakathon_service/presentation/widgets/address_field_widget.dart';
+import 'package:hakathon_service/presentation/widgets/note_field_widget.dart';
 import 'package:hakathon_service/services/map_service.dart';
 import 'package:hakathon_service/utils/constants.dart';
 import 'package:intl/intl.dart';
@@ -80,11 +81,11 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
                   const SizedBox(
                     height: 16,
                   ),
-                  _buildLocationWidget(),
+                  AddressFieldWidget(addressController: _addressController),
                   const SizedBox(
                     height: 16,
                   ),
-                  _buildNotefieldWidget(),
+                  NoteFieldWidget(noteController: _noteController),
                   const SizedBox(
                     height: 16,
                   ),
@@ -475,99 +476,11 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [...widgetList],
-      // children: hourListMap.map(
-      //   (index, e) {
-      //     bool canBook =
-      //         e.difference(DateTime.now()) > Duration(hours: priorOrderHour);
-      //     return InkWell(
-      //       onTap: () {
-      //         if (canBook) {
-      //           setState(() {
-      //             selectedServiceTime = e;
-      //             selectedTime = index;
-      //           });
-      //         }
-      //       },
-      //       child: Container(
-      //         width: (MediaQuery.of(context).size.width -
-      //                 (8 * (hourList.length - 1)) -
-      //                 40) /
-      //             hourList.length,
-      //         padding: const EdgeInsets.all(12),
-      //         decoration: BoxDecoration(
-      //           color: !canBook
-      //               ? Colors.grey[800]
-      //               : selectedTime == index
-      //                   ? colorSecondaryVariant
-      //                   : colorGrey,
-      //           borderRadius: BorderRadius.circular(8.0),
-      //         ),
-      //         child: Text(
-      //           DateFormat('h:mm a').format(e),
-      //           textAlign: TextAlign.center,
-      //           style: TextStyle(
-      //               fontWeight: FontWeight.w300,
-      //               color: !canBook ? Colors.white : Colors.black),
-      //         ),
-      //       ),
-      //     );
-      //   },
-      // ).toList(),
-    );
-  }
-
-  Widget _buildLocationWidget() {
-    return TextField(
-      controller: _addressController,
-      readOnly: true,
-      maxLines: 1,
-      keyboardType: TextInputType.multiline,
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) {
-              return LocationPage();
-            },
-          ),
-        ).then((value) => _addressController.text = value[0]);
-      },
-      decoration: InputDecoration(
-        hintText: 'Your Address',
-        border: const OutlineInputBorder(),
-        suffixIcon: IconButton(
-          icon: const Icon(Icons.gps_fixed),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) {
-                  return LocationPage();
-                },
-              ),
-            ).then((value) {
-              print("@>value: $value");
-              _addressController.text = value;
-            });
-          },
-        ),
-      ),
     );
   }
 
   TextEditingController _addressController = TextEditingController();
   TextEditingController _noteController = TextEditingController();
-  Widget _buildNotefieldWidget() {
-    return TextField(
-      controller: _noteController,
-      maxLines: 4, // Allows unlimited lines of text
-      keyboardType: TextInputType.multiline,
-      decoration: const InputDecoration(
-        hintText: 'Note for service (optional)',
-        border: OutlineInputBorder(),
-      ),
-    );
-  }
 
   Widget _buildContinueButton() {
     return SizedBox(
@@ -591,6 +504,7 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
       ),
     );
   }
+
 
   double lat = 12.345;
   double long = 13.456;
