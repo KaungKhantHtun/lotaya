@@ -8,6 +8,8 @@ const Color colorSecondary = Color(0xffffba00);
 const Color colorSecondaryVariant = Color(0xfff9f3e8);
 const Color colorGrey = Color(0xfff7f8fa);
 const Color fontColorGrey = Color(0xffadb4b6);
+const Color errorColor = Color(0xFFC40C0C);
+const Color successColor = Color(0xFF219F02);
 
 const TextStyle headerStyle = TextStyle(
   fontSize: 20,
@@ -20,3 +22,5 @@ const TextStyle regularStyle = TextStyle(
 );
 
 const String mapApiKey = "AIzaSyBcQNwTBaKpuGRkJWDCytVvG0v7nqZRrwc";
+
+
