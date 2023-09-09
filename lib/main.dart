@@ -47,11 +47,11 @@ class _MyAppState extends State<MyApp> {
       // home: const HomeScreen(
       //   initialIndex: 0,
       // ),
-      //home: const KiloTaxiScreen(),
+      home: const KiloTaxiScreen(),
       // home: BookingsScreen(),
-      home: const HomeScreen(
-        initialIndex: 0,
-      ),
+      // home: const HomeScreen(
+      //   initialIndex: 0,
+      // ),
     );
   }
 }
