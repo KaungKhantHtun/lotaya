@@ -4,19 +4,18 @@ import 'package:hakathon_service/domain/entities/booking_entity.dart';
 import 'package:hakathon_service/domain/entities/booking_status.dart';
 import 'package:hakathon_service/domain/entities/service_provider_type.dart';
 import 'package:hakathon_service/presentation/pages/booking/booking_detail_screen.dart';
-import 'package:hakathon_service/presentation/pages/booking/bookings_screen_admin.dart';
 import 'package:hakathon_service/utils/constants.dart';
 import 'package:intl/intl.dart';
 import 'package:multiselect/multiselect.dart';
 
-class BookingsScreen extends StatefulWidget {
-  const BookingsScreen({Key? key}) : super(key: key);
+class BookingsScreenAdmin extends StatefulWidget {
+  const BookingsScreenAdmin({Key? key}) : super(key: key);
 
   @override
-  State<BookingsScreen> createState() => _BookingsScreenState();
+  State<BookingsScreenAdmin> createState() => _BookingsScreenAdminState();
 }
 
-class _BookingsScreenState extends State<BookingsScreen> {
+class _BookingsScreenAdminState extends State<BookingsScreenAdmin> {
   BookingEntity booking1 = BookingEntity(
     bookingId: "12",
     name: "Fix You Service",
@@ -58,6 +57,7 @@ class _BookingsScreenState extends State<BookingsScreen> {
   ];
   List<String> selectedServiceProviderType = [];
   List<String> optionList = const [];
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   @override
   void initState() {
@@ -89,44 +89,11 @@ class _BookingsScreenState extends State<BookingsScreen> {
         ),
         backgroundColor: Colors.white,
         centerTitle: false,
-        title: GestureDetector(
-          onLongPress: () {
-            showDialog(
-              context: context,
-              builder: (context) {
-                return AlertDialog(
-                  title: Text("Enter Password"),
-                  content: Container(
-                    //height: 40,
-                    color: Colors.grey.shade100,
-                    //  padding: EdgeInsets.all(8),
-                    child: TextField(
-                      obscureText: true,
-                      decoration: InputDecoration(
-                          border: InputBorder.none,
-                          contentPadding: EdgeInsets.all(8)),
-                      onSubmitted: (value) {
-                        Navigator.pop(context);
-                        if (value == "Two@Gether!") {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => BookingsScreenAdmin(),
-                              ));
-                        }
-                      },
-                    ),
-                  ),
-                );
-              },
-            );
-          },
-          child: const Text(
-            "Bookings",
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.w500,
-            ),
+        title: const Text(
+          "Bookings Request List",
+          style: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.w500,
           ),
         ),
         actions: [
@@ -161,7 +128,8 @@ class _BookingsScreenState extends State<BookingsScreen> {
                     padding:
                         const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                     child: Text(
-                      selectedValues.length == optionList.length
+                      selectedValues.length == optionList.length ||
+                              selectedValues.isEmpty
                           ? "All"
                           : selectedValues.join(", "),
                       style: const TextStyle(
@@ -194,8 +162,8 @@ class _BookingsScreenState extends State<BookingsScreen> {
                 padding: const EdgeInsets.all(16),
                 itemBuilder: (context, index) {
                   var doc = data?.docs[index];
-
                   BookingEntity e = BookingEntity.fromDoc(doc);
+                  print(e.bookingStatus);
 
                   return Container(
                     margin: const EdgeInsets.only(bottom: 16),
@@ -338,6 +306,37 @@ class _BookingsScreenState extends State<BookingsScreen> {
                                 ),
                               ],
                             ),
+                            SizedBox(
+                              height: 32,
+                            ),
+                            Row(
+                              children: [
+                                TextButton.icon(
+                                  label: Text(
+                                    "Reject",
+                                    style: TextStyle(color: errorColor),
+                                  ),
+                                  onPressed: () =>
+                                      updateStatus(doc!.id, "Rejected"),
+                                  icon: Icon(
+                                    Icons.remove_circle_outline,
+                                    color: errorColor,
+                                  ),
+                                ),
+                                TextButton.icon(
+                                  label: Text(
+                                    "Accept",
+                                    style: TextStyle(color: successColor),
+                                  ),
+                                  onPressed: () =>
+                                      updateStatus(doc!.id, "Pending Payment"),
+                                  icon: Icon(
+                                    Icons.check_circle_outline,
+                                    color: successColor,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ],
                         ),
                         Positioned(
@@ -369,6 +368,16 @@ class _BookingsScreenState extends State<BookingsScreen> {
           }
         },
       ),
+    );
+  }
+
+  updateStatus(String id, String status) {
+    print(id);
+    final DocumentReference docRef = firestore.collection(bookingTable).doc(id);
+    docRef.update(
+      {
+        "bookingStatus": status,
+      },
     );
   }
 }
