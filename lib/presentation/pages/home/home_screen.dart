@@ -58,14 +58,18 @@ class _HomeScreenState extends State<HomeScreen> {
         selectedLabelStyle: const TextStyle(),
         selectedFontSize: 0,
         unselectedFontSize: 0,
-        items: const [
+        items: [
           BottomNavigationBarItem(
             label: "Dashboard",
             icon: Icon(Icons.home),
           ),
           BottomNavigationBarItem(
             label: "Bookings",
-            icon: Icon(Icons.book_online),
+            icon: Image.asset(
+              "assets/booking.png",
+              width: 20,
+              height: 20,
+            ),
           ),
           BottomNavigationBarItem(
             label: "Chat",

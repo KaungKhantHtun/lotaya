@@ -1,7 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:hakathon_service/domain/entities/booking_status.dart';
+import 'package:intl/intl.dart';
 
+import '../../domain/entities/booking_entity.dart';
 import '../../utils/constants.dart';
+import 'booking/booking_detail_screen.dart';
 import 'categories_list.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -12,6 +16,22 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
+  late Query<Map<String, dynamic>> querySnapshot;
+
+  @override
+  void initState() {
+    querySnapshot = FirebaseFirestore.instance
+        .collection(bookingTable)
+        .where('bookingStatus', whereIn: [
+          BookingStatus.pending.name,
+          BookingStatus.pendingPayment.name,
+          BookingStatus.requested.name,
+        ])
+        .orderBy('bookingCreatedTime')
+        .limit(1);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,93 +51,124 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      height: 120,
-                      padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                        color: colorPrimary,
-                        borderRadius: BorderRadius.circular(20.0),
-                      ),
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
+                    StreamBuilder(
+                      stream: querySnapshot.snapshots(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<QuerySnapshot> snapshot) {
+                        if (!snapshot.hasData) {
+                          return Container();
+                        } else {
+                          final data = snapshot.data;
+
+                          if (data?.docs.length == 0) {
+                            return Container();
+                          }
+                          var doc = data?.docs[0];
+                          BookingEntity e = BookingEntity.fromDoc(doc);
+
+                          return InkWell(
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => BookingDetailScreen(
+                                        bookingId: e.bookingId,
+                                      )));
+                            },
+                            child: Container(
+                              height: 120,
+                              padding: const EdgeInsets.all(16),
+                              decoration: BoxDecoration(
+                                color: colorPrimary,
+                                borderRadius: BorderRadius.circular(20.0),
+                              ),
+                              child: Column(
                                 children: [
-                                  Container(
-                                    height: 16,
-                                    width: 2,
-                                    color: Colors.white,
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Container(
+                                            height: 16,
+                                            width: 2,
+                                            color: Colors.white,
+                                          ),
+                                          const SizedBox(
+                                            width: 16,
+                                          ),
+                                          Text(
+                                            "Your booking is ${e.bookingStatus.name}.",
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                      Container(
+                                        width: 20,
+                                        height: 20,
+                                        decoration: BoxDecoration(
+                                          color: Colors.white.withOpacity(0.3),
+                                          borderRadius:
+                                              BorderRadius.circular(20.0),
+                                        ),
+                                        child: const Center(
+                                          child: Icon(
+                                            Icons.close,
+                                            size: 16,
+                                            color: colorPrimary,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                   const SizedBox(
-                                    width: 16,
+                                    height: 16,
                                   ),
-                                  const Text(
-                                    "Your booking is confirmed.",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                    ),
-                                  )
-                                ],
-                              ),
-                              Container(
-                                width: 20,
-                                height: 20,
-                                decoration: BoxDecoration(
-                                  color: Colors.white.withOpacity(0.3),
-                                  borderRadius: BorderRadius.circular(20.0),
-                                ),
-                                child: const Center(
-                                  child: Icon(
-                                    Icons.close,
-                                    size: 16,
-                                    color: colorPrimary,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 16,
-                          ),
-                          Row(
-                            children: [
-                              Container(
-                                width: 40,
-                                height: 40,
-                                decoration: BoxDecoration(
-                                  color: Colors.white.withOpacity(0.3),
-                                  borderRadius: BorderRadius.circular(20.0),
-                                ),
-                                child: const Icon(Icons.check_box,
-                                    color: Colors.white),
-                              ),
-                              const SizedBox(
-                                width: 8,
-                              ),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
-                                  Text(
-                                    "Home Cleaning Service",
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                  SizedBox(
-                                    height: 8,
-                                  ),
-                                  Text(
-                                    "03-Sept-2023 9:00 AM",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                    ),
+                                  Row(
+                                    children: [
+                                      Container(
+                                        width: 40,
+                                        height: 40,
+                                        decoration: BoxDecoration(
+                                          color: Colors.white.withOpacity(0.3),
+                                          borderRadius:
+                                              BorderRadius.circular(20.0),
+                                        ),
+                                        child: const Icon(Icons.check_box,
+                                            color: Colors.white),
+                                      ),
+                                      const SizedBox(
+                                        width: 8,
+                                      ),
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            e.name,
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          ),
+                                          SizedBox(
+                                            height: 8,
+                                          ),
+                                          Text(
+                                            "${DateFormat('d MMM, y').format(e.bookingCreatedTime)} ${DateFormat('h:mm a').format(e.serviceTime)}",
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
-                            ],
-                          ),
-                        ],
-                      ),
+                            ),
+                          );
+                        }
+                      },
                     ),
                     const SizedBox(
                       height: 32,
