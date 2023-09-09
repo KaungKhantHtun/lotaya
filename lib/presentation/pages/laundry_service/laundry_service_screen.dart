@@ -1,12 +1,14 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:hakathon_service/domain/entities/cloth_entity.dart';
+import 'package:hakathon_service/domain/entities/cloth_with_count_entity.dart';
+import 'package:hakathon_service/domain/entities/laundry_booking_confirm_entity.dart';
 import 'package:hakathon_service/domain/entities/wear_type.dart';
-import 'package:hakathon_service/presentation/pages/laundry_service/laundry_order_confirm_screen.dart';
 import 'package:hakathon_service/utils/constants.dart';
 
 import '../../../domain/entities/laundry_service_type.dart';
 import '../../../domain/entities/service_provider_entity.dart';
+import 'laundry_order_confirm_screen.dart';
 
 class LaundryServiceScreen extends StatefulWidget {
   LaundryServiceScreen({Key? key, required this.serviceProvider})
@@ -19,84 +21,9 @@ class LaundryServiceScreen extends StatefulWidget {
 
 class _LaundryServiceScreenState extends State<LaundryServiceScreen> {
   Map<WearType, List<ClothEntity>> clothMap = {
-    WearType.outWear: [
-      ClothEntity(
-          id: "1",
-          name: "Coat",
-          imgUrl: "assets/jacket.png",
-          wearType: WearType.outWear,
-          dryCleanPrice: 500,
-          washAndIconPrice: 250,
-          ironPrice: 200),
-      ClothEntity(
-          id: "2",
-          name: "Coat",
-          imgUrl: "assets/jacket.png",
-          wearType: WearType.outWear,
-          dryCleanPrice: 500,
-          washAndIconPrice: 250,
-          ironPrice: 200),
-      ClothEntity(
-          id: "3",
-          name: "Coat",
-          imgUrl: "assets/jacket.png",
-          wearType: WearType.outWear,
-          dryCleanPrice: 500,
-          washAndIconPrice: 250,
-          ironPrice: 200),
-    ],
-    WearType.casualWear: [
-      ClothEntity(
-          id: "1",
-          name: "Coat",
-          imgUrl: "assets/jacket.png",
-          wearType: WearType.outWear,
-          dryCleanPrice: 500,
-          washAndIconPrice: 250,
-          ironPrice: 200),
-      ClothEntity(
-          id: "2",
-          name: "Coat",
-          imgUrl: "assets/jacket.png",
-          wearType: WearType.outWear,
-          dryCleanPrice: 500,
-          washAndIconPrice: 250,
-          ironPrice: 200),
-      ClothEntity(
-          id: "3",
-          name: "Coat",
-          imgUrl: "assets/jacket.png",
-          wearType: WearType.outWear,
-          dryCleanPrice: 500,
-          washAndIconPrice: 250,
-          ironPrice: 200),
-    ],
-    WearType.formalWear: [
-      ClothEntity(
-          id: "1",
-          name: "Coat",
-          imgUrl: "assets/jacket.png",
-          wearType: WearType.outWear,
-          dryCleanPrice: 500,
-          washAndIconPrice: 250,
-          ironPrice: 200),
-      ClothEntity(
-          id: "2",
-          name: "Coat",
-          imgUrl: "assets/jacket.png",
-          wearType: WearType.outWear,
-          dryCleanPrice: 500,
-          washAndIconPrice: 250,
-          ironPrice: 200),
-      ClothEntity(
-          id: "3",
-          name: "Coat",
-          imgUrl: "assets/jacket.png",
-          wearType: WearType.outWear,
-          dryCleanPrice: 500,
-          washAndIconPrice: 250,
-          ironPrice: 200),
-    ],
+    WearType.outWear: originalClothList,
+    WearType.casualWear: originalClothList,
+    WearType.formalWear: originalClothList,
   };
   List<LaundryServiceType> serviceList = [
     LaundryServiceType.dryCleaning,
@@ -475,6 +402,9 @@ class _LaundryServiceScreenState extends State<LaundryServiceScreen> {
                         style: const TextStyle(
                             color: Colors.white, fontWeight: FontWeight.w600),
                       ),
+                      const SizedBox(
+                        height: 8,
+                      ),
                       Text(
                         "Total Price : $totalAmount Ks",
                         style: const TextStyle(
@@ -495,11 +425,53 @@ class _LaundryServiceScreenState extends State<LaundryServiceScreen> {
   Widget _buildContinueButton() {
     return ElevatedButton(
       onPressed: () {
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => const LaundryOrderConfirmScreen()));
+        if (totalCount > 0) {
+          List<ClothWithCountEntity> clothList = [];
+          countMap.keys.forEach((type) {
+            countMap[type]!.forEach((id, count) {
+              clothList.add(
+                ClothWithCountEntity(
+                    name: originalClothList
+                        .where((element) => element.id == id)
+                        .first
+                        .name,
+                    serviceType: type,
+                    price: originalClothList
+                        .where((element) => element.id == id)
+                        .first
+                        .getPrice(type),
+                    clothId: id,
+                    count: count),
+              );
+            });
+          });
+          // clothMap.values.forEach((element) {
+          //   element.map((e) {
+          //     return ClothWithCountEntity(
+          //         serviceType: serviceType,
+          //         price: price,
+          //         clothId: clothId,
+          //         count: count);
+          //   });
+          //   // clothList.addAll();
+          // });
+          LaundryBookingConfirmEntity bookingConfirm =
+              LaundryBookingConfirmEntity(
+            clothList: clothList,
+            serviceName: "Clean Cool Laundry Service",
+            totalCount: totalCount,
+            totalPrice: totalAmount,
+          );
+
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => LaundryOrderConfirmScreen(
+                  serviceProvider: widget.serviceProvider,
+                  laundryBookingConfirmEntity: bookingConfirm)));
+        }
       },
       style: ElevatedButton.styleFrom(
-        backgroundColor: colorSecondary,
+        backgroundColor:
+            totalCount == 0 ? Colors.grey.shade500 : colorSecondary,
       ),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
