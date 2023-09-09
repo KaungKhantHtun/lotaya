@@ -43,6 +43,7 @@ dependencies:
   google_geocoding_api:
   faker: ^2.1.0
   multiselect: ^0.1.0
+  expandable: ^5.0.1
 
 
 dev_dependencies:

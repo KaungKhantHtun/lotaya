@@ -128,7 +128,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
                                 ),
                                 const Text(
                                   "aircon service & Repair & Install and Maintenance.aircon service & Repair & Install and Maintenance.",
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontSize: 13,
                                   ),
                                 ),
