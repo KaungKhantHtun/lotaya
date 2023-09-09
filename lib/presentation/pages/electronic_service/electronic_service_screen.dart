@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:hakathon_service/domain/entities/booking_entity.dart';
-import 'package:hakathon_service/presentation/pages/location_screen.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:hakathon_service/domain/entities/booking_entity.dart';
+import 'package:hakathon_service/domain/entities/booking_status.dart';
 import 'package:hakathon_service/services/location_service.dart';
 import 'package:hakathon_service/services/map_service.dart';
 import 'package:hakathon_service/utils/constants.dart';
@@ -599,6 +599,7 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
     final CollectionReference bookingList =
         FirebaseFirestore.instance.collection(bookingTable);
     BookingEntity booking = BookingEntity(
+      bookingId: "123",
       name: widget.serviceProvider.serviceName,
       serviceType: widget.serviceProvider.serviceType,
       serviceProviderId: widget.serviceProvider.serviceId,
@@ -611,6 +612,7 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
         selectedServiceTime.minute,
       ),
       bookingCreatedTime: DateTime.now(),
+      bookingStatus: BookingStatus.pending,
       address: _addressController.text,
       lat: lat,
       long: long,

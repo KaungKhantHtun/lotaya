@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.hakathon_service.app-mergeDebugResources-9:/values-night-v8/values-night-v8.xml",
+            "outputFile": "com.example.hakathon_service.app-mergeDebugResources-15:/values-night-v8/values-night-v8.xml",
             "map": [
                 {
                     "source": "/Users/eizinhtun/Documents/hakathon_service/android/app/src/main/res/values-night/styles.xml",

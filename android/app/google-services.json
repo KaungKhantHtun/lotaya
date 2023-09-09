@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1095771549322",
+    "project_id": "service-33a01",
+    "storage_bucket": "service-33a01.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1095771549322:android:d0a6b14f373ed44fd68773",
+        "android_client_info": {
+          "package_name": "com.example.hakathon_service"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1095771549322-i4mu99ak75606g9nvj1qghluve6100je.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBj4qsRpcikmqDRJGvCkFFck4iWkfeLsNg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1095771549322-i4mu99ak75606g9nvj1qghluve6100je.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
