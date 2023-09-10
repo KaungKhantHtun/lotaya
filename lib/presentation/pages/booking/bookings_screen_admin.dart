@@ -62,6 +62,7 @@ class _BookingsScreenAdminState extends State<BookingsScreenAdmin> {
   @override
   void initState() {
     // TODO: implement initState
+    isAdmin = true;
     bookingList = [
       booking1,
       booking2,

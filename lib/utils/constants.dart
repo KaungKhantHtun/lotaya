@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_chat_types/flutter_chat_types.dart';
 import 'package:hakathon_service/domain/entities/cloth_entity.dart';
 import 'package:hakathon_service/domain/entities/wear_type.dart';
 
@@ -49,3 +50,19 @@ List<ClothEntity> originalClothList = [
       washAndIconPrice: 250,
       ironPrice: 200),
 ];
+
+const currentUser = User(
+  id: "W1",
+  firstName: "First Name",
+  lastName: "Last Name",
+  imageUrl: "",
+);
+
+const adminUser = User(
+  id: "Admin1",
+  firstName: "Admin First Name",
+  lastName: "Admin Last Name",
+  imageUrl: "",
+);
+
+bool isAdmin = false;

@@ -1,8 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hakathon_service/domain/entities/booking_entity.dart';
+import 'package:hakathon_service/presentation/pages/chat/chat.dart';
+import 'package:hakathon_service/presentation/pages/chat/core/firebase_chat_core.dart';
 import 'package:hakathon_service/utils/constants.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 
 import '../chat_screen.dart';
 
@@ -194,8 +197,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
                         children: [
                           InkWell(
                             onTap: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => const ChatScreen()));
+                              _handlePressed(context, widget.bookingId);
                             },
                             // child: Text(
                             //   "View Details",
@@ -237,6 +239,21 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
             );
           }
         },
+      ),
+    );
+  }
+
+  void _handlePressed(BuildContext context, String bookingId) async {
+    final navigator = Navigator.of(context);
+    final room = await FirebaseChatCore.instance
+        .createRoom(isAdmin ? currentUser : adminUser, roomId: bookingId);
+
+    navigator.pop();
+    await navigator.push(
+      MaterialPageRoute(
+        builder: (context) => ChatPage(
+          room: room,
+        ),
       ),
     );
   }
