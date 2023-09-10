@@ -247,13 +247,15 @@ class _BookingsScreenState extends State<BookingsScreen> {
                                               fontSize: 16,
                                             ),
                                           ),
-                                          Text(
-                                            e.name,
-                                            textAlign: TextAlign.end,
-                                            style: const TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 14,
-                                              color: Color(0xff84888d),
+                                          Flexible(
+                                            child: Text(
+                                              e.name,
+                                              textAlign: TextAlign.end,
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 14,
+                                                color: Color(0xff84888d),
+                                              ),
                                             ),
                                           ),
                                         ],
