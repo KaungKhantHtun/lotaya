@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:hakathon_service/services/user_profile_service.dart';
+import 'package:hakathon_service/utils/constants.dart';
 
 import '../booking/bookings_screen.dart';
 import '../chat_screen.dart';
 import '../dashboard_screen.dart';
-import '../profile_screen.dart';
+import '../profile/profile_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key, required this.initialIndex});
@@ -20,6 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
+    operateUser();
     widgetList = const [
       DashboardScreen(),
       BookingsScreen(),
@@ -28,6 +31,10 @@ class _HomeScreenState extends State<HomeScreen> {
     ];
     currentIndex = widget.initialIndex;
     super.initState();
+  }
+
+  operateUser() async {
+    await UserProfileService().operateUserProfile();
   }
 
   void selectedPage(int index) {
@@ -48,10 +55,10 @@ class _HomeScreenState extends State<HomeScreen> {
         showSelectedLabels: true,
         showUnselectedLabels: true,
         type: BottomNavigationBarType.fixed,
-        selectedItemColor: Colors.black,
+        selectedItemColor: colorPrimary,
         unselectedItemColor: const Color(0xff9F9F9F),
         selectedIconTheme: const IconThemeData(
-          color: Colors.black,
+          color: colorPrimary,
         ),
         unselectedIconTheme: const IconThemeData(color: Color(0xff9F9F9F)),
         unselectedLabelStyle: const TextStyle(),
@@ -59,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
         selectedFontSize: 0,
         unselectedFontSize: 0,
         items: [
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
             label: "Dashboard",
             icon: Icon(Icons.home),
           ),
@@ -69,13 +76,14 @@ class _HomeScreenState extends State<HomeScreen> {
               "assets/booking.png",
               width: 20,
               height: 20,
+              color: currentIndex == 1 ? colorPrimary : Colors.black,
             ),
           ),
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
             label: "Chat",
             icon: Icon(Icons.chat),
           ),
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
             label: "Profile",
             icon: Icon(Icons.person),
           ),
