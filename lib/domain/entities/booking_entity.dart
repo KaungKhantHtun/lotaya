@@ -69,6 +69,8 @@ class BookingEntity {
     );
   }
 
+
+
   static BookingEntity fromDoc(QueryDocumentSnapshot<Object?>? doc) {
     return BookingEntity(
       bookingId: doc?.data().toString().contains("bookingId") ?? false

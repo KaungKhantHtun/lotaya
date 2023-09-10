@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:hakathon_service/domain/entities/cloth_entity.dart';
 import 'package:hakathon_service/domain/entities/wear_type.dart';
 
-const String testTable = "test";
 const String bookingTable = "booking";
 const Color colorPrimary = Color(0xff1f467d);
 const Color headerSectionColor = Color(0xfff0ffff);

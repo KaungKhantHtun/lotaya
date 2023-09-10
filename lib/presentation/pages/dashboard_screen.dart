@@ -267,15 +267,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               ],
                             ),
                           ),
-                          const SizedBox(
-                            width: 16,
-                          ),
-                          ElevatedButton(
-                            onPressed: () {
-                              getTestData();
-                            },
-                            child: const Text("Test"),
-                          ),
                         ],
                       ),
                     ),
@@ -287,20 +278,5 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ),
       ),
     );
-  }
-
-  Future<void> getTestData() async {
-    final CollectionReference users =
-        FirebaseFirestore.instance.collection(testTable);
-
-    try {
-      QuerySnapshot querySnapshot = await users.get();
-
-      for (QueryDocumentSnapshot doc in querySnapshot.docs) {
-        print(doc.data());
-      }
-    } catch (e) {
-      print('Error retrieving data: $e');
-    }
   }
 }

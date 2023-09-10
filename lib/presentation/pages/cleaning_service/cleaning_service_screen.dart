@@ -12,16 +12,15 @@ import 'package:intl/intl.dart';
 import '../../../domain/entities/service_provider_entity.dart';
 import '../home/home_screen.dart';
 
-class ElectronicServiceScreen extends StatefulWidget {
-  const ElectronicServiceScreen({super.key, required this.serviceProvider});
+class CleaningServiceScreen extends StatefulWidget {
+  const CleaningServiceScreen({super.key, required this.serviceProvider});
   final ServiceProviderEntity serviceProvider;
 
   @override
-  State<ElectronicServiceScreen> createState() =>
-      _ElectronicServiceScreenState();
+  State<CleaningServiceScreen> createState() => _CleaningServiceScreenState();
 }
 
-class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
+class _CleaningServiceScreenState extends State<CleaningServiceScreen> {
   String selectedServiceName = "";
   DateTime selectedServiceDate = DateTime.now();
   DateTime selectedServiceTime = DateTime.now();
@@ -50,12 +49,13 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
       DateTime(day.year, day.month, day.day, 13, 10),
       DateTime(day.year, day.month, day.day, 14, 10),
     ];
-    selectedServiceName = "General Service";
+    selectedServiceName = "General Cleaning";
     selectedServiceTime = hourList
         .where((e) =>
             e.difference(DateTime.now()) > Duration(hours: priorOrderHour))
         .first;
     selectedTime = hourList.indexOf(selectedServiceTime);
+
     addCustomIcon();
   }
 
@@ -75,7 +75,11 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
                 children: [
                   _buildServiceList(),
                   const SizedBox(
-                    height: 32,
+                    height: 16,
+                  ),
+                  _buildSizeSlider(),
+                  const SizedBox(
+                    height: 16,
                   ),
                   _buildDatePicker(),
                   const SizedBox(
@@ -225,7 +229,7 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
   }
 
   Widget _buildServiceList() {
-    double width = MediaQuery.of(context).size.width / 3 - 16 * 2;
+    double width = MediaQuery.of(context).size.width / 3 - 16;
     return Column(
       children: [
         SingleChildScrollView(
@@ -235,7 +239,7 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
             children: [
               _buildServiceCard(
                 index: 0,
-                name: "AC",
+                name: "Home Clean",
                 iconUrl: "assets/aircon.png",
                 width: width,
                 isSelected: selectedDevice == 0,
@@ -245,7 +249,7 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
               ),
               _buildServiceCard(
                 index: 1,
-                name: "Fridge",
+                name: "Vehicle washing",
                 iconUrl: "assets/fridge.png",
                 width: width,
                 isSelected: selectedDevice == 1,
@@ -255,7 +259,7 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
               ),
               _buildServiceCard(
                 index: 2,
-                name: "Oven",
+                name: "Shop Clean",
                 iconUrl: "assets/oven.png",
                 width: width,
                 isSelected: selectedDevice == 2,
@@ -270,7 +274,7 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
           children: [
             Expanded(
               child: _buildServiceType(
-                  name: "General Service",
+                  name: "General Cleaning",
                   index: 0,
                   isSelected: selectIdType == 0),
             ),
@@ -279,13 +283,72 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
             ),
             Expanded(
               child: _buildServiceType(
-                  name: "Gas Recharge",
+                  name: "Deep Cleaning",
                   index: 1,
                   isSelected: selectIdType == 1),
             ),
           ],
         ),
       ],
+    );
+  }
+
+  int minSize = 0;
+  int maxSize = 1400;
+  int defaultMinSize = 50;
+  int defaultMaxSize = 1400;
+  int? actualMinSize;
+  int? actualMaxSize;
+  Widget _buildSizeSlider() {
+    return Container(
+      margin: EdgeInsets.zero,
+      padding: EdgeInsets.zero,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          const Text(
+            "Space Size",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          SliderTheme(
+            data: SliderThemeData(
+              activeTickMarkColor: colorPrimary,
+              activeTrackColor: colorPrimary,
+              overlayColor: colorPrimary.withOpacity(0.25),
+              valueIndicatorColor: colorPrimary,
+              thumbColor: Colors.white,
+              overlappingShapeStrokeColor: Colors.white,
+              trackHeight: 2.0,
+            ),
+            child: RangeSlider(
+              inactiveColor: colorPrimary.withOpacity(0.4),
+              min: defaultMinSize.toDouble(),
+              max: defaultMaxSize.toDouble(),
+              divisions: 50,
+              labels: RangeLabels(
+                actualMinSize == null
+                    ? "$defaultMinSize sqft"
+                    : "$actualMinSize sqft",
+                actualMaxSize == null
+                    ? "$defaultMaxSize sqft"
+                    : "$actualMaxSize sqft",
+              ),
+              values: RangeValues(
+                  actualMinSize?.toDouble() ?? defaultMinSize.toDouble(),
+                  actualMaxSize?.toDouble() ?? defaultMaxSize.toDouble()),
+              onChanged: (values) {
+                setState(
+                  () {
+                    actualMinSize = values.start.toInt();
+                    actualMaxSize = values.end.toInt();
+                  },
+                );
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -302,31 +365,34 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
         });
       },
       child: Container(
-        width: width,
-        padding: const EdgeInsets.only(bottom: 8, top: 16, left: 16, right: 16),
+        // width: width,
+        height: 40,
+        padding: const EdgeInsets.only(bottom: 8, top: 8, left: 16, right: 16),
         decoration: BoxDecoration(
           color: isSelected ? colorPrimary : colorGrey,
           borderRadius: BorderRadius.circular(8.0),
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-              iconUrl,
-              width: 25,
-              height: 25,
-              color: isSelected ? Colors.white : Colors.black,
-            ),
-            const SizedBox(
-              height: 4,
-            ),
-            Text(
-              name,
-              style: regularStyle.copyWith(
-                color: isSelected ? Colors.white : Colors.black,
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // Image.asset(
+              //   iconUrl,
+              //   width: 25,
+              //   height: 25,
+              //   color: isSelected ? Colors.white : Colors.black,
+              // ),
+              // const SizedBox(
+              //   height: 4,
+              // ),
+              Text(
+                name,
+                style: regularStyle.copyWith(
+                  color: isSelected ? Colors.white : Colors.black,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -342,15 +408,17 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
         });
       },
       child: Container(
-        padding:
-            const EdgeInsets.only(bottom: 16, top: 16, left: 16, right: 16),
+        height: 40,
+        padding: const EdgeInsets.only(bottom: 8, top: 8, left: 16, right: 16),
         decoration: BoxDecoration(
           color: isSelected ? colorSecondaryVariant : colorGrey,
           borderRadius: BorderRadius.circular(8.0),
         ),
-        child: Text(
-          name,
-          textAlign: TextAlign.center,
+        child: Center(
+          child: Text(
+            name,
+            textAlign: TextAlign.center,
+          ),
         ),
       ),
     );
@@ -361,7 +429,7 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          "Date & Time",
+          "Cleaning Date & Time",
           style: TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w600,
@@ -490,11 +558,13 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
     return SizedBox(
       width: MediaQuery.of(context).size.width - 32,
       child: ElevatedButton(
-        onPressed: _addressController.text.isEmpty
-            ? null
-            : () async {
-                await doBooking();
-              },
+        onPressed:
+            // _addressController.text.isEmpty
+            //     ? null
+            //     :
+            () async {
+          await doBooking();
+        },
         style: ElevatedButton.styleFrom(
           backgroundColor: colorPrimary,
         ),
