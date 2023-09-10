@@ -21,6 +21,14 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
   late Query<Map<String, dynamic>> querySnapshot;
 
+  ServiceProviderEntity serviceProviderEntity = ServiceProviderEntity(
+      serviceId: "1",
+      serviceName: "Home Appliance Repair",
+      about: "We offer professional reparing service on-demand",
+      priceRate: 5000,
+      serviceType: ServiceProviderType.electronic,
+      rating: 5);
+
   @override
   void initState() {
     querySnapshot = FirebaseFirestore.instance

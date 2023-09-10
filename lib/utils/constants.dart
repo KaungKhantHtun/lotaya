@@ -5,6 +5,7 @@ import 'package:hakathon_service/domain/entities/wear_type.dart';
 
 const String bookingTable = "booking";
 const Color colorPrimary = Color(0xff1f467d);
+const Color colorPrimaryLight = Color(0xFFE6F0FD);
 const Color headerSectionColor = Color(0xfff0ffff);
 const Color colorSecondary = Color(0xffffba00);
 const Color colorSecondaryVariant = Color(0xfff9f3e8);
