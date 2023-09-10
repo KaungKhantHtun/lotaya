@@ -3,30 +3,33 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hakathon_service/domain/entities/booking_entity.dart';
 import 'package:hakathon_service/domain/entities/booking_status.dart';
-import 'package:hakathon_service/presentation/widgets/address_field_widget.dart';
+import 'package:hakathon_service/domain/entities/car_entity.dart';
 import 'package:hakathon_service/presentation/widgets/note_field_widget.dart';
+import 'package:hakathon_service/services/distance_service.dart';
 import 'package:hakathon_service/services/map_service.dart';
 import 'package:hakathon_service/utils/constants.dart';
 import 'package:intl/intl.dart';
 
 import '../../../domain/entities/service_provider_entity.dart';
+import '../../../services/location_service.dart';
 import '../home/home_screen.dart';
 
-class ElectronicServiceScreen extends StatefulWidget {
-  const ElectronicServiceScreen({super.key, required this.serviceProvider});
+class HouseMovingServiceScreen extends StatefulWidget {
+  const HouseMovingServiceScreen({super.key, required this.serviceProvider});
   final ServiceProviderEntity serviceProvider;
 
   @override
-  State<ElectronicServiceScreen> createState() =>
-      _ElectronicServiceScreenState();
+  State<HouseMovingServiceScreen> createState() =>
+      _HouseMovingServiceScreenState();
 }
 
-class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
-  String selectedServiceName = "";
+class _HouseMovingServiceScreenState extends State<HouseMovingServiceScreen> {
+  DateTime movingDate = DateTime.now();
+  List<DateTime> hourList = [];
   DateTime selectedServiceDate = DateTime.now();
-  DateTime selectedServiceTime = DateTime.now();
-  int selectedDevice = 1;
-  int selectIdType = 0;
+  DateTime selectedServiceTime = DateTime(
+      DateTime.now().year, DateTime.now().month, DateTime.now().day, 11);
+
   int selectedDay = 0;
   int selectedTime = 0;
 
@@ -37,20 +40,44 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
     DateTime.now().month,
     DateTime.now().day,
   );
-  List<DateTime> hourList = [];
 
   BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
 
+  final TextEditingController _fromController = TextEditingController();
+  final TextEditingController _toController = TextEditingController();
+
+  LatLng? _fromLatLng;
+  LatLng? _toLatLng;
+  DistanceAndDuration? _estimate;
+
+  List<CarEntity> carList = [
+    CarEntity(
+        name: "Mini Truck",
+        price: 40000,
+        size: 2000,
+        imgUrl: 'assets/mini-truck.png'),
+    CarEntity(
+        name: "Truck", price: 60000, size: 4000, imgUrl: 'assets/truck.png'),
+    CarEntity(
+        name: "Mini Truck",
+        price: 40000,
+        size: 2000,
+        imgUrl: 'assets/mini-truck.png'),
+    CarEntity(
+        name: "Truck", price: 60000, size: 4000, imgUrl: 'assets/truck.png'),
+
+    // CarEntity(name:,price:, size:,imgUrl: ''),
+    // CarEntity(name:,price:, size:,imgUrl: ''),
+  ];
   @override
   void initState() {
     super.initState();
     hourList = [
-      DateTime(day.year, day.month, day.day, 11),
-      DateTime(day.year, day.month, day.day, 12, 10),
-      DateTime(day.year, day.month, day.day, 13, 10),
-      DateTime(day.year, day.month, day.day, 14, 10),
+      DateTime(movingDate.year, movingDate.month, movingDate.day, 11),
+      DateTime(movingDate.year, movingDate.month, movingDate.day, 12, 10),
+      DateTime(movingDate.year, movingDate.month, movingDate.day, 13, 10),
+      DateTime(movingDate.year, movingDate.month, movingDate.day, 14, 10),
     ];
-    selectedServiceName = "General Service";
     List<DateTime> list = hourList
         .where((e) =>
             e.difference(DateTime.now()) > Duration(hours: priorOrderHour))
@@ -65,7 +92,7 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
         DateTime(startDate.year, startDate.month, startDate.day, 13, 10),
         DateTime(startDate.year, startDate.month, startDate.day, 14, 10),
       ];
-       selectedServiceTime = hourList.first;
+      selectedServiceTime = hourList.first;
     }
     selectedTime = hourList.indexOf(selectedServiceTime);
     addCustomIcon();
@@ -85,19 +112,27 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _buildServiceList(),
+                  _buildFromLocationWidget(),
                   const SizedBox(
-                    height: 32,
+                    height: 16,
+                  ),
+                  _buildToLocationWidget(),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  _buildFloorWidget(),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  _buildCarTypeWidget(),
+                  const SizedBox(
+                    height: 16,
                   ),
                   _buildDatePicker(),
                   const SizedBox(
                     height: 16,
                   ),
                   _buildTimePicker(),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  AddressFieldWidget(addressController: _addressController),
                   const SizedBox(
                     height: 16,
                   ),
@@ -113,6 +148,199 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
         ),
       ),
     );
+  }
+
+  Widget _buildFromLocationWidget() {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border(
+          bottom: BorderSide(
+            color: Color(0xffa1a2bd),
+          ),
+        ),
+      ),
+      child: TextField(
+        style: const TextStyle(fontSize: 14),
+        controller: _fromController,
+        readOnly: true,
+        maxLines: 1,
+        keyboardType: TextInputType.multiline,
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return const LocationPage();
+              },
+            ),
+          ).then(
+            (value) {
+              _fromController.text = value[0];
+              _fromLatLng = value[1];
+              calculateDistance();
+            },
+          );
+        },
+        decoration: InputDecoration(
+            labelText: "Moving From",
+            // hintText: "Moving From",
+            contentPadding: const EdgeInsets.only(top: 16, bottom: 8),
+            labelStyle: const TextStyle(
+              color: Color(0xffa1a2bd),
+            ),
+            border: InputBorder.none,
+            prefixIcon: Padding(
+              padding:
+                  const EdgeInsets.only(left: 0, right: 8, top: 8, bottom: 8),
+              child: Image.asset(
+                "assets/location.png",
+                height: 20,
+                width: 20,
+                color: colorPrimary,
+              ),
+            )),
+      ),
+    );
+  }
+
+  Widget _buildToLocationWidget() {
+    return Container(
+      // color: Colors.white,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border(
+          bottom: BorderSide(
+            color: Color(0xffa1a2bd),
+          ),
+        ),
+      ),
+      child: TextField(
+        style: const TextStyle(fontSize: 14),
+        controller: _toController,
+        readOnly: true,
+        maxLines: 1,
+        keyboardType: TextInputType.multiline,
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return const LocationPage();
+              },
+            ),
+          ).then((value) {
+            _toController.text = value[0];
+            _toLatLng = value[1];
+            calculateDistance();
+          });
+        },
+        decoration: InputDecoration(
+          labelText: "Moving To",
+          // hintText: 'Moving To',
+          labelStyle: TextStyle(),
+          border: InputBorder.none,
+          prefixIcon: Padding(
+            padding:
+                const EdgeInsets.only(left: 0, right: 8, top: 8, bottom: 8),
+            child: Image.asset(
+              "assets/location.png",
+              color: colorPrimary,
+              height: 24,
+              width: 24,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  int selectedCarIndex = 0;
+  Widget _buildCarTypeWidget() {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: carList.map(
+          (e) {
+            int index = carList.indexOf(e);
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                InkWell(
+                  onTap: () {
+                    selectedCarIndex = index;
+                    setState(() {});
+                  },
+                  child: Container(
+                    // width: 100,
+                    height: 80,
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: selectedCarIndex == index
+                          ? colorPrimary.withOpacity(0.4)
+                          : colorPrimary.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                e.name,
+                                textAlign: TextAlign.start,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 8,
+                              ),
+                              Text(
+                                "${e.price} Ks",
+                                textAlign: TextAlign.start,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            width: 16,
+                          ),
+                          Image.asset(
+                            e.imgUrl,
+                            width: 50,
+                            height: 50,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                if (index != carList.length - 1)
+                  const SizedBox(
+                    width: 16,
+                  )
+              ],
+            );
+          },
+        ).toList(),
+      ),
+    );
+  }
+
+  calculateDistance() async {
+    if (_fromLatLng == null && _toLatLng == null) return;
+    final s = CalculateDistance();
+    _estimate = await s.calculateEstimateDistance(_fromLatLng!, _toLatLng!);
+    setState(() {});
   }
 
   void addCustomIcon() {
@@ -236,135 +464,77 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
     );
   }
 
-  Widget _buildServiceList() {
-    double width = MediaQuery.of(context).size.width / 3 - 16 * 2;
-    return Column(
+  List<String> _floorList = const [
+    "1st Floor",
+    "2nd Floor",
+    "3rd Floor",
+    "4th Floor",
+    "5th Floor"
+        "6th Floor"
+        "7th Floor"
+  ];
+  String _selectedFloor = "1st Floor";
+
+  Widget _buildFloorWidget() {
+    return Row(
       children: [
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              _buildServiceCard(
-                index: 0,
-                name: "AC",
-                iconUrl: "assets/aircon.png",
-                width: width,
-                isSelected: selectedDevice == 0,
+        Expanded(
+          child: DropdownButton<String>(
+            isExpanded: true,
+            underline: Container(
+                padding: const EdgeInsets.only(top: 16),
+                child: const Divider(color: colorPrimary)),
+            // dropdownColor: colorPrimary,
+            iconEnabledColor: colorPrimary,
+            iconDisabledColor: colorPrimary,
+            focusColor: colorPrimary,
+            value: _selectedFloor,
+            icon: Container(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: const Icon(
+                Icons.arrow_drop_down,
+                color: colorPrimary,
+                size: 24,
               ),
-              const SizedBox(
-                width: 16,
-              ),
-              _buildServiceCard(
-                index: 1,
-                name: "Fridge",
-                iconUrl: "assets/fridge.png",
-                width: width,
-                isSelected: selectedDevice == 1,
-              ),
-              const SizedBox(
-                width: 16,
-              ),
-              _buildServiceCard(
-                index: 2,
-                name: "Oven",
-                iconUrl: "assets/oven.png",
-                width: width,
-                isSelected: selectedDevice == 2,
-              ),
-            ],
+            ),
+            onChanged: (newValue) {
+              setState(() {
+                _selectedFloor = newValue!;
+              });
+            },
+            selectedItemBuilder: (context) {
+              return _floorList.map<Widget>((String item) {
+                return Container(
+                  padding: const EdgeInsets.only(left: 12, bottom: 16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Image.asset(
+                        "assets/building.png",
+                        width: 24,
+                        height: 24,
+                        color: colorPrimary,
+                      ),
+                      const SizedBox(
+                        width: 8,
+                      ),
+                      Text(item),
+                    ],
+                  ),
+                );
+              }).toList();
+              // Container(height: 10, color: Colors.red);
+            },
+
+            items: _floorList.map((String item) {
+              return DropdownMenuItem<String>(
+                value: item,
+                child: Text(item),
+              );
+            }).toList(),
           ),
         ),
-        const SizedBox(
-          height: 16,
-        ),
-        Row(
-          children: [
-            Expanded(
-              child: _buildServiceType(
-                  name: "General Service",
-                  index: 0,
-                  isSelected: selectIdType == 0),
-            ),
-            const SizedBox(
-              width: 16,
-            ),
-            Expanded(
-              child: _buildServiceType(
-                  name: "Gas Recharge",
-                  index: 1,
-                  isSelected: selectIdType == 1),
-            ),
-          ],
-        ),
       ],
-    );
-  }
-
-  Widget _buildServiceCard(
-      {required String name,
-      required String iconUrl,
-      required double width,
-      required bool isSelected,
-      required int index}) {
-    return InkWell(
-      onTap: () {
-        setState(() {
-          selectedDevice = index;
-        });
-      },
-      child: Container(
-        width: width,
-        padding: const EdgeInsets.only(bottom: 8, top: 16, left: 16, right: 16),
-        decoration: BoxDecoration(
-          color: isSelected ? colorPrimary : colorGrey,
-          borderRadius: BorderRadius.circular(8.0),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-              iconUrl,
-              width: 25,
-              height: 25,
-              color: isSelected ? Colors.white : Colors.black,
-            ),
-            const SizedBox(
-              height: 4,
-            ),
-            Text(
-              name,
-              style: regularStyle.copyWith(
-                color: isSelected ? Colors.white : Colors.black,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildServiceType(
-      {required String name, required int index, required bool isSelected}) {
-    return InkWell(
-      onTap: () {
-        setState(() {
-          selectIdType = index;
-          selectedServiceName = name;
-        });
-      },
-      child: Container(
-        padding:
-            const EdgeInsets.only(bottom: 16, top: 16, left: 16, right: 16),
-        decoration: BoxDecoration(
-          color: isSelected ? colorSecondaryVariant : colorGrey,
-          borderRadius: BorderRadius.circular(8.0),
-        ),
-        child: Text(
-          name,
-          textAlign: TextAlign.center,
-        ),
-      ),
     );
   }
 
@@ -437,7 +607,7 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
                         ),
                       ),
                     ),
-                    SizedBox(width: index != dayCount-1 ? 8 : 0),
+                    SizedBox(width: index != dayCount - 1 ? 8 : 0),
                   ],
                 );
               },
@@ -495,18 +665,15 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
     );
   }
 
-  TextEditingController _addressController = TextEditingController();
   TextEditingController _noteController = TextEditingController();
 
   Widget _buildContinueButton() {
     return SizedBox(
       width: MediaQuery.of(context).size.width - 32,
       child: ElevatedButton(
-        onPressed: _addressController.text.isEmpty
-            ? null
-            : () async {
-                await doBooking();
-              },
+        onPressed: () async {
+          await doBooking();
+        },
         style: ElevatedButton.styleFrom(
           backgroundColor: colorPrimary,
         ),
@@ -530,11 +697,11 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
     final CollectionReference bookingList =
         FirebaseFirestore.instance.collection(bookingTable);
     BookingEntity booking = BookingEntity(
-      bookingId: "123",
+      bookingId: "house123",
       name: widget.serviceProvider.serviceName,
       serviceType: widget.serviceProvider.serviceType,
       serviceProviderId: widget.serviceProvider.serviceId,
-      serviceName: selectedServiceName,
+      serviceName: "House Moving",
       serviceTime: DateTime(
         selectedServiceDate.year,
         selectedServiceDate.month,
@@ -544,9 +711,9 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
       ),
       bookingCreatedTime: DateTime.now(),
       bookingStatus: BookingStatus.pending,
-      address: _addressController.text,
-      lat: lat,
-      long: long,
+      address: _fromController.text,
+      lat: _fromLatLng?.latitude,
+      long: _fromLatLng?.longitude,
       price: price,
       note: _noteController.text,
     );

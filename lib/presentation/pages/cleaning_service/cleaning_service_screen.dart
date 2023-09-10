@@ -50,10 +50,22 @@ class _CleaningServiceScreenState extends State<CleaningServiceScreen> {
       DateTime(day.year, day.month, day.day, 14, 10),
     ];
     selectedServiceName = "General Cleaning";
-    selectedServiceTime = hourList
+    List<DateTime> list = hourList
         .where((e) =>
             e.difference(DateTime.now()) > Duration(hours: priorOrderHour))
-        .first;
+        .toList();
+    if (list.isNotEmpty) {
+      selectedServiceTime = list.first;
+    } else {
+      startDate = DateTime.now().add(const Duration(days: 1));
+      hourList = [
+        DateTime(startDate.year, startDate.month, startDate.day, 11),
+        DateTime(startDate.year, startDate.month, startDate.day, 12, 10),
+        DateTime(startDate.year, startDate.month, startDate.day, 13, 10),
+        DateTime(startDate.year, startDate.month, startDate.day, 14, 10),
+      ];
+      selectedServiceTime = hourList.first;
+    }
     selectedTime = hourList.indexOf(selectedServiceTime);
 
     addCustomIcon();
@@ -481,10 +493,10 @@ class _CleaningServiceScreenState extends State<CleaningServiceScreen> {
                               "${day.day}",
                               textAlign: TextAlign.center,
                             ),
-                            Text(
-                              DateFormat.E().format(day),
-                              textAlign: TextAlign.center,
-                            ),
+                            // Text(
+                            //   DateFormat.E().format(day),
+                            //   textAlign: TextAlign.center,
+                            // ),
                             Text(
                               DateFormat.MMM().format(day),
                               textAlign: TextAlign.center,
@@ -493,7 +505,7 @@ class _CleaningServiceScreenState extends State<CleaningServiceScreen> {
                         ),
                       ),
                     ),
-                    SizedBox(width: index != dayCount ? 8 : 0),
+                    SizedBox(width: index != dayCount - 1 ? 8 : 0),
                   ],
                 );
               },
