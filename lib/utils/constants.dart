@@ -3,6 +3,7 @@ import 'package:hakathon_service/domain/entities/cloth_entity.dart';
 import 'package:hakathon_service/domain/entities/wear_type.dart';
 
 const String bookingTable = "booking";
+const String profileTable = "profile";
 const Color colorPrimary = Color(0xff1f467d);
 const Color headerSectionColor = Color(0xfff0ffff);
 const Color colorSecondary = Color(0xffffba00);

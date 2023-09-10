@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hakathon_service/domain/entities/service_provider_entity.dart';
+import 'package:hakathon_service/presentation/pages/home/home_screen.dart';
 
 import 'domain/entities/service_provider_type.dart';
-import 'presentation/pages/cleaning_service/cleaning_service_screen.dart';
 import 'services/firebase_service.dart';
 
 void main() async {
@@ -42,14 +42,15 @@ class _MyAppState extends State<MyApp> {
       // home: ElectronicServiceScreen(
       //   serviceProvider: serviceProviderEntity,
       // ),
-      // home: const HomeScreen(
-      //   initialIndex: 0,
-      // ),
+      home: const HomeScreen(
+        initialIndex: 0,
+      ),
       //home: const KiloTaxiScreen(),
       // home: BookingsScreen(),
-      home: CleaningServiceScreen(
-        serviceProvider: serviceProviderEntity,
-      ),
+      // home: CleaningServiceScreen(
+      //   serviceProvider: serviceProviderEntity,
+      // ),
+      // home: ProfileScreen(),
       // home: const HomeScreen(
       //   initialIndex: 0,
       // ),
