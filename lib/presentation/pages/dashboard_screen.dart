@@ -1,6 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hakathon_service/domain/entities/booking_status.dart';
+import 'package:hakathon_service/domain/entities/service_provider_entity.dart';
+import 'package:hakathon_service/domain/entities/service_provider_type.dart';
+import 'package:hakathon_service/presentation/pages/electronic_service/electronic_service_screen.dart';
 import 'package:intl/intl.dart';
 
 import '../../domain/entities/booking_entity.dart';
@@ -17,6 +20,14 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   late Query<Map<String, dynamic>> querySnapshot;
+
+  ServiceProviderEntity serviceProviderEntity = ServiceProviderEntity(
+      serviceId: "1",
+      serviceName: "Home Appliance Repair",
+      about: "We offer professional reparing service on-demand",
+      priceRate: 5000,
+      serviceType: ServiceProviderType.electronic,
+      rating: 5);
 
   @override
   void initState() {
@@ -186,8 +197,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         InkWell(
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) =>
-                                    const CategoriesListScreen()));
+                                builder: (context) => ElectronicServiceScreen(
+                                      serviceProvider: serviceProviderEntity,
+                                    )));
                           },
                           child: const Text(
                             "View All",

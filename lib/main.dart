@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hakathon_service/domain/entities/service_provider_entity.dart';
+import 'package:hakathon_service/presentation/pages/freelancer/freelancer_screen.dart';
 
 import 'domain/entities/service_provider_type.dart';
 import 'presentation/pages/house_moving_service/house_moving_service_screen.dart';
@@ -45,18 +46,15 @@ class _MyAppState extends State<MyApp> {
       // home: const HomeScreen(
       //   initialIndex: 0,
       // ),
-      home: HouseMovingServiceScreen(
-        serviceProvider: serviceProviderEntity,
-      ),
       //home: const KiloTaxiScreen(),
       // home: BookingsScreen(),
       // home: CleaningServiceScreen(
       //   serviceProvider: serviceProviderEntity,
       // ),
-      // home: ProfileScreen(),
       // home: const HomeScreen(
       //   initialIndex: 0,
       // ),
+      home: FreelancerScreen(),
     );
   }
 }

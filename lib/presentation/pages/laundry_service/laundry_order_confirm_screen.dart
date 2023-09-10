@@ -147,7 +147,7 @@ class _LaundryOrderConfirmScreenState extends State<LaundryOrderConfirmScreen> {
                               children: [
                                 Expanded(
                                   flex: 2,
-                                  child: Text(e.name ?? ""),
+                                  child: Text(e.name),
                                 ),
                                 Expanded(
                                   flex: 2,
