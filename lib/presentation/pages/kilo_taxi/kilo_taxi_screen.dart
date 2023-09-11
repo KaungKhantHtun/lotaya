@@ -44,6 +44,7 @@ class _KiloTaxiScreenState extends State<KiloTaxiScreen> {
       day.add(const Duration(hours: 13, minutes: 10)),
       day.add(const Duration(hours: 14, minutes: 10)),
     ];
+    
   }
 
   @override
@@ -282,6 +283,8 @@ class _KiloTaxiScreenState extends State<KiloTaxiScreen> {
     );
   }
 
+
+
   calculateDistance() async {
     if (_fromLatLng == null && _toLatLng == null) return;
     final s = CalculateDistance();
@@ -327,4 +330,6 @@ class _KiloTaxiScreenState extends State<KiloTaxiScreen> {
       ),
     );
   }
+
+
 }

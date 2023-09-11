@@ -4,7 +4,7 @@ import 'package:hakathon_service/presentation/pages/freelancer/freelancer_screen
 import 'package:hakathon_service/presentation/pages/home/home_screen.dart';
 
 import 'domain/entities/service_provider_type.dart';
-import 'presentation/pages/cleaning_service/cleaning_service_screen.dart';
+import 'presentation/pages/house_moving_service/house_moving_service_screen.dart';
 import 'services/firebase_service.dart';
 
 void main() async {
