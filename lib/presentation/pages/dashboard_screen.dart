@@ -5,13 +5,17 @@ import 'package:hakathon_service/domain/entities/service_provider_entity.dart';
 import 'package:hakathon_service/domain/entities/service_provider_type.dart';
 import 'package:hakathon_service/presentation/pages/cleaning_service/cleaning_service_screen.dart';
 import 'package:hakathon_service/presentation/pages/electronic_service/electronic_service_screen.dart';
+import 'package:hakathon_service/presentation/pages/freelancer/freelancer_screen.dart';
+import 'package:hakathon_service/presentation/pages/kilo_taxi/kilo_taxi_screen.dart';
 import 'package:hakathon_service/presentation/pages/laundry_service/laundry_service_screen.dart';
 import 'package:intl/intl.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../domain/entities/booking_entity.dart';
 import '../../utils/constants.dart';
 import 'booking/booking_detail_screen.dart';
 import 'categories_list.dart';
+import 'house_moving_service/house_moving_service_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({Key? key}) : super(key: key);
@@ -54,10 +58,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              Image.asset(
-                "assets/clean.png",
-                fit: BoxFit.fill,
-                height: MediaQuery.of(context).size.height * 0.4,
+              Lottie.asset(
+                'lottie/services.json',
+                height: 240,
               ),
               Container(
                 margin: const EdgeInsets.all(16),
@@ -87,7 +90,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                       )));
                             },
                             child: Container(
-                              height: 120,
+                              //height: 120,
                               padding: const EdgeInsets.all(16),
                               decoration: BoxDecoration(
                                 color: colorPrimary,
@@ -214,114 +217,262 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       ],
                     ),
                     const SizedBox(height: 16),
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            width: 80,
-                            child: Column(
-                              children: [
-                                InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            ElectronicServiceScreen(
-                                                serviceProvider:
-                                                    serviceProviderEntity),
-                                      ),
-                                    );
-                                  },
-                                  child: ClipOval(
+                    Wrap(
+                      spacing: 32,
+                      runSpacing: 32,
+                      children: [
+                        SizedBox(
+                          width: 80,
+                          child: Column(
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          ElectronicServiceScreen(
+                                              serviceProvider:
+                                                  serviceProviderEntity),
+                                    ),
+                                  );
+                                },
+                                child: Container(
+                                  height: 80,
+                                  width: 80,
+                                  decoration: BoxDecoration(
+                                      color: colorPrimary,
+                                      shape: BoxShape.circle),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(16.0),
                                     child: Image.asset(
-                                      "assets/aircon_service.jpg",
-                                      fit: BoxFit.fitHeight,
-                                      width: 70,
-                                      height: 70,
+                                      "assets/electric.png",
+                                      color: Colors.white,
                                     ),
                                   ),
                                 ),
-                                const Text(
-                                  "Electronic",
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ],
-                            ),
+                                // ClipOval(
+                                //   child: Image.asset(
+                                //     "assets/aircon_service.jpg",
+                                //     fit: BoxFit.fitHeight,
+                                //     width: 70,
+                                //     height: 70,
+                                //   ),
+                                // ),
+                              ),
+                              SizedBox(
+                                height: 4,
+                              ),
+                              const Text(
+                                "Electronic",
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
                           ),
-                          const SizedBox(
-                            width: 16,
-                          ),
-                          SizedBox(
-                            width: 80,
-                            child: Column(
-                              children: [
-                                InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            LaundryServiceScreen(
-                                                serviceProvider:
-                                                    serviceProviderEntity),
-                                      ),
-                                    );
-                                  },
-                                  child: ClipOval(
+                        ),
+                        SizedBox(
+                          width: 80,
+                          child: Column(
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          LaundryServiceScreen(
+                                              serviceProvider:
+                                                  serviceProviderEntity),
+                                    ),
+                                  );
+                                },
+                                child: Container(
+                                  height: 80,
+                                  width: 80,
+                                  decoration: BoxDecoration(
+                                      color: colorPrimary,
+                                      shape: BoxShape.circle),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(16.0),
                                     child: Image.asset(
-                                      "assets/laundry_service.jpg",
-                                      fit: BoxFit.fitHeight,
-                                      width: 70,
-                                      height: 70,
+                                      "assets/laundry-machine.png",
+                                      color: Colors.white,
                                     ),
                                   ),
                                 ),
-                                const Text(
-                                  "Laundry",
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ],
-                            ),
+                              ),
+                              SizedBox(
+                                height: 4,
+                              ),
+                              const Text(
+                                "Laundry",
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
                           ),
-                          const SizedBox(
-                            width: 16,
-                          ),
-                          SizedBox(
-                            width: 80,
-                            child: Column(
-                              children: [
-                                InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            CleaningServiceScreen(
-                                                serviceProvider:
-                                                    serviceProviderEntity),
-                                      ),
-                                    );
-                                  },
-                                  child: ClipOval(
+                        ),
+                        SizedBox(
+                          width: 80,
+                          child: Column(
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          CleaningServiceScreen(
+                                              serviceProvider:
+                                                  serviceProviderEntity),
+                                    ),
+                                  );
+                                },
+                                child: Container(
+                                  height: 80,
+                                  width: 80,
+                                  decoration: BoxDecoration(
+                                      color: colorPrimary,
+                                      shape: BoxShape.circle),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(16.0),
                                     child: Image.asset(
-                                      "assets/clean_service.jpg",
-                                      fit: BoxFit.fitHeight,
-                                      width: 70,
-                                      height: 70,
+                                      "assets/house-keeping.png",
+                                      color: Colors.white,
                                     ),
                                   ),
                                 ),
-                                const Text(
-                                  "Home Clean Service",
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ],
-                            ),
+                              ),
+                              SizedBox(
+                                height: 4,
+                              ),
+                              const Text(
+                                "Home Clean Service",
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                        SizedBox(
+                          width: 80,
+                          child: Column(
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          HouseMovingServiceScreen(
+                                              serviceProvider:
+                                                  serviceProviderEntity),
+                                    ),
+                                  );
+                                },
+                                child: Container(
+                                  height: 80,
+                                  width: 80,
+                                  decoration: BoxDecoration(
+                                      color: colorPrimary,
+                                      shape: BoxShape.circle),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(16.0),
+                                    child: Image.asset(
+                                      "assets/moving-truck.png",
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 4,
+                              ),
+                              const Text(
+                                "Home Moving",
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          width: 80,
+                          child: Column(
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => KiloTaxiScreen(),
+                                    ),
+                                  );
+                                },
+                                child: Container(
+                                  height: 80,
+                                  width: 80,
+                                  decoration: BoxDecoration(
+                                      color: colorPrimary,
+                                      shape: BoxShape.circle),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(16.0),
+                                    child: Image.asset(
+                                      "assets/taxi 2.png",
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 4,
+                              ),
+                              const Text(
+                                "Kilo Taxi",
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          width: 80,
+                          child: Column(
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => FreelancerScreen(),
+                                    ),
+                                  );
+                                },
+                                child: Container(
+                                  height: 80,
+                                  width: 80,
+                                  decoration: BoxDecoration(
+                                      color: colorPrimary,
+                                      shape: BoxShape.circle),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(16.0),
+                                    child: Image.asset(
+                                      "assets/time-management.png",
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 4,
+                              ),
+                              const Text(
+                                "Freelancer",
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 100,
+                        )
+                      ],
                     ),
                   ],
                 ),

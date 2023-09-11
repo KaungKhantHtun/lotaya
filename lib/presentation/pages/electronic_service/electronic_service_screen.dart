@@ -65,7 +65,7 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
         DateTime(startDate.year, startDate.month, startDate.day, 13, 10),
         DateTime(startDate.year, startDate.month, startDate.day, 14, 10),
       ];
-       selectedServiceTime = hourList.first;
+      selectedServiceTime = hourList.first;
     }
     selectedTime = hourList.indexOf(selectedServiceTime);
     addCustomIcon();
@@ -74,6 +74,9 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: colorPrimary,
+      ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
@@ -437,7 +440,7 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
                         ),
                       ),
                     ),
-                    SizedBox(width: index != dayCount-1 ? 8 : 0),
+                    SizedBox(width: index != dayCount - 1 ? 8 : 0),
                   ],
                 );
               },

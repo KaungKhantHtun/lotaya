@@ -74,6 +74,9 @@ class _CleaningServiceScreenState extends State<CleaningServiceScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: colorPrimary,
+      ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(

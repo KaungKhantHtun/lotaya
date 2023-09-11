@@ -20,6 +20,9 @@ class _FreelancerListScreenState extends State<FreelancerListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: colorPrimary,
+      ),
       backgroundColor: colorPrimaryLight,
       body: SingleChildScrollView(
         child: Container(

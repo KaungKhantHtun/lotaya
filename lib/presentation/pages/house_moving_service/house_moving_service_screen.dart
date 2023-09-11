@@ -101,6 +101,9 @@ class _HouseMovingServiceScreenState extends State<HouseMovingServiceScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: colorPrimary,
+      ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
