@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:hakathon_service/domain/entities/booking_status.dart';
 import 'package:hakathon_service/domain/entities/service_provider_entity.dart';
 import 'package:hakathon_service/domain/entities/service_provider_type.dart';
+import 'package:hakathon_service/presentation/pages/cleaning_service/cleaning_service_screen.dart';
 import 'package:hakathon_service/presentation/pages/electronic_service/electronic_service_screen.dart';
+import 'package:hakathon_service/presentation/pages/laundry_service/laundry_service_screen.dart';
 import 'package:intl/intl.dart';
 
 import '../../domain/entities/booking_entity.dart';
@@ -220,16 +222,29 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             width: 80,
                             child: Column(
                               children: [
-                                ClipOval(
-                                  child: Image.asset(
-                                    "assets/aircon_service.jpg",
-                                    fit: BoxFit.fitHeight,
-                                    width: 70,
-                                    height: 70,
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            ElectronicServiceScreen(
+                                                serviceProvider:
+                                                    serviceProviderEntity),
+                                      ),
+                                    );
+                                  },
+                                  child: ClipOval(
+                                    child: Image.asset(
+                                      "assets/aircon_service.jpg",
+                                      fit: BoxFit.fitHeight,
+                                      width: 70,
+                                      height: 70,
+                                    ),
                                   ),
                                 ),
                                 const Text(
-                                  "Aircon Service",
+                                  "Electronic",
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               ],
@@ -242,16 +257,29 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             width: 80,
                             child: Column(
                               children: [
-                                ClipOval(
-                                  child: Image.asset(
-                                    "assets/laundry_service.jpg",
-                                    fit: BoxFit.fitHeight,
-                                    width: 70,
-                                    height: 70,
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            LaundryServiceScreen(
+                                                serviceProvider:
+                                                    serviceProviderEntity),
+                                      ),
+                                    );
+                                  },
+                                  child: ClipOval(
+                                    child: Image.asset(
+                                      "assets/laundry_service.jpg",
+                                      fit: BoxFit.fitHeight,
+                                      width: 70,
+                                      height: 70,
+                                    ),
                                   ),
                                 ),
                                 const Text(
-                                  "Laundry Service",
+                                  "Laundry",
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               ],
@@ -264,12 +292,25 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             width: 80,
                             child: Column(
                               children: [
-                                ClipOval(
-                                  child: Image.asset(
-                                    "assets/clean_service.jpg",
-                                    fit: BoxFit.fitHeight,
-                                    width: 70,
-                                    height: 70,
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            CleaningServiceScreen(
+                                                serviceProvider:
+                                                    serviceProviderEntity),
+                                      ),
+                                    );
+                                  },
+                                  child: ClipOval(
+                                    child: Image.asset(
+                                      "assets/clean_service.jpg",
+                                      fit: BoxFit.fitHeight,
+                                      width: 70,
+                                      height: 70,
+                                    ),
                                   ),
                                 ),
                                 const Text(

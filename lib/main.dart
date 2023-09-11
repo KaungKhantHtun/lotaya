@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hakathon_service/domain/entities/service_provider_entity.dart';
 import 'package:hakathon_service/presentation/pages/freelancer/freelancer_screen.dart';
+import 'package:hakathon_service/presentation/pages/home/home_screen.dart';
 
 import 'domain/entities/service_provider_type.dart';
 import 'presentation/pages/cleaning_service/cleaning_service_screen.dart';
@@ -51,10 +52,10 @@ class _MyAppState extends State<MyApp> {
       // home: CleaningServiceScreen(
       //   serviceProvider: serviceProviderEntity,
       // ),
-      // home: const HomeScreen(
-      //   initialIndex: 0,
-      // ),
-      home: FreelancerScreen(),
+      home: const HomeScreen(
+        initialIndex: 0,
+      ),
+      // home: FreelancerScreen(),
     );
   }
 }
