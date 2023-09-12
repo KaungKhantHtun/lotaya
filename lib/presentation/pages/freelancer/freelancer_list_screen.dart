@@ -1,9 +1,6 @@
 import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:hakathon_service/presentation/pages/chat/chat.dart';
 import 'package:hakathon_service/presentation/pages/freelancer/freelancer_detail_screen.dart';
 import 'package:hakathon_service/utils/constants.dart';
 
@@ -22,11 +19,20 @@ class _FreelancerListScreenState extends State<FreelancerListScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: colorPrimary,
+        centerTitle: true,
+        title: Text(
+          "${widget.label.toUpperCase()}S",
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
       ),
       backgroundColor: colorPrimaryLight,
       body: SingleChildScrollView(
         child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 16, vertical: 48),
+          margin: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -35,7 +41,7 @@ class _FreelancerListScreenState extends State<FreelancerListScreen> {
                 style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
               ),
               SizedBox(
-                height: 20,
+                height: 16,
               ),
               ListView(
                 shrinkWrap: true,
@@ -96,55 +102,67 @@ class FreelancerCardaWidget extends StatelessWidget {
                       SizedBox(
                         width: 16,
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            " " + fakeName,
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.w500),
-                          ),
-                          SizedBox(
-                            height: 4,
-                          ),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Icon(Icons.location_on),
-                              Text(
-                                fakeLocation,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.grey,
-                                    fontWeight: FontWeight.bold),
+                      Expanded(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  " " + fakeName,
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                SizedBox(
+                                  height: 4,
+                                ),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Icon(Icons.location_on),
+                                    Text(
+                                      fakeLocation,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.grey,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            Flexible(
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          FreelacerDetailScreen(
+                                              imageUrl: fakeImage,
+                                              hourlyRate: fakeRate,
+                                              location: fakeLocation,
+                                              name: fakeName),
+                                    ),
+                                  );
+                                },
+                                child: Padding(
+                                  padding: EdgeInsets.only(top: 8),
+                                  child: Text(
+                                    "View Details",
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                        color: colorPrimary),
+                                  ),
+                                ),
                               ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      Spacer(),
-                      InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => FreelacerDetailScreen(
-                                    imageUrl: fakeImage,
-                                    hourlyRate: fakeRate,
-                                    location: fakeLocation,
-                                    name: fakeName),
-                              ));
-                        },
-                        child: Padding(
-                          padding: EdgeInsets.only(top: 8),
-                          child: Text(
-                            "View Details",
-                            style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                                color: colorPrimary),
-                          ),
+                            ),
+                          ],
                         ),
                       ),
                     ],

@@ -5,16 +5,17 @@ import 'package:hakathon_service/domain/entities/booking_entity.dart';
 import 'package:hakathon_service/domain/entities/booking_status.dart';
 import 'package:hakathon_service/presentation/widgets/address_field_widget.dart';
 import 'package:hakathon_service/presentation/widgets/note_field_widget.dart';
-import 'package:hakathon_service/services/map_service.dart';
 import 'package:hakathon_service/utils/constants.dart';
 import 'package:intl/intl.dart';
 
-import '../../../domain/entities/service_provider_entity.dart';
+import '../../../domain/entities/service_provider_type.dart';
+import '../../widgets/service_provider_select.dart';
 import '../home/home_screen.dart';
 
 class CleaningServiceScreen extends StatefulWidget {
-  const CleaningServiceScreen({super.key, required this.serviceProvider});
-  final ServiceProviderEntity serviceProvider;
+  const CleaningServiceScreen({
+    super.key,
+  });
 
   @override
   State<CleaningServiceScreen> createState() => _CleaningServiceScreenState();
@@ -39,6 +40,8 @@ class _CleaningServiceScreenState extends State<CleaningServiceScreen> {
   List<DateTime> hourList = [];
 
   BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
+
+  TextEditingController _serviceProviderController = TextEditingController();
 
   @override
   void initState() {
@@ -76,13 +79,22 @@ class _CleaningServiceScreenState extends State<CleaningServiceScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: colorPrimary,
+        centerTitle: true,
+        title: const Text(
+          "CLEANING",
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
       ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildHeader(),
+            // _buildHeader(),
             Container(
               margin: const EdgeInsets.all(16),
               child: Column(
@@ -104,7 +116,24 @@ class _CleaningServiceScreenState extends State<CleaningServiceScreen> {
                   const SizedBox(
                     height: 16,
                   ),
-                  AddressFieldWidget(addressController: _addressController),
+                  ServiceProviderSelect(
+                    type: ServiceProviderType.homeCleaning,
+                    serviceProviderController: _serviceProviderController,
+                    onChanged: (value) {
+                      _serviceProviderController.text = value;
+                      setState(() {});
+                    },
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  AddressFieldWidget(
+                    addressController: _addressController,
+                    onChanged: (address) {
+                      _addressController.text = address;
+                      setState(() {});
+                    },
+                  ),
                   const SizedBox(
                     height: 16,
                   ),
@@ -135,152 +164,164 @@ class _CleaningServiceScreenState extends State<CleaningServiceScreen> {
     );
   }
 
-  Widget _buildHeader() {
-    return Container(
-      height: 200,
-      padding: const EdgeInsets.all(16),
-      decoration: const BoxDecoration(
-        color: headerSectionColor,
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(40),
-          bottomRight: Radius.circular(40),
-        ),
-      ),
-      child: Center(
-        child: Row(
-          children: [
-            Expanded(
-              flex: 3,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  Row(
-                    children: [
-                      ...List.generate(
-                        widget.serviceProvider.rating,
-                        (index) => const Icon(
-                          Icons.star,
-                          color: colorSecondary,
-                          size: 16,
-                        ),
-                      ).toList(),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 4,
-                  ),
-                  Text(
-                    widget.serviceProvider.serviceName,
-                    style: headerStyle,
-                    textAlign: TextAlign.left,
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  Flexible(
-                    child: Text(
-                      widget.serviceProvider.about,
-                      style: regularStyle.copyWith(color: fontColorGrey),
-                      textAlign: TextAlign.left,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  Text(
-                    "${widget.serviceProvider.priceRate} Ks/Hr",
-                    style: regularStyle.copyWith(
-                        color: colorPrimary, fontWeight: FontWeight.w600),
-                    textAlign: TextAlign.left,
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              flex: 2,
-              child: Container(),
-            ),
-            IconButton(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => MapSample(
-                        markers: [
-                          Marker(
-                            markerId: MarkerId("1"),
-                            position: LatLng(16.844171, 96.085055),
-                            icon: markerIcon,
-                          ),
-                          Marker(
-                            markerId: MarkerId("2"),
-                            position: LatLng(16.845986, 96.087491),
-                            icon: markerIcon,
-                          ),
-                          Marker(
-                            markerId: MarkerId("3"),
-                            position: LatLng(16.840941, 96.087332),
-                            icon: markerIcon,
-                          ),
-                          Marker(
-                            markerId: MarkerId("4"),
-                            position: LatLng(16.840868, 96.085035),
-                            icon: markerIcon,
-                          )
-                        ],
-                      ),
-                    ));
-              },
-              icon: Image.asset("assets/map.png"),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+  // Widget _buildHeader() {
+  //   return Container(
+  //     height: 200,
+  //     padding: const EdgeInsets.all(16),
+  //     decoration: const BoxDecoration(
+  //       color: headerSectionColor,
+  //       borderRadius: BorderRadius.only(
+  //         bottomLeft: Radius.circular(40),
+  //         bottomRight: Radius.circular(40),
+  //       ),
+  //     ),
+  //     child: Center(
+  //       child: Row(
+  //         children: [
+  //           Expanded(
+  //             flex: 3,
+  //             child: Column(
+  //               mainAxisAlignment: MainAxisAlignment.start,
+  //               crossAxisAlignment: CrossAxisAlignment.start,
+  //               children: [
+  //                 const SizedBox(
+  //                   height: 30,
+  //                 ),
+  //                 Row(
+  //                   children: [
+  //                     ...List.generate(
+  //                       widget.serviceProvider.rating,
+  //                       (index) => const Icon(
+  //                         Icons.star,
+  //                         color: colorSecondary,
+  //                         size: 16,
+  //                       ),
+  //                     ).toList(),
+  //                   ],
+  //                 ),
+  //                 const SizedBox(
+  //                   height: 4,
+  //                 ),
+  //                 Text(
+  //                   widget.serviceProvider.serviceName,
+  //                   style: headerStyle,
+  //                   textAlign: TextAlign.left,
+  //                 ),
+  //                 const SizedBox(
+  //                   height: 16,
+  //                 ),
+  //                 Flexible(
+  //                   child: Text(
+  //                     widget.serviceProvider.about,
+  //                     style: regularStyle.copyWith(color: fontColorGrey),
+  //                     textAlign: TextAlign.left,
+  //                   ),
+  //                 ),
+  //                 const SizedBox(
+  //                   height: 8,
+  //                 ),
+  //                 Text(
+  //                   "${widget.serviceProvider.priceRate} Ks/Hr",
+  //                   style: regularStyle.copyWith(
+  //                       color: colorPrimary, fontWeight: FontWeight.w600),
+  //                   textAlign: TextAlign.left,
+  //                 ),
+  //               ],
+  //             ),
+  //           ),
+  //           Expanded(
+  //             flex: 2,
+  //             child: Container(),
+  //           ),
+  //           IconButton(
+  //             onPressed: () {
+  //               Navigator.push(
+  //                   context,
+  //                   MaterialPageRoute(
+  //                     builder: (context) => MapSample(
+  //                       markers: [
+  //                         Marker(
+  //                           markerId: MarkerId("1"),
+  //                           position: LatLng(16.844171, 96.085055),
+  //                           icon: markerIcon,
+  //                         ),
+  //                         Marker(
+  //                           markerId: MarkerId("2"),
+  //                           position: LatLng(16.845986, 96.087491),
+  //                           icon: markerIcon,
+  //                         ),
+  //                         Marker(
+  //                           markerId: MarkerId("3"),
+  //                           position: LatLng(16.840941, 96.087332),
+  //                           icon: markerIcon,
+  //                         ),
+  //                         Marker(
+  //                           markerId: MarkerId("4"),
+  //                           position: LatLng(16.840868, 96.085035),
+  //                           icon: markerIcon,
+  //                         )
+  //                       ],
+  //                     ),
+  //                   ));
+  //             },
+  //             icon: Image.asset("assets/map.png"),
+  //           ),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget _buildServiceList() {
     double width = MediaQuery.of(context).size.width / 3 - 16;
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              _buildServiceCard(
-                index: 0,
-                name: "Home Clean",
-                iconUrl: "assets/aircon.png",
-                width: width,
-                isSelected: selectedDevice == 0,
-              ),
-              const SizedBox(
-                width: 16,
-              ),
-              _buildServiceCard(
-                index: 1,
-                name: "Vehicle washing",
-                iconUrl: "assets/fridge.png",
-                width: width,
-                isSelected: selectedDevice == 1,
-              ),
-              const SizedBox(
-                width: 16,
-              ),
-              _buildServiceCard(
-                index: 2,
-                name: "Shop Clean",
-                iconUrl: "assets/oven.png",
-                width: width,
-                isSelected: selectedDevice == 2,
-              ),
-            ],
-          ),
+        const Text(
+          "Cleaning Place",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(
+          height: 16,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            _buildServiceCard(
+              index: 0,
+              name: "Home Clean",
+              iconUrl: "assets/aircon.png",
+              width: width,
+              isSelected: selectedDevice == 0,
+            ),
+            const SizedBox(
+              width: 16,
+            ),
+            _buildServiceCard(
+              index: 1,
+              name: "Vehicle washing",
+              iconUrl: "assets/fridge.png",
+              width: width,
+              isSelected: selectedDevice == 1,
+            ),
+            const SizedBox(
+              width: 16,
+            ),
+            _buildServiceCard(
+              index: 2,
+              name: "Shop Clean",
+              iconUrl: "assets/oven.png",
+              width: width,
+              isSelected: selectedDevice == 2,
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 16,
+        ),
+        const Text(
+          "Service Type",
+          style: TextStyle(fontWeight: FontWeight.bold),
         ),
         const SizedBox(
           height: 16,
@@ -382,7 +423,7 @@ class _CleaningServiceScreenState extends State<CleaningServiceScreen> {
       child: Container(
         // width: width,
         height: 40,
-        padding: const EdgeInsets.only(bottom: 8, top: 8, left: 16, right: 16),
+        padding: const EdgeInsets.only(bottom: 8, top: 8, left: 18, right: 18),
         decoration: BoxDecoration(
           color: isSelected ? colorPrimary : colorGrey,
           borderRadius: BorderRadius.circular(8.0),
@@ -573,13 +614,11 @@ class _CleaningServiceScreenState extends State<CleaningServiceScreen> {
     return SizedBox(
       width: MediaQuery.of(context).size.width - 32,
       child: ElevatedButton(
-        onPressed:
-            // _addressController.text.isEmpty
-            //     ? null
-            //     :
-            () async {
-          await doBooking();
-        },
+        onPressed: _addressController.text.isEmpty
+            ? null
+            : () async {
+                await doBooking();
+              },
         style: ElevatedButton.styleFrom(
           backgroundColor: colorPrimary,
         ),
@@ -604,9 +643,9 @@ class _CleaningServiceScreenState extends State<CleaningServiceScreen> {
         FirebaseFirestore.instance.collection(bookingTable);
     BookingEntity booking = BookingEntity(
       bookingId: "123",
-      name: widget.serviceProvider.serviceName,
-      serviceType: widget.serviceProvider.serviceType,
-      serviceProviderId: widget.serviceProvider.serviceId,
+      // name: widget.serviceProvider.serviceName,
+      serviceType: ServiceProviderType.homeCleaning,
+      // serviceProviderId: widget.serviceProvider.serviceId,
       serviceName: selectedServiceName,
       serviceTime: DateTime(
         selectedServiceDate.year,

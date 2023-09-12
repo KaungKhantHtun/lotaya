@@ -5,16 +5,17 @@ import 'package:hakathon_service/domain/entities/booking_entity.dart';
 import 'package:hakathon_service/domain/entities/booking_status.dart';
 import 'package:hakathon_service/presentation/widgets/address_field_widget.dart';
 import 'package:hakathon_service/presentation/widgets/note_field_widget.dart';
-import 'package:hakathon_service/services/map_service.dart';
 import 'package:hakathon_service/utils/constants.dart';
 import 'package:intl/intl.dart';
 
-import '../../../domain/entities/service_provider_entity.dart';
+import '../../../domain/entities/service_provider_type.dart';
+import '../../widgets/service_provider_select.dart';
 import '../home/home_screen.dart';
 
 class ElectronicServiceScreen extends StatefulWidget {
-  const ElectronicServiceScreen({super.key, required this.serviceProvider});
-  final ServiceProviderEntity serviceProvider;
+  const ElectronicServiceScreen({
+    super.key,
+  });
 
   @override
   State<ElectronicServiceScreen> createState() =>
@@ -23,13 +24,14 @@ class ElectronicServiceScreen extends StatefulWidget {
 
 class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
   String selectedServiceName = "";
-  DateTime selectedServiceDate = DateTime.now();
-  DateTime selectedServiceTime = DateTime.now();
+
   int selectedDevice = 1;
   int selectIdType = 0;
+
+  DateTime selectedServiceDate = DateTime.now();
+  DateTime selectedServiceTime = DateTime.now();
   int selectedDay = 0;
   int selectedTime = 0;
-
   DateTime startDate = DateTime.now();
   int dayCount = 6;
   DateTime day = DateTime(
@@ -71,18 +73,30 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
     addCustomIcon();
   }
 
+  TextEditingController _addressController = TextEditingController();
+  TextEditingController _noteController = TextEditingController();
+  TextEditingController _serviceProviderController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: colorPrimary,
+        centerTitle: true,
+        title: const Text(
+          "ELECTRONIC",
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
       ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildHeader(),
+            // _buildHeader(),
             Container(
               margin: const EdgeInsets.all(16),
               child: Column(
@@ -100,7 +114,24 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
                   const SizedBox(
                     height: 16,
                   ),
-                  AddressFieldWidget(addressController: _addressController),
+                  ServiceProviderSelect(
+                    type: ServiceProviderType.electronic,
+                    serviceProviderController: _serviceProviderController,
+                    onChanged: (value) {
+                      _serviceProviderController.text = value;
+                      setState(() {});
+                    },
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  AddressFieldWidget(
+                    addressController: _addressController,
+                    onChanged: (address) {
+                      _addressController.text = address;
+                      setState(() {});
+                    },
+                  ),
                   const SizedBox(
                     height: 16,
                   ),
@@ -131,118 +162,124 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
     );
   }
 
-  Widget _buildHeader() {
-    return Container(
-      height: 200,
-      padding: const EdgeInsets.all(16),
-      decoration: const BoxDecoration(
-        color: headerSectionColor,
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(40),
-          bottomRight: Radius.circular(40),
-        ),
-      ),
-      child: Center(
-        child: Row(
-          children: [
-            Expanded(
-              flex: 3,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  Row(
-                    children: [
-                      ...List.generate(
-                        widget.serviceProvider.rating,
-                        (index) => const Icon(
-                          Icons.star,
-                          color: colorSecondary,
-                          size: 16,
-                        ),
-                      ).toList(),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 4,
-                  ),
-                  Text(
-                    widget.serviceProvider.serviceName,
-                    style: headerStyle,
-                    textAlign: TextAlign.left,
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  Flexible(
-                    child: Text(
-                      widget.serviceProvider.about,
-                      style: regularStyle.copyWith(color: fontColorGrey),
-                      textAlign: TextAlign.left,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  Text(
-                    "${widget.serviceProvider.priceRate} Ks/Hr",
-                    style: regularStyle.copyWith(
-                        color: colorPrimary, fontWeight: FontWeight.w600),
-                    textAlign: TextAlign.left,
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              flex: 2,
-              child: Container(),
-            ),
-            IconButton(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => MapSample(
-                        markers: [
-                          Marker(
-                            markerId: MarkerId("1"),
-                            position: LatLng(16.844171, 96.085055),
-                            icon: markerIcon,
-                          ),
-                          Marker(
-                            markerId: MarkerId("2"),
-                            position: LatLng(16.845986, 96.087491),
-                            icon: markerIcon,
-                          ),
-                          Marker(
-                            markerId: MarkerId("3"),
-                            position: LatLng(16.840941, 96.087332),
-                            icon: markerIcon,
-                          ),
-                          Marker(
-                            markerId: MarkerId("4"),
-                            position: LatLng(16.840868, 96.085035),
-                            icon: markerIcon,
-                          )
-                        ],
-                      ),
-                    ));
-              },
-              icon: Image.asset("assets/map.png"),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+  // Widget _buildHeader() {
+  //   return Container(
+  //     height: 200,
+  //     padding: const EdgeInsets.all(16),
+  //     decoration: const BoxDecoration(
+  //       color: headerSectionColor,
+  //       borderRadius: BorderRadius.only(
+  //         bottomLeft: Radius.circular(40),
+  //         bottomRight: Radius.circular(40),
+  //       ),
+  //     ),
+  //     child: Center(
+  //       child: Row(
+  //         children: [
+  //           Expanded(
+  //             flex: 3,
+  //             child: Column(
+  //               mainAxisAlignment: MainAxisAlignment.start,
+  //               crossAxisAlignment: CrossAxisAlignment.start,
+  //               children: [
+  //                 const SizedBox(
+  //                   height: 30,
+  //                 ),
+  //                 Row(
+  //                   children: [
+  //                     ...List.generate(
+  //                       widget.serviceProvider.rating,
+  //                       (index) => const Icon(
+  //                         Icons.star,
+  //                         color: colorSecondary,
+  //                         size: 16,
+  //                       ),
+  //                     ).toList(),
+  //                   ],
+  //                 ),
+  //                 const SizedBox(
+  //                   height: 4,
+  //                 ),
+  //                 Text(
+  //                   widget.serviceProvider.serviceName,
+  //                   style: headerStyle,
+  //                   textAlign: TextAlign.left,
+  //                 ),
+  //                 const SizedBox(
+  //                   height: 16,
+  //                 ),
+  //                 Flexible(
+  //                   child: Text(
+  //                     widget.serviceProvider.about,
+  //                     style: regularStyle.copyWith(color: fontColorGrey),
+  //                     textAlign: TextAlign.left,
+  //                   ),
+  //                 ),
+  //                 const SizedBox(
+  //                   height: 8,
+  //                 ),
+  //                 Text(
+  //                   "${widget.serviceProvider.priceRate} Ks/Hr",
+  //                   style: regularStyle.copyWith(
+  //                       color: colorPrimary, fontWeight: FontWeight.w600),
+  //                   textAlign: TextAlign.left,
+  //                 ),
+  //               ],
+  //             ),
+  //           ),
+  //           Expanded(
+  //             flex: 2,
+  //             child: Container(),
+  //           ),
+  //           IconButton(
+  //             onPressed: () {
+  //               Navigator.push(
+  //                   context,
+  //                   MaterialPageRoute(
+  //                     builder: (context) => MapSample(
+  //                       markers: [
+  //                         Marker(
+  //                           markerId: MarkerId("1"),
+  //                           position: LatLng(16.844171, 96.085055),
+  //                           icon: markerIcon,
+  //                         ),
+  //                         Marker(
+  //                           markerId: MarkerId("2"),
+  //                           position: LatLng(16.845986, 96.087491),
+  //                           icon: markerIcon,
+  //                         ),
+  //                         Marker(
+  //                           markerId: MarkerId("3"),
+  //                           position: LatLng(16.840941, 96.087332),
+  //                           icon: markerIcon,
+  //                         ),
+  //                         Marker(
+  //                           markerId: MarkerId("4"),
+  //                           position: LatLng(16.840868, 96.085035),
+  //                           icon: markerIcon,
+  //                         )
+  //                       ],
+  //                     ),
+  //                   ));
+  //             },
+  //             icon: Image.asset("assets/map.png"),
+  //           ),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget _buildServiceList() {
     double width = MediaQuery.of(context).size.width / 3 - 16 * 2;
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        const Text(
+          "Electronic Device",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 16),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
@@ -277,6 +314,13 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
               ),
             ],
           ),
+        ),
+        const SizedBox(
+          height: 16,
+        ),
+        const Text(
+          "Service type",
+          style: TextStyle(fontWeight: FontWeight.bold),
         ),
         const SizedBox(
           height: 16,
@@ -376,7 +420,7 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          "Date & Time",
+          "Service Date & Time",
           style: TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w600,
@@ -498,9 +542,6 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
     );
   }
 
-  TextEditingController _addressController = TextEditingController();
-  TextEditingController _noteController = TextEditingController();
-
   Widget _buildContinueButton() {
     return SizedBox(
       width: MediaQuery.of(context).size.width - 32,
@@ -534,9 +575,9 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
         FirebaseFirestore.instance.collection(bookingTable);
     BookingEntity booking = BookingEntity(
       bookingId: "123",
-      name: widget.serviceProvider.serviceName,
-      serviceType: widget.serviceProvider.serviceType,
-      serviceProviderId: widget.serviceProvider.serviceId,
+      // name: widget.serviceProvider.serviceName,
+      serviceType: ServiceProviderType.electronic,
+      // serviceProviderId: widget.serviceProvider.serviceId,
       serviceName: selectedServiceName,
       serviceTime: DateTime(
         selectedServiceDate.year,

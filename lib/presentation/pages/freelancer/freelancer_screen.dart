@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:hakathon_service/presentation/pages/chat/chat.dart';
 import 'package:hakathon_service/presentation/pages/freelancer/freelancer_list_screen.dart';
 import 'package:hakathon_service/utils/constants.dart';
 
@@ -18,6 +15,15 @@ class _FreelancerScreenState extends State<FreelancerScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: colorPrimary,
+        centerTitle: true,
+        title: const Text(
+          "FREELANCERS",
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
       ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(

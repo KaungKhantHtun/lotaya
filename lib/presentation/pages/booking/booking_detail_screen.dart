@@ -5,9 +5,6 @@ import 'package:hakathon_service/presentation/pages/chat/chat.dart';
 import 'package:hakathon_service/presentation/pages/chat/core/firebase_chat_core.dart';
 import 'package:hakathon_service/utils/constants.dart';
 import 'package:intl/intl.dart';
-import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
-
-import '../chat_screen.dart';
 
 class BookingDetailScreen extends StatefulWidget {
   const BookingDetailScreen({Key? key, required this.bookingId})
@@ -64,7 +61,8 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
             }
             var doc = data?.docs[0];
 
-            BookingEntity e = BookingEntity.fromDoc(doc);
+            BookingEntity e =
+                BookingEntity.fromDoc(doc);
             return Container(
               padding: const EdgeInsets.all(16),
               child: Stack(
@@ -106,7 +104,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
                                       ),
                                     ),
                                     Text(
-                                      e.name,
+                                      e.name ?? "",
                                       textAlign: TextAlign.end,
                                       style: const TextStyle(
                                         fontWeight: FontWeight.bold,
