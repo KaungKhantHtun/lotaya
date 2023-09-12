@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hakathon_service/domain/entities/booking_entity.dart';
 import 'package:hakathon_service/domain/entities/booking_status.dart';
 import 'package:hakathon_service/domain/entities/service_provider_type.dart';
+import 'package:hakathon_service/presentation/cubit/booking_cubit.dart';
 import 'package:hakathon_service/presentation/pages/booking/booking_detail_screen.dart';
 import 'package:hakathon_service/utils/constants.dart';
 import 'package:intl/intl.dart';
@@ -16,36 +18,36 @@ class BookingsScreenAdmin extends StatefulWidget {
 }
 
 class _BookingsScreenAdminState extends State<BookingsScreenAdmin> {
-  BookingEntity booking1 = BookingEntity(
-    bookingId: "12",
-    name: "Fix You Service",
-    serviceType: ServiceProviderType.electronic,
-    serviceProviderId: "1",
-    serviceName: "Home Appliance Repair",
-    serviceTime: DateTime.now(),
-    bookingCreatedTime: DateTime.now(),
-    bookingStatus: BookingStatus.pending,
-    address: "No.34, Yadanar Theinkha Street, Kyun Taw Road, Yangon",
-    long: 12355.45,
-    lat: 12345.45,
-    price: 5000,
-    note: "abc",
-  );
-  BookingEntity booking2 = BookingEntity(
-    bookingId: "45",
-    name: "Fix You Service",
-    serviceType: ServiceProviderType.electronic,
-    serviceProviderId: "1",
-    serviceName: "Home Appliance Repair",
-    serviceTime: DateTime.now(),
-    bookingCreatedTime: DateTime(2023, 9, 5),
-    bookingStatus: BookingStatus.pending,
-    address: "No.34, Yadanar Theinkha Street, Kyun Taw Road, Yangon",
-    long: 12355.45,
-    lat: 12345.45,
-    price: 5000,
-    note: "abc",
-  );
+  // BookingEntity booking1 = BookingEntity(
+  //   bookingId: "12",
+  //   name: "Fix You Service",
+  //   serviceType: ServiceProviderType.electronic,
+  //   serviceProviderId: "1",
+  //   serviceName: "Home Appliance Repair",
+  //   serviceTime: DateTime.now(),
+  //   bookingCreatedTime: DateTime.now(),
+  //   bookingStatus: BookingStatus.pending,
+  //   address: "No.34, Yadanar Theinkha Street, Kyun Taw Road, Yangon",
+  //   long: 12355.45,
+  //   lat: 12345.45,
+  //   price: 5000,
+  //   note: "abc",
+  // );
+  // BookingEntity booking2 = BookingEntity(
+  //   bookingId: "45",
+  //   name: "Fix You Service",
+  //   serviceType: ServiceProviderType.electronic,
+  //   serviceProviderId: "1",
+  //   serviceName: "Home Appliance Repair",
+  //   serviceTime: DateTime.now(),
+  //   bookingCreatedTime: DateTime(2023, 9, 5),
+  //   bookingStatus: BookingStatus.pending,
+  //   address: "No.34, Yadanar Theinkha Street, Kyun Taw Road, Yangon",
+  //   long: 12355.45,
+  //   lat: 12345.45,
+  //   price: 5000,
+  //   note: "abc",
+  // );
   List<BookingEntity> bookingList = [];
   late Query<Map<String, dynamic>> querySnapshot;
   List<ServiceProviderType> serviceTypeList = const [
@@ -57,19 +59,18 @@ class _BookingsScreenAdminState extends State<BookingsScreenAdmin> {
   ];
   List<String> selectedServiceProviderType = [];
   List<String> optionList = const [];
-  final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   @override
   void initState() {
     // TODO: implement initState
     isAdmin = true;
-    bookingList = [
-      booking1,
-      booking2,
-      booking2,
-      booking2,
-      booking2,
-    ];
+    // bookingList = [
+    //   booking1,
+    //   booking2,
+    //   booking2,
+    //   booking2,
+    //   booking2,
+    // ];
     querySnapshot = FirebaseFirestore.instance.collection(bookingTable);
     optionList = serviceTypeList.map((e) => e.name).toList();
     super.initState();
@@ -310,34 +311,110 @@ class _BookingsScreenAdminState extends State<BookingsScreenAdmin> {
                             SizedBox(
                               height: 32,
                             ),
-                            Row(
-                              children: [
-                                TextButton.icon(
-                                  label: Text(
-                                    "Reject",
-                                    style: TextStyle(color: errorColor),
+                            if (e.bookingStatus ==
+                                BookingStatus.serviceRequested)
+                              Row(
+                                children: [
+                                  TextButton.icon(
+                                    label: Text(
+                                      "Reject",
+                                      style: TextStyle(color: errorColor),
+                                    ),
+                                    onPressed: () => context
+                                        .read<BookingCubit>()
+                                        .updateStatus(e.bookingId, "Rejected"),
+                                    icon: Icon(
+                                      Icons.remove_circle_outline,
+                                      color: errorColor,
+                                    ),
                                   ),
-                                  onPressed: () =>
-                                      updateStatus(doc!.id, "Rejected"),
-                                  icon: Icon(
-                                    Icons.remove_circle_outline,
-                                    color: errorColor,
+                                  TextButton.icon(
+                                    label: Text(
+                                      "Accept",
+                                      style: TextStyle(color: successColor),
+                                    ),
+                                    onPressed: () => context
+                                        .read<BookingCubit>()
+                                        .updateStatus(doc!.id,
+                                            BookingStatus.pendingPayment.name),
+                                    icon: Icon(
+                                      Icons.check_circle_outline,
+                                      color: successColor,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            if (e.bookingStatus == BookingStatus.bookingAccepted)
+                              SizedBox(
+                                height: 36,
+                                width: double.infinity,
+                                child: TextButton(
+                                  onPressed: () async {
+                                    context.read<BookingCubit>().updateStatus(
+                                          e.bookingId,
+                                          BookingStatus.serviceProcessing.name,
+                                        );
+                                  },
+                                  style: ButtonStyle(
+                                    backgroundColor:
+                                        MaterialStateProperty.all<Color>(
+                                            colorPrimary),
+                                    shape: MaterialStateProperty.all<
+                                        RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
+                                    ),
+                                  ),
+                                  child: const Text(
+                                    "Start Service",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w400,
+                                      fontStyle: FontStyle.normal,
+                                      color: Color(0xFFFFFFFF),
+
+                                      // height: 19/19,
+                                    ),
                                   ),
                                 ),
-                                TextButton.icon(
-                                  label: Text(
-                                    "Accept",
-                                    style: TextStyle(color: successColor),
+                              ),
+
+                              if (e.bookingStatus == BookingStatus.serviceProcessing)
+                              SizedBox(
+                                height: 36,
+                                width: double.infinity,
+                                child: TextButton(
+                                  onPressed: () async {
+                                    context.read<BookingCubit>().updateStatus(
+                                          e.bookingId,
+                                          BookingStatus.serviceFinished.name,
+                                        );
+                                  },
+                                  style: ButtonStyle(
+                                    backgroundColor:
+                                        MaterialStateProperty.all<Color>(
+                                            colorPrimary),
+                                    shape: MaterialStateProperty.all<
+                                        RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
+                                    ),
                                   ),
-                                  onPressed: () =>
-                                      updateStatus(doc!.id, "Pending Payment"),
-                                  icon: Icon(
-                                    Icons.check_circle_outline,
-                                    color: successColor,
+                                  child: const Text(
+                                    "Done",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w400,
+                                      fontStyle: FontStyle.normal,
+                                      color: Color(0xFFFFFFFF),
+
+                                      // height: 19/19,
+                                    ),
                                   ),
                                 ),
-                              ],
-                            ),
+                              ),
                           ],
                         ),
                         Positioned(
@@ -369,16 +446,6 @@ class _BookingsScreenAdminState extends State<BookingsScreenAdmin> {
           }
         },
       ),
-    );
-  }
-
-  updateStatus(String id, String status) {
-    print(id);
-    final DocumentReference docRef = firestore.collection(bookingTable).doc(id);
-    docRef.update(
-      {
-        "bookingStatus": status,
-      },
     );
   }
 }

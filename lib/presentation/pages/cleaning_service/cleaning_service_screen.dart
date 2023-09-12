@@ -655,7 +655,7 @@ class _CleaningServiceScreenState extends State<CleaningServiceScreen> {
         selectedServiceTime.minute,
       ),
       bookingCreatedTime: DateTime.now(),
-      bookingStatus: BookingStatus.pending,
+      bookingStatus: BookingStatus.serviceRequested,
       address: _addressController.text,
       lat: lat,
       long: long,

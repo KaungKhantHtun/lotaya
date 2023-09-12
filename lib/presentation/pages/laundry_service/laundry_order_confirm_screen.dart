@@ -279,7 +279,7 @@ class _LaundryOrderConfirmScreenState extends State<LaundryOrderConfirmScreen> {
       serviceName: "Laundry",
       serviceTime: DateTime.now(),
       bookingCreatedTime: DateTime.now(),
-      bookingStatus: BookingStatus.pending,
+      bookingStatus: BookingStatus.serviceRequested,
       address: _addressController.text,
       lat: lat,
       long: long,
