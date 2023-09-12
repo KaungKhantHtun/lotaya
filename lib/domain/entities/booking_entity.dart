@@ -269,4 +269,7 @@ class BookingEntity {
           : null,
     );
   }
+
+  //
+  
 }
