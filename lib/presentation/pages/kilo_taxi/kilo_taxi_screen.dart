@@ -235,7 +235,7 @@ class _KiloTaxiScreenState extends State<KiloTaxiScreen> {
       serviceName: "Taxi Service",
       serviceTime: dateTimeSelected,
       bookingCreatedTime: DateTime.now(),
-      bookingStatus: BookingStatus.pending,
+      bookingStatus: BookingStatus.serviceRequested,
       note: _noteController.text,
     );
     try {
