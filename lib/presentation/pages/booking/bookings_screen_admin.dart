@@ -217,7 +217,7 @@ class _BookingsScreenAdminState extends State<BookingsScreenAdmin> {
                                             ),
                                           ),
                                           Text(
-                                            e.name,
+                                            e.name ?? "",
                                             textAlign: TextAlign.end,
                                             style: const TextStyle(
                                               fontWeight: FontWeight.bold,

@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hakathon_service/domain/entities/booking_status.dart';
-import 'package:hakathon_service/domain/entities/service_provider_entity.dart';
-import 'package:hakathon_service/domain/entities/service_provider_type.dart';
 import 'package:hakathon_service/presentation/pages/cleaning_service/cleaning_service_screen.dart';
 import 'package:hakathon_service/presentation/pages/electronic_service/electronic_service_screen.dart';
 import 'package:hakathon_service/presentation/pages/freelancer/freelancer_screen.dart';
@@ -14,7 +12,6 @@ import 'package:lottie/lottie.dart';
 import '../../domain/entities/booking_entity.dart';
 import '../../utils/constants.dart';
 import 'booking/booking_detail_screen.dart';
-import 'categories_list.dart';
 import 'house_moving_service/house_moving_service_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -26,14 +23,6 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   late Query<Map<String, dynamic>> querySnapshot;
-
-  ServiceProviderEntity serviceProviderEntity = ServiceProviderEntity(
-      serviceId: "1",
-      serviceName: "Home Appliance Repair",
-      about: "We offer professional reparing service on-demand",
-      priceRate: 5000,
-      serviceType: ServiceProviderType.electronic,
-      rating: 5);
 
   @override
   void initState() {
@@ -59,7 +48,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Lottie.asset(
-                'lottie/services.json',
+                'assets/lottie/services.json',
                 height: 240,
               ),
               Container(
@@ -162,7 +151,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                             MainAxisAlignment.center,
                                         children: [
                                           Text(
-                                            e.name,
+                                            e.name ?? "",
                                             style:
                                                 TextStyle(color: Colors.white),
                                           ),
@@ -202,9 +191,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         InkWell(
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => ElectronicServiceScreen(
-                                      serviceProvider: serviceProviderEntity,
-                                    )));
+                                builder: (context) =>
+                                    ElectronicServiceScreen()));
                           },
                           child: const Text(
                             "View All",
@@ -231,9 +219,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>
-                                          ElectronicServiceScreen(
-                                              serviceProvider:
-                                                  serviceProviderEntity),
+                                          ElectronicServiceScreen(),
                                     ),
                                   );
                                 },
@@ -280,9 +266,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>
-                                          LaundryServiceScreen(
-                                              serviceProvider:
-                                                  serviceProviderEntity),
+                                          LaundryServiceScreen(),
                                     ),
                                   );
                                 },
@@ -321,9 +305,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>
-                                          CleaningServiceScreen(
-                                              serviceProvider:
-                                                  serviceProviderEntity),
+                                          CleaningServiceScreen(),
                                     ),
                                   );
                                 },
@@ -362,9 +344,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>
-                                          HouseMovingServiceScreen(
-                                              serviceProvider:
-                                                  serviceProviderEntity),
+                                          HouseMovingServiceScreen(),
                                     ),
                                   );
                                 },

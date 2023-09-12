@@ -5,7 +5,9 @@ enum ServiceProviderType {
     "Home Cleaning",
   ),
   houseMoving("House Moving"),
-  laundry("Laundry");
+  laundry("Laundry"),
+  kiloTaxi("Kilo Taxi"),
+  freelancer("Freelancer");
 
   final String name;
   const ServiceProviderType(this.name);
@@ -21,6 +23,10 @@ enum ServiceProviderType {
         return ServiceProviderType.houseMoving;
       case "Laundry":
         return ServiceProviderType.laundry;
+          case "Kilo Taxi":
+        return ServiceProviderType.kiloTaxi;
+          case "Freelancer":
+        return ServiceProviderType.freelancer;
       default:
         return ServiceProviderType.electronic;
     }

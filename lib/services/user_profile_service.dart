@@ -1,15 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../domain/entities/user_entity.dart';
 import '../utils/constants.dart';
 
 class UserProfileService {
+  static late String msisdn;
   operateUserProfile() async {
-    String? userId = await getUserId();
-    if (userId == null) {
-      UserEntity profile = await UserProfileService().getUserProfile();
-      await UserProfileService().createProfile(profile);
+    UserEntity userEntity = await getUserProfile();
+    bool isNewUser = await checkUserId(userEntity.userId);
+    if (isNewUser) {
+      await UserProfileService().createProfile(userEntity);
     } else {}
   }
 
@@ -17,7 +17,7 @@ class UserProfileService {
     final CollectionReference profileList =
         FirebaseFirestore.instance.collection(profileTable);
     try {
-      await profileList.add(profile.toJson());
+      await profileList.doc(profile.msisdn).set(profile.toJson());
     } catch (e) {
       print('Error retrieving data: $e');
     }
@@ -34,16 +34,19 @@ class UserProfileService {
       gender: "Female",
       nrc: "8/HTALANA(N)123456",
     );
+    msisdn = profile.msisdn;
     return profile;
   }
 
-  Future<String?> getUserId() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString("userId");
-  }
-
-  Future<void> saveUserId(String userId) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString("userId", userId);
+  Future<bool> checkUserId(String userId) async {
+    final CollectionReference profileList =
+        FirebaseFirestore.instance.collection(profileTable);
+    late DocumentSnapshot<Object?> snapshot;
+    try {
+      snapshot = await profileList.doc(userId).get();
+    } catch (e) {
+      print('Error retrieving data: $e');
+    }
+    return snapshot == null;
   }
 }

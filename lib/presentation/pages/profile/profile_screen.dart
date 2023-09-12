@@ -26,16 +26,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       FirebaseFirestore.instance.collection(profileTable);
   @override
   void initState() {
-    operateUser();
     super.initState();
-  }
-
-  void operateUser() async {
-    String? userId = await UserProfileService().getUserId();
-    querySnapshot = FirebaseFirestore.instance
-        .collection(profileTable)
-        .where("userId", isEqualTo: userId)
-        .limit(1);
   }
 
   @override
@@ -60,17 +51,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
         elevation: 0,
       ),
       body: StreamBuilder(
-        stream: querySnapshot.snapshots(),
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        // stream: querySnapshot.snapshots(),
+        stream: FirebaseFirestore.instance
+            .collection(profileTable)
+            .doc(UserProfileService.msisdn)
+            .snapshots(),
+        builder: (BuildContext context, snapshot) {
           if (!snapshot.hasData) {
             return Container();
           } else {
             final data = snapshot.data;
-            if (data?.docs.length == 0) {
-              return Container();
-            }
-            var doc = data?.docs[0];
-            UserEntity profile = UserEntity.fromDoc(doc);
+            // if (data?.docs.length == 0) {
+            //   return Container();
+            // }
+            // var doc = data?.docs[0];
+            UserEntity profile = UserEntity.fromDoc(data);
             return SingleChildScrollView(
               scrollDirection: Axis.vertical,
               child: Column(
