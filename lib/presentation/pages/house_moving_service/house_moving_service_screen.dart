@@ -713,7 +713,7 @@ class _HouseMovingServiceScreenState extends State<HouseMovingServiceScreen> {
         selectedServiceTime.minute,
       ),
       bookingCreatedTime: DateTime.now(),
-      bookingStatus: BookingStatus.pending,
+      bookingStatus: BookingStatus.serviceRequested,
       address: _fromController.text,
       lat: _fromLatLng?.latitude,
       long: _fromLatLng?.longitude,

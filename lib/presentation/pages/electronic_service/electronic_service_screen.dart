@@ -546,7 +546,7 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
         selectedServiceTime.minute,
       ),
       bookingCreatedTime: DateTime.now(),
-      bookingStatus: BookingStatus.pending,
+      bookingStatus: BookingStatus.serviceRequested,
       address: _addressController.text,
       lat: lat,
       long: long,

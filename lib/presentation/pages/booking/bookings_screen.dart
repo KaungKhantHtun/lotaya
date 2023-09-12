@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hakathon_service/domain/entities/booking_entity.dart';
 import 'package:hakathon_service/domain/entities/booking_status.dart';
 import 'package:hakathon_service/domain/entities/service_provider_type.dart';
+import 'package:hakathon_service/presentation/cubit/booking_cubit.dart';
 import 'package:hakathon_service/presentation/pages/booking/booking_detail_screen.dart';
 import 'package:hakathon_service/presentation/pages/booking/bookings_screen_admin.dart';
 import 'package:hakathon_service/utils/constants.dart';
@@ -17,36 +19,36 @@ class BookingsScreen extends StatefulWidget {
 }
 
 class _BookingsScreenState extends State<BookingsScreen> {
-  BookingEntity booking1 = BookingEntity(
-    bookingId: "12",
-    name: "Fix You Service",
-    serviceType: ServiceProviderType.electronic,
-    serviceProviderId: "1",
-    serviceName: "Home Appliance Repair",
-    serviceTime: DateTime.now(),
-    bookingCreatedTime: DateTime.now(),
-    bookingStatus: BookingStatus.pending,
-    address: "No.34, Yadanar Theinkha Street, Kyun Taw Road, Yangon",
-    long: 12355.45,
-    lat: 12345.45,
-    price: 5000,
-    note: "abc",
-  );
-  BookingEntity booking2 = BookingEntity(
-    bookingId: "45",
-    name: "Fix You Service",
-    serviceType: ServiceProviderType.electronic,
-    serviceProviderId: "1",
-    serviceName: "Home Appliance Repair",
-    serviceTime: DateTime.now(),
-    bookingCreatedTime: DateTime(2023, 9, 5),
-    bookingStatus: BookingStatus.pending,
-    address: "No.34, Yadanar Theinkha Street, Kyun Taw Road, Yangon",
-    long: 12355.45,
-    lat: 12345.45,
-    price: 5000,
-    note: "abc",
-  );
+  // BookingEntity booking1 = BookingEntity(
+  //   bookingId: "12",
+  //   name: "Fix You Service",
+  //   serviceType: ServiceProviderType.electronic,
+  //   serviceProviderId: "1",
+  //   serviceName: "Home Appliance Repair",
+  //   serviceTime: DateTime.now(),
+  //   bookingCreatedTime: DateTime.now(),
+  //   bookingStatus: BookingStatus.pending,
+  //   address: "No.34, Yadanar Theinkha Street, Kyun Taw Road, Yangon",
+  //   long: 12355.45,
+  //   lat: 12345.45,
+  //   price: 5000,
+  //   note: "abc",
+  // );
+  // BookingEntity booking2 = BookingEntity(
+  //   bookingId: "45",
+  //   name: "Fix You Service",
+  //   serviceType: ServiceProviderType.electronic,
+  //   serviceProviderId: "1",
+  //   serviceName: "Home Appliance Repair",
+  //   serviceTime: DateTime.now(),
+  //   bookingCreatedTime: DateTime(2023, 9, 5),
+  //   bookingStatus: BookingStatus.pending,
+  //   address: "No.34, Yadanar Theinkha Street, Kyun Taw Road, Yangon",
+  //   long: 12355.45,
+  //   lat: 12345.45,
+  //   price: 5000,
+  //   note: "abc",
+  // );
   List<BookingEntity> bookingList = [];
   late Query<Map<String, dynamic>> querySnapshot;
   List<ServiceProviderType> serviceTypeList = const [
@@ -62,13 +64,13 @@ class _BookingsScreenState extends State<BookingsScreen> {
   @override
   void initState() {
     // TODO: implement initState
-    bookingList = [
-      booking1,
-      booking2,
-      booking2,
-      booking2,
-      booking2,
-    ];
+    // bookingList = [
+    //   booking1,
+    //   booking2,
+    //   booking2,
+    //   booking2,
+    //   booking2,
+    // ];
     querySnapshot = FirebaseFirestore.instance.collection(bookingTable);
     optionList = serviceTypeList.map((e) => e.name).toList();
     super.initState();
@@ -340,10 +342,83 @@ class _BookingsScreenState extends State<BookingsScreen> {
                                 ),
                               ],
                             ),
+                            SizedBox(
+                              height: 16,
+                            ),
+                            if (e.bookingStatus == BookingStatus.pendingPayment)
+                              SizedBox(
+                                height: 36,
+                                width: double.infinity,
+                                child: TextButton(
+                                  onPressed: () async {
+                                    context.read<BookingCubit>().updateStatus(
+                                          e.bookingId,
+                                          BookingStatus.bookingAccepted.name,
+                                        );
+                                  },
+                                  style: ButtonStyle(
+                                    backgroundColor:
+                                        MaterialStateProperty.all<Color>(
+                                            colorPrimary),
+                                    shape: MaterialStateProperty.all<
+                                        RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
+                                    ),
+                                  ),
+                                  child: const Text(
+                                    "Make Payment",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w400,
+                                      fontStyle: FontStyle.normal,
+                                      color: Color(0xFFFFFFFF),
+
+                                      // height: 19/19,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              if (e.bookingStatus == BookingStatus.serviceFinished)
+                              SizedBox(
+                                height: 36,
+                                width: double.infinity,
+                                child: TextButton(
+                                  onPressed: () async {
+                                    context.read<BookingCubit>().updateStatus(
+                                          e.bookingId,
+                                          BookingStatus.completed.name,
+                                        );
+                                  },
+                                  style: ButtonStyle(
+                                    backgroundColor:
+                                        MaterialStateProperty.all<Color>(
+                                            colorPrimary),
+                                    shape: MaterialStateProperty.all<
+                                        RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
+                                    ),
+                                  ),
+                                  child: const Text(
+                                    "Yes, Service is Done",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w400,
+                                      fontStyle: FontStyle.normal,
+                                      color: Color(0xFFFFFFFF),
+
+                                      // height: 19/19,
+                                    ),
+                                  ),
+                                ),
+                              ),
                           ],
                         ),
                         Positioned(
-                          bottom: 0,
+                          bottom: 54,
                           right: 0,
                           child: InkWell(
                             onTap: () {

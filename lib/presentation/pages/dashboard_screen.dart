@@ -40,9 +40,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
     querySnapshot = FirebaseFirestore.instance
         .collection(bookingTable)
         .where('bookingStatus', whereIn: [
-          BookingStatus.pending.name,
+          BookingStatus.serviceRequested.name,
           BookingStatus.pendingPayment.name,
-          BookingStatus.requested.name,
+          // BookingStatus.requested.name,
         ])
         .orderBy('bookingCreatedTime')
         .limit(1);
@@ -67,6 +67,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+/*
                     StreamBuilder(
                       stream: querySnapshot.snapshots(),
                       builder: (BuildContext context,
@@ -186,6 +187,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         }
                       },
                     ),
+                  */
                     const SizedBox(
                       height: 32,
                     ),
