@@ -29,7 +29,7 @@ class _KiloTaxiScreenState extends State<KiloTaxiScreen> {
   LatLng? _toLatLng;
   DistanceAndDuration? _estimate;
   DateTime now = DateTime.now();
-  DateTime dateTimeSelected = DateTime.now();
+  DateTime dateTimeSelected = DateTime.now().toLocal();
 
   int selectedDevice = 1;
   int selectdType = 0;
@@ -41,9 +41,9 @@ class _KiloTaxiScreenState extends State<KiloTaxiScreen> {
 
   @override
   void initState() {
-    super.initState();
     _timeController = TextEditingController(
-        text: DateFormat('h:mm a').format(dateTimeSelected));
+        text: DateFormat('hh:mm a').format(dateTimeSelected));
+    super.initState();
   }
 
   @override
@@ -229,14 +229,21 @@ class _KiloTaxiScreenState extends State<KiloTaxiScreen> {
         FirebaseFirestore.instance.collection(bookingTable);
     BookingEntity booking = BookingEntity(
       bookingId: "123",
-      // name: widget.serviceProvider.serviceName,
+      name: "Kilo Taxi Service ",
       serviceType: ServiceProviderType.kiloTaxi,
       // serviceProviderId: widget.serviceProvider.serviceId,
       serviceName: "Taxi Service",
       serviceTime: dateTimeSelected,
       bookingCreatedTime: DateTime.now(),
-      bookingStatus: BookingStatus.pending,
+      bookingStatus: BookingStatus.serviceRequested,
+      price: (_estimate!.distance.value * 0.6).round() + 1500,
       note: _noteController.text,
+      fromLat: _fromLatLng?.latitude,
+      fromLong: _fromLatLng?.longitude,
+      toLat: _toLatLng?.latitude,
+      toLong: _toLatLng?.longitude,
+      fromAddr: _fromController.text,
+      toAddr: _toController.text,
     );
     try {
       await bookingList.add(booking.toJson());
@@ -440,7 +447,7 @@ class _KiloTaxiScreenState extends State<KiloTaxiScreen> {
         dateTimeSelected = result;
       });
       _timeController = TextEditingController(
-          text: DateFormat('h:mm a').format(dateTimeSelected));
+          text: DateFormat('hh:mm a').format(dateTimeSelected));
     }
   }
 }

@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hakathon_service/domain/entities/service_provider_type.dart';
 
 import 'booking_status.dart';
-import 'car_entity.dart';
 import 'cloth_with_count_entity.dart';
 
 class BookingEntity {
@@ -17,7 +16,7 @@ class BookingEntity {
   final BookingStatus bookingStatus;
   final double? long;
   final double? lat;
-  final double? price;
+  final double price;
   final String? note;
   final String? userName;
   final String? userMsisdn;
@@ -39,7 +38,7 @@ class BookingEntity {
   final String? fromAddr;
   final String? toAddr;
   final String? floorNo;
-  final CarEntity? car;
+  // final CarEntity? car;
   final String? carName;
   final String? carImgUrl;
   final int? carSize;
@@ -51,6 +50,8 @@ class BookingEntity {
   final int? spaceSize;
 
   // for kilo taxi
+  int? distance;
+  int? duration;
 
   // for freelancer
   int? workingHours;
@@ -62,12 +63,12 @@ class BookingEntity {
     required this.serviceTime,
     required this.bookingCreatedTime,
     required this.bookingStatus,
+    required this.price,
     this.serviceProviderId,
     this.name,
     this.address,
     this.long,
     this.lat,
-    this.price,
     this.note,
     this.userName,
     this.userMsisdn,
@@ -83,7 +84,7 @@ class BookingEntity {
     this.fromAddr,
     this.toAddr,
     this.floorNo,
-    this.car,
+    // this.car,
     this.carName,
     this.carImgUrl,
     this.carSize,
@@ -91,6 +92,8 @@ class BookingEntity {
     this.cleaningPlace,
     this.cleaningServiceType,
     this.spaceSize,
+    this.distance,
+    this.duration,
     this.workingHours,
   });
   Map<String, dynamic> toJson() {
@@ -128,6 +131,8 @@ class BookingEntity {
       "cleaningPlace": cleaningPlace,
       "cleaningServiceType": cleaningServiceType,
       "spaceSize": spaceSize,
+      "distance": distance,
+      "duration": duration,
       "workingHours": workingHours,
     };
   }
@@ -264,6 +269,12 @@ class BookingEntity {
       spaceSize: doc?.data().toString().contains("spaceSize") ?? false
           ? doc?.get("spaceSize")
           : null,
+      distance: doc?.data().toString().contains("distance") ?? false
+          ? doc?.get("distance")
+          : null,
+      duration: doc?.data().toString().contains("duration") ?? false
+          ? doc?.get("duration")
+          : null,
       workingHours: doc?.data().toString().contains("workingHours") ?? false
           ? doc?.get("workingHours")
           : null,
@@ -271,5 +282,4 @@ class BookingEntity {
   }
 
   //
-  
 }

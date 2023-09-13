@@ -73,7 +73,7 @@ class FreelancerCardaWidget extends StatelessWidget {
   String fakeImage = "https://i.pravatar.cc/300?u=${faker.person.name()}";
   String fakeName = faker.person.name();
   String fakeLocation = faker.address.city();
-  String fakeRate = faker.randomGenerator.integer(100).toString();
+ int fakeRate = faker.randomGenerator.integer(100000);
 
   @override
   Widget build(BuildContext context) {
@@ -142,6 +142,7 @@ class FreelancerCardaWidget extends StatelessWidget {
                                     MaterialPageRoute(
                                       builder: (context) =>
                                           FreelacerDetailScreen(
+                                              type: widget.label,
                                               imageUrl: fakeImage,
                                               hourlyRate: fakeRate,
                                               location: fakeLocation,

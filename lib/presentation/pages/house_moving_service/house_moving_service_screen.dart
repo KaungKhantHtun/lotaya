@@ -12,6 +12,7 @@ import 'package:intl/intl.dart';
 import '../../../domain/entities/service_provider_type.dart';
 import '../../../services/location_service.dart';
 import '../../widgets/service_provider_select.dart';
+import '../../widgets/total_cost_widget.dart';
 import '../home/home_screen.dart';
 
 class HouseMovingServiceScreen extends StatefulWidget {
@@ -52,6 +53,7 @@ class _HouseMovingServiceScreenState extends State<HouseMovingServiceScreen> {
   LatLng? _fromLatLng;
   LatLng? _toLatLng;
   DistanceAndDuration? _estimate;
+  late CarEntity _selectedCar;
 
   List<CarEntity> carList = [
     CarEntity(
@@ -75,6 +77,8 @@ class _HouseMovingServiceScreenState extends State<HouseMovingServiceScreen> {
   @override
   void initState() {
     super.initState();
+    _selectedCar = carList.first;
+    price = _selectedCar.price.toDouble();
     hourList = [
       DateTime(movingDate.year, movingDate.month, movingDate.day, 11),
       DateTime(movingDate.year, movingDate.month, movingDate.day, 12, 10),
@@ -163,6 +167,10 @@ class _HouseMovingServiceScreenState extends State<HouseMovingServiceScreen> {
                     height: 16,
                   ),
                   NoteFieldWidget(noteController: _noteController),
+                  const SizedBox(
+                    height: 16,
+                  ),
+               TotalCostWidget(price:price),
                   const SizedBox(
                     height: 16,
                   ),
@@ -303,6 +311,8 @@ class _HouseMovingServiceScreenState extends State<HouseMovingServiceScreen> {
                     InkWell(
                       onTap: () {
                         selectedCarIndex = index;
+                        _selectedCar = e;
+                        price = _selectedCar.price.toDouble();
                         setState(() {});
                       },
                       child: Container(
@@ -391,6 +401,8 @@ class _HouseMovingServiceScreenState extends State<HouseMovingServiceScreen> {
       },
     );
   }
+
+
 
   // Widget _buildHeader() {
   //   return Container(
@@ -736,7 +748,7 @@ class _HouseMovingServiceScreenState extends State<HouseMovingServiceScreen> {
         FirebaseFirestore.instance.collection(bookingTable);
     BookingEntity booking = BookingEntity(
       bookingId: "house123",
-      // name: widget.serviceProvider.serviceName,
+      name: _serviceProviderController.text,
       serviceType: ServiceProviderType.houseMoving,
       // serviceProviderId: widget.serviceProvider.serviceId,
       serviceName: "House Moving",
@@ -754,6 +766,19 @@ class _HouseMovingServiceScreenState extends State<HouseMovingServiceScreen> {
       long: _fromLatLng?.longitude,
       price: price,
       note: _noteController.text,
+
+      fromLat: _fromLatLng?.latitude,
+      fromLong: _fromLatLng?.longitude,
+      toLat: _toLatLng?.latitude,
+      toLong: _toLatLng?.longitude,
+      fromAddr: _fromController.text,
+      toAddr: _toController.text,
+      floorNo: _selectedFloor,
+      // car:,
+      carName: _selectedCar.name,
+      carImgUrl: _selectedCar.imgUrl,
+      carSize: _selectedCar.size,
+      carPrice: _selectedCar.price,
     );
     try {
       await bookingList.add(booking.toJson());

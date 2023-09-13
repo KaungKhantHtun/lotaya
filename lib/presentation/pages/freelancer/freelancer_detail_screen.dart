@@ -9,20 +9,23 @@ import 'package:intl/intl.dart';
 
 import '../../widgets/address_field_widget.dart';
 import '../../widgets/note_field_widget.dart';
+import '../../widgets/total_cost_widget.dart';
 import '../home/home_screen.dart';
 
 class FreelacerDetailScreen extends StatefulWidget {
   FreelacerDetailScreen({
     super.key,
+    required this.type,
     required this.imageUrl,
     required this.name,
     required this.hourlyRate,
     required this.location,
   });
 
+  final String type;
   final String imageUrl;
   final String name;
-  final String hourlyRate;
+  final int hourlyRate;
   final String location;
 
   @override
@@ -79,6 +82,15 @@ class _FreelacerDetailScreenState extends State<FreelacerDetailScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: colorPrimary,
+        centerTitle: true,
+        title: Text(
+          "${widget.type.toUpperCase()} DETAILS",
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -102,7 +114,7 @@ class _FreelacerDetailScreenState extends State<FreelacerDetailScreen> {
                     height: 8,
                   ),
                   Text(
-                    "\$${widget.hourlyRate}/hr",
+                    "\$${widget.hourlyRate} Ks/hr",
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w500,
@@ -263,8 +275,10 @@ class _FreelacerDetailScreenState extends State<FreelacerDetailScreen> {
                   ),
                   AddressFieldWidget(
                     addressController: _addressController,
-                    onChanged: (address) {
+                    onChanged: (address, latlng) {
                       _addressController.text = address;
+                      lat = latlng.latitude;
+                      long = latlng.longitude;
                       setState(() {});
                     },
                   ),
@@ -272,6 +286,10 @@ class _FreelacerDetailScreenState extends State<FreelacerDetailScreen> {
                     height: 16,
                   ),
                   NoteFieldWidget(noteController: _noteController),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  TotalCostWidget(price: price),
                   const SizedBox(
                     height: 16,
                   ),
@@ -314,15 +332,16 @@ class _FreelacerDetailScreenState extends State<FreelacerDetailScreen> {
   double long = 13.456;
   double price = 5000;
   Future<void> doBooking() async {
+    price = _selectedWorkingHour * widget.hourlyRate.toDouble();
     final CollectionReference bookingList =
         FirebaseFirestore.instance.collection(bookingTable);
     BookingEntity booking = BookingEntity(
       bookingId: "123",
-      name: "",
+      name: widget.name,
       serviceType: ServiceProviderType.freelancer,
       // serviceProviderId: widget.serviceProvider.serviceId,
-      serviceName: "selectedServiceName",
-      workingHours: _selectedWorkingHour,
+      serviceName: widget.type,
+
       serviceTime: DateTime(
         selectedServiceDate.year,
         selectedServiceDate.month,
@@ -331,12 +350,13 @@ class _FreelacerDetailScreenState extends State<FreelacerDetailScreen> {
         selectedServiceTime.minute,
       ),
       bookingCreatedTime: DateTime.now(),
-      bookingStatus: BookingStatus.pending,
+      bookingStatus: BookingStatus.serviceRequested,
       address: _addressController.text,
       lat: lat,
       long: long,
       price: price,
       note: _noteController.text,
+      workingHours: _selectedWorkingHour,
     );
     try {
       await bookingList.add(booking.toJson());

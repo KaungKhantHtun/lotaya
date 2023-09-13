@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hakathon_service/services/location_service.dart';
 
 class AddressFieldWidget extends StatefulWidget {
@@ -6,7 +7,7 @@ class AddressFieldWidget extends StatefulWidget {
       {Key? key, required this.addressController, required this.onChanged})
       : super(key: key);
   final TextEditingController addressController;
-  final Function(String address) onChanged;
+  final Function(String address, LatLng latlng) onChanged;
 
   @override
   State<AddressFieldWidget> createState() => _AddressFieldWidgetState();
@@ -29,7 +30,7 @@ class _AddressFieldWidgetState extends State<AddressFieldWidget> {
             },
           ),
         ).then((value) {
-          widget.onChanged(value[0]);
+          widget.onChanged(value[0], value[1]);
         });
       },
       decoration: InputDecoration(
@@ -47,7 +48,7 @@ class _AddressFieldWidgetState extends State<AddressFieldWidget> {
               ),
             ).then((value) {
               print("@>value: $value");
-              widget.onChanged(value[0]);
+              widget.onChanged(value[0], value[1]);
             });
           },
         ),

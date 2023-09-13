@@ -23,13 +23,15 @@ class ClothWithCountEntity {
 
   ClothWithCountEntity fromJson(Map<String, dynamic> json) {
     return ClothWithCountEntity(
-        name: json['name'],
-        imgUrl: json['imgUrl'],
-        price: json['price'],
-        clothId: json['clothId'],
-        count: json['count'],
-        serviceType: json['serviceType'],
-        wearType: json['wearType']);
+      name: json['name'],
+      imgUrl: json['imgUrl'],
+      price: json['price'],
+      clothId: json['clothId'],
+      count: json['count'],
+      serviceType:
+          LaundryServiceType.getLaundryServiceType(json['serviceType']),
+      wearType: WearType.getWearType(json['wearType']),
+    );
   }
 
   Map<String, dynamic> toJson() {
@@ -39,8 +41,8 @@ class ClothWithCountEntity {
     data['price'] = price;
     data['clothId'] = clothId;
     data['count'] = count;
-    data['serviceType'] = serviceType;
-    data['wearType'] = wearType;
+    data['serviceType'] = serviceType.name;
+    data['wearType'] = wearType?.name;
     return data;
   }
 }

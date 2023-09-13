@@ -10,6 +10,7 @@ import 'package:intl/intl.dart';
 
 import '../../../domain/entities/service_provider_type.dart';
 import '../../widgets/service_provider_select.dart';
+import '../../widgets/total_cost_widget.dart';
 import '../home/home_screen.dart';
 
 class ElectronicServiceScreen extends StatefulWidget {
@@ -23,10 +24,26 @@ class ElectronicServiceScreen extends StatefulWidget {
 }
 
 class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
-  String selectedServiceName = "";
+  String selectedServiceDevice = "Fridge";
+  String selectedServiceName = "General Service";
 
   int selectedDevice = 1;
+
   int selectIdType = 0;
+  Map<String, Map<String, double>> priceMap = {
+    "AC": {
+      "General Service": 5000,
+      "Gas Recharge": 6000,
+    },
+    "Fridge": {
+      "General Service": 7000,
+      "Gas Recharge": 8000,
+    },
+    "Oven": {
+      "General Service": 9000,
+      "Gas Recharge": 10000,
+    },
+  };
 
   DateTime selectedServiceDate = DateTime.now();
   DateTime selectedServiceTime = DateTime.now();
@@ -52,7 +69,7 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
       DateTime(day.year, day.month, day.day, 13, 10),
       DateTime(day.year, day.month, day.day, 14, 10),
     ];
-    selectedServiceName = "General Service";
+
     List<DateTime> list = hourList
         .where((e) =>
             e.difference(DateTime.now()) > Duration(hours: priorOrderHour))
@@ -70,6 +87,8 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
       selectedServiceTime = hourList.first;
     }
     selectedTime = hourList.indexOf(selectedServiceTime);
+
+    price = priceMap[selectedServiceDevice]?[selectedServiceName] ?? 0;
     addCustomIcon();
   }
 
@@ -127,8 +146,11 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
                   ),
                   AddressFieldWidget(
                     addressController: _addressController,
-                    onChanged: (address) {
+                    onChanged: (address, latlng) {
                       _addressController.text = address;
+                      lat = latlng.latitude;
+                      long = latlng.longitude;
+
                       setState(() {});
                     },
                   ),
@@ -136,6 +158,10 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
                     height: 16,
                   ),
                   NoteFieldWidget(noteController: _noteController),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  TotalCostWidget(price: price),
                   const SizedBox(
                     height: 16,
                   ),
@@ -358,6 +384,8 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
       onTap: () {
         setState(() {
           selectedDevice = index;
+          selectedServiceDevice = name;
+          price = priceMap[selectedServiceDevice]?[selectedServiceName] ?? 0;
         });
       },
       child: Container(
@@ -398,6 +426,7 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
         setState(() {
           selectIdType = index;
           selectedServiceName = name;
+          price = priceMap[selectedServiceDevice]?[selectedServiceName] ?? 0;
         });
       },
       child: Container(
@@ -575,7 +604,7 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
         FirebaseFirestore.instance.collection(bookingTable);
     BookingEntity booking = BookingEntity(
       bookingId: "123",
-      // name: widget.serviceProvider.serviceName,
+      name: _serviceProviderController.text,
       serviceType: ServiceProviderType.electronic,
       // serviceProviderId: widget.serviceProvider.serviceId,
       serviceName: selectedServiceName,
@@ -593,6 +622,8 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
       long: long,
       price: price,
       note: _noteController.text,
+      electronicType: selectIdType == 1 ? "Gas Recharge" : "General Service",
+      electronicServiceName: selectedServiceName,
     );
     try {
       await bookingList.add(booking.toJson());
