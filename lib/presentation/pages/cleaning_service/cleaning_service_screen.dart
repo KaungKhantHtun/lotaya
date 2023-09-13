@@ -5,6 +5,7 @@ import 'package:hakathon_service/domain/entities/booking_entity.dart';
 import 'package:hakathon_service/domain/entities/booking_status.dart';
 import 'package:hakathon_service/presentation/widgets/address_field_widget.dart';
 import 'package:hakathon_service/presentation/widgets/note_field_widget.dart';
+import 'package:hakathon_service/presentation/widgets/total_cost_widget.dart';
 import 'package:hakathon_service/utils/constants.dart';
 import 'package:intl/intl.dart';
 
@@ -23,9 +24,10 @@ class CleaningServiceScreen extends StatefulWidget {
 
 class _CleaningServiceScreenState extends State<CleaningServiceScreen> {
   String selectedServiceName = "";
+  String selectedServicePlace = "";
   DateTime selectedServiceDate = DateTime.now();
   DateTime selectedServiceTime = DateTime.now();
-  int selectedDevice = 1;
+  int selectedPlace = 1;
   int selectIdType = 0;
   int selectedDay = 0;
   int selectedTime = 0;
@@ -70,7 +72,7 @@ class _CleaningServiceScreenState extends State<CleaningServiceScreen> {
       selectedServiceTime = hourList.first;
     }
     selectedTime = hourList.indexOf(selectedServiceTime);
-
+    price = getPrice(type: selectedServiceName, size: actualMaxSize);
     addCustomIcon();
   }
 
@@ -129,8 +131,10 @@ class _CleaningServiceScreenState extends State<CleaningServiceScreen> {
                   ),
                   AddressFieldWidget(
                     addressController: _addressController,
-                    onChanged: (address) {
+                    onChanged: (address, latlng) {
                       _addressController.text = address;
+                      lat = latlng.latitude;
+                      long = latlng.longitude;
                       setState(() {});
                     },
                   ),
@@ -138,6 +142,10 @@ class _CleaningServiceScreenState extends State<CleaningServiceScreen> {
                     height: 16,
                   ),
                   NoteFieldWidget(noteController: _noteController),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  TotalCostWidget(price: price),
                   const SizedBox(
                     height: 16,
                   ),
@@ -149,6 +157,24 @@ class _CleaningServiceScreenState extends State<CleaningServiceScreen> {
         ),
       ),
     );
+  }
+
+  double getPrice({required String type, required int size}) {
+    double basePrice = 5000;
+    if (type == "Deep Cleaning") {
+      basePrice = 7000;
+    } else {
+      basePrice = 5000;
+    }
+    if (size < 500) {
+      return basePrice * 2;
+    } else if (size > 500 && size < 1000) {
+      return basePrice * 3;
+    } else
+    // if (size > 1000 && size < 1400)
+    {
+      return basePrice * 4;
+    }
   }
 
   void addCustomIcon() {
@@ -292,7 +318,7 @@ class _CleaningServiceScreenState extends State<CleaningServiceScreen> {
               name: "Home Clean",
               iconUrl: "assets/aircon.png",
               width: width,
-              isSelected: selectedDevice == 0,
+              isSelected: selectedPlace == 0,
             ),
             const SizedBox(
               width: 16,
@@ -302,7 +328,7 @@ class _CleaningServiceScreenState extends State<CleaningServiceScreen> {
               name: "Vehicle washing",
               iconUrl: "assets/fridge.png",
               width: width,
-              isSelected: selectedDevice == 1,
+              isSelected: selectedPlace == 1,
             ),
             const SizedBox(
               width: 16,
@@ -312,7 +338,7 @@ class _CleaningServiceScreenState extends State<CleaningServiceScreen> {
               name: "Shop Clean",
               iconUrl: "assets/oven.png",
               width: width,
-              isSelected: selectedDevice == 2,
+              isSelected: selectedPlace == 2,
             ),
           ],
         ),
@@ -353,8 +379,8 @@ class _CleaningServiceScreenState extends State<CleaningServiceScreen> {
   int maxSize = 1400;
   int defaultMinSize = 50;
   int defaultMaxSize = 1400;
-  int? actualMinSize;
-  int? actualMaxSize;
+  int actualMinSize = 50;
+  int actualMaxSize = 1400;
   Widget _buildSizeSlider() {
     return Container(
       margin: EdgeInsets.zero,
@@ -398,6 +424,8 @@ class _CleaningServiceScreenState extends State<CleaningServiceScreen> {
                   () {
                     actualMinSize = values.start.toInt();
                     actualMaxSize = values.end.toInt();
+                    price = getPrice(
+                        type: selectedServiceName, size: actualMaxSize);
                   },
                 );
               },
@@ -417,7 +445,8 @@ class _CleaningServiceScreenState extends State<CleaningServiceScreen> {
     return InkWell(
       onTap: () {
         setState(() {
-          selectedDevice = index;
+          selectedPlace = index;
+          selectedServicePlace = name;
         });
       },
       child: Container(
@@ -461,6 +490,7 @@ class _CleaningServiceScreenState extends State<CleaningServiceScreen> {
         setState(() {
           selectIdType = index;
           selectedServiceName = name;
+          price = getPrice(type: selectedServiceName, size: actualMaxSize);
         });
       },
       child: Container(
@@ -643,7 +673,7 @@ class _CleaningServiceScreenState extends State<CleaningServiceScreen> {
         FirebaseFirestore.instance.collection(bookingTable);
     BookingEntity booking = BookingEntity(
       bookingId: "123",
-      // name: widget.serviceProvider.serviceName,
+      name: _serviceProviderController.text,
       serviceType: ServiceProviderType.homeCleaning,
       // serviceProviderId: widget.serviceProvider.serviceId,
       serviceName: selectedServiceName,
@@ -661,6 +691,9 @@ class _CleaningServiceScreenState extends State<CleaningServiceScreen> {
       long: long,
       price: price,
       note: _noteController.text,
+      cleaningPlace: selectedServicePlace,
+      cleaningServiceType: selectedServiceName,
+      spaceSize: actualMaxSize,
     );
     try {
       await bookingList.add(booking.toJson());

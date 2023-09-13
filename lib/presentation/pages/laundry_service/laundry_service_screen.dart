@@ -436,7 +436,10 @@ class _LaundryServiceScreenState extends State<LaundryServiceScreen> {
                         .where((element) => element.id == id)
                         .first
                         .name,
-                    imgUrl: "assets/jacket.png",
+                    imgUrl: originalClothList
+                        .where((element) => element.id == id)
+                        .first
+                        .imgUrl,
                     serviceType: type,
                     price: originalClothList
                         .where((element) => element.id == id)

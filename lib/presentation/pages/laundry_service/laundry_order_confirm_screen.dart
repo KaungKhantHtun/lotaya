@@ -33,6 +33,8 @@ class _LaundryOrderConfirmScreenState extends State<LaundryOrderConfirmScreen> {
     super.initState();
   }
 
+  double lat = 0.0;
+  double long = 0.0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -103,7 +105,16 @@ class _LaundryOrderConfirmScreenState extends State<LaundryOrderConfirmScreen> {
                             Expanded(
                               flex: 2,
                               child: Text(
-                                "Cloth Type",
+                                "Cloth",
+                                maxLines: 2,
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            Expanded(
+                              flex: 3,
+                              child: Text(
+                                "Service",
+                                maxLines: 2,
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                             ),
@@ -149,18 +160,26 @@ class _LaundryOrderConfirmScreenState extends State<LaundryOrderConfirmScreen> {
                                   child: Text(e.name),
                                 ),
                                 Expanded(
+                                  flex: 3,
+                                  child: Text(e.serviceType.name),
+                                ),
+                                Expanded(
                                   flex: 2,
-                                  child: Text(e.price.toString()),
+                                  child: Text(
+                                    e.price.toInt().toString(),
+                                  ),
                                 ),
                                 Expanded(
                                   flex: 2,
                                   child: Text(
                                     e.count.toString(),
+                                    textAlign: TextAlign.center,
                                   ),
                                 ),
                                 Expanded(
                                   flex: 2,
-                                  child: Text("${e.count * e.price} Ks"),
+                                  child:
+                                      Text("${(e.count * e.price).toInt()} Ks"),
                                 ),
                               ],
                             ),
@@ -221,8 +240,10 @@ class _LaundryOrderConfirmScreenState extends State<LaundryOrderConfirmScreen> {
               ),
               AddressFieldWidget(
                 addressController: _addressController,
-                onChanged: (address) {
+                onChanged: (address, latlng) {
                   _addressController.text = address;
+                  lat = latlng.latitude;
+                  long = latlng.longitude;
                   setState(() {});
                 },
               ),
@@ -273,7 +294,7 @@ class _LaundryOrderConfirmScreenState extends State<LaundryOrderConfirmScreen> {
     double long = 34;
     BookingEntity booking = BookingEntity(
       bookingId: "123",
-      // name: widget.serviceProvider.serviceName,
+      name: _serviceProviderController.text,
       serviceType: ServiceProviderType.laundry,
       // serviceProviderId: widget.serviceProvider.serviceId,
       serviceName: "Laundry",
@@ -285,6 +306,9 @@ class _LaundryOrderConfirmScreenState extends State<LaundryOrderConfirmScreen> {
       long: long,
       price: widget.laundryBookingConfirmEntity.totalPrice,
       note: _noteController.text,
+      clothList: widget.laundryBookingConfirmEntity.clothList,
+      totalClothCount: widget.laundryBookingConfirmEntity.totalCount,
+      totalLaundryPrice: widget.laundryBookingConfirmEntity.totalPrice,
     );
     try {
       await bookingList.add(booking.toJson());
