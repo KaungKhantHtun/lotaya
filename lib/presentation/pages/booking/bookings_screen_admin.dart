@@ -153,15 +153,18 @@ class _BookingsScreenAdminState extends State<BookingsScreenAdmin> {
           ),
         ],
       ),
-      body: StreamBuilder(
-        stream: querySnapshot.snapshots(),
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (!snapshot.hasData) {
-            return Container();
-          } else {
-            final data = snapshot.data;
+      body: BlocProvider(
+        create: (_) => BookingCubit(),
+        child: StreamBuilder(
+          stream: querySnapshot.snapshots(),
+          builder:
+              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (!snapshot.hasData) {
+              return Container();
+            } else {
+              final data = snapshot.data;
 
-            return ListView.builder(
+              return ListView.builder(
                 itemCount: data?.size,
                 padding: const EdgeInsets.all(16),
                 itemBuilder: (context, index) {
@@ -439,9 +442,11 @@ class _BookingsScreenAdminState extends State<BookingsScreenAdmin> {
                       ),
                     ),
                   );
-                });
-          }
-        },
+                },
+              );
+            }
+          },
+        ),
       ),
     );
   }

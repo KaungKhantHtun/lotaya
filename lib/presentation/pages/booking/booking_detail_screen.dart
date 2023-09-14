@@ -5,8 +5,6 @@ import 'package:hakathon_service/domain/entities/booking_entity.dart';
 import 'package:hakathon_service/domain/entities/booking_status.dart';
 import 'package:hakathon_service/domain/entities/service_provider_type.dart';
 import 'package:hakathon_service/presentation/cubit/booking_cubit.dart';
-import 'package:hakathon_service/presentation/pages/chat/chat.dart';
-import 'package:hakathon_service/presentation/pages/chat/core/firebase_chat_core.dart';
 import 'package:hakathon_service/utils/constants.dart';
 import 'package:intl/intl.dart';
 
@@ -116,41 +114,39 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
-                                              Text(
-                                                e.name ?? "",
-                                                textAlign: TextAlign.start,
-                                                style: TextStyle(
-                                                  //color: e.bookingStatus.getColor,
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize: 16,
+                                              Expanded(
+                                                child: Text(
+                                                  e.name ?? "",
+                                                  textAlign: TextAlign.start,
+                                                  style: const TextStyle(
+                                                    //color: e.bookingStatus.getColor,
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize: 16,
+                                                  ),
                                                 ),
                                               ),
-                                              Flexible(
-                                                child: Container(
-                                                  padding: EdgeInsets.all(8),
-                                                  decoration: BoxDecoration(
-                                                    color: colorPrimaryLight,
-                                                    border: Border.all(
-                                                      color:
-                                                          colorPrimaryLight, // Border color
-                                                      width:
-                                                          2.0, // Border width
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                      Radius.circular(
-                                                          50.0), // Stadium border shape
-                                                    ),
+                                              Container(
+                                                padding: EdgeInsets.all(8),
+                                                decoration: BoxDecoration(
+                                                  color: colorPrimaryLight,
+                                                  border: Border.all(
+                                                    color:
+                                                        colorPrimaryLight, // Border color
+                                                    width: 2.0, // Border width
                                                   ),
-                                                  child: Text(
-                                                    e.bookingStatus.name,
-                                                    textAlign: TextAlign.end,
-                                                    style: const TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 10,
-                                                      color: colorPrimary,
-                                                    ),
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                    Radius.circular(
+                                                        50.0), // Stadium border shape
+                                                  ),
+                                                ),
+                                                child: Text(
+                                                  e.bookingStatus.name,
+                                                  textAlign: TextAlign.end,
+                                                  style: const TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 10,
+                                                    color: colorPrimary,
                                                   ),
                                                 ),
                                               ),

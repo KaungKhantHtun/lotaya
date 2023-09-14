@@ -316,7 +316,7 @@ class _FreelacerDetailScreenState extends State<FreelacerDetailScreen> {
               },
         style: ElevatedButton.styleFrom(
           backgroundColor: colorPrimary,
-             shape: RoundedRectangleBorder(
+          shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),
         ),
@@ -362,7 +362,9 @@ class _FreelacerDetailScreenState extends State<FreelacerDetailScreen> {
       workingHours: _selectedWorkingHour,
     );
     try {
-      await bookingList.add(booking.toJson());
+      await bookingList.add(booking.toJson()).then((value) {
+        bookingList.doc(value.id).update({"bookingId": value.id});
+      });
       Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => const HomeScreen(
                 initialIndex: 1,

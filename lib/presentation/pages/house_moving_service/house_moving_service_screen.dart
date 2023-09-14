@@ -638,7 +638,9 @@ class _HouseMovingServiceScreenState extends State<HouseMovingServiceScreen> {
       carPrice: _selectedCar.price,
     );
     try {
-      await bookingList.add(booking.toJson());
+      await bookingList.add(booking.toJson()).then((value) {
+        bookingList.doc(value.id).update({"bookingId": value.id});
+      });
       Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => const HomeScreen(
                 initialIndex: 1,

@@ -133,28 +133,32 @@ class _BookingsScreenState extends State<BookingsScreen> {
           ),
         ],
       ),
-      body: StreamBuilder(
-        stream: querySnapshot.snapshots(),
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (!snapshot.hasData) {
-            return Container();
-          } else {
-            final data = snapshot.data;
+      body: BlocProvider(
+        create: (_) => BookingCubit(),
+        child: StreamBuilder(
+          stream: querySnapshot.snapshots(),
+          builder:
+              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (!snapshot.hasData) {
+              return Container();
+            } else {
+              final data = snapshot.data;
 
-            return ListView.builder(
-                itemCount: data?.size,
-                padding: const EdgeInsets.all(16),
-                itemBuilder: (context, index) {
-                  var doc = data?.docs[index];
+              return ListView.builder(
+                  itemCount: data?.size,
+                  padding: const EdgeInsets.all(16),
+                  itemBuilder: (context, index) {
+                    var doc = data?.docs[index];
 
-                  BookingEntity e = BookingEntity.fromDoc(doc);
+                    BookingEntity e = BookingEntity.fromDoc(doc);
 
-                  return BookingCardWidget(
-                    e: e,
-                  );
-                });
-          }
-        },
+                    return BookingCardWidget(
+                      e: e,
+                    );
+                  });
+            }
+          },
+        ),
       ),
     );
   }
@@ -272,37 +276,37 @@ class BookingCardWidget extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                e.name ?? "",
-                                textAlign: TextAlign.start,
-                                style: TextStyle(
-                                  //color: e.bookingStatus.getColor,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 16,
+                              Expanded(
+                                child: Text(
+                                  e.name ?? "",
+                                  textAlign: TextAlign.start,
+                                  style: TextStyle(
+                                    //color: e.bookingStatus.getColor,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 16,
+                                  ),
                                 ),
                               ),
-                              Flexible(
-                                child: Container(
-                                  padding: EdgeInsets.all(8),
-                                  decoration: BoxDecoration(
-                                    color: colorPrimaryLight,
-                                    border: Border.all(
-                                      color: colorPrimaryLight, // Border color
-                                      width: 2.0, // Border width
-                                    ),
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(
-                                          50.0), // Stadium border shape
-                                    ),
+                              Container(
+                                padding: EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                  color: colorPrimaryLight,
+                                  border: Border.all(
+                                    color: colorPrimaryLight, // Border color
+                                    width: 2.0, // Border width
                                   ),
-                                  child: Text(
-                                    e.bookingStatus.name,
-                                    textAlign: TextAlign.end,
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 10,
-                                      color: colorPrimary,
-                                    ),
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(
+                                        50.0), // Stadium border shape
+                                  ),
+                                ),
+                                child: Text(
+                                  e.bookingStatus.name,
+                                  textAlign: TextAlign.end,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 10,
+                                    color: colorPrimary,
                                   ),
                                 ),
                               ),

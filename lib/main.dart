@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hakathon_service/domain/entities/service_provider_entity.dart';
 import 'package:hakathon_service/presentation/cubit/booking_cubit.dart';
 import 'package:hakathon_service/presentation/pages/home/home_screen.dart';
+import 'package:hakathon_service/utils/constants.dart';
 
-import 'domain/entities/service_provider_type.dart';
-import 'package:hakathon_service/presentation/cubit/booking_cubit.dart';
-import 'package:hakathon_service/presentation/pages/booking/bookings_screen.dart';
-import 'presentation/pages/home/home_screen.dart';
-import 'presentation/pages/onboarding/onboarding_screen.dart';
 import 'services/firebase_service.dart';
 
 void main() async {
@@ -35,8 +30,9 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'Flutter Demo',
 
-      theme:
-          ThemeData(primarySwatch: Colors.blue, textTheme: const TextTheme()),
+      theme: ThemeData(
+          primarySwatch: MaterialColor(0xff1f467d, color),
+          textTheme: const TextTheme()),
       // home: const MyHomePage(title: 'Flutter Demo Home Page'),
       // home: ElectronicServiceScreen(
       //   serviceProvider: serviceProviderEntity,
@@ -53,9 +49,10 @@ class _MyAppState extends State<MyApp> {
       // home: CleaningServiceScreen(
       //   serviceProvider: serviceProviderEntity,
       // ),
+      // home: TutorialScreen(),
       home: BlocProvider(
         create: (context) => BookingCubit(),
-        child: HomeScreen(
+        child: const HomeScreen(
           initialIndex: 0,
         ),
       ),
