@@ -310,7 +310,8 @@ class _BookingsScreenAdminState extends State<BookingsScreenAdmin> {
                                   Spacer(),
                                   InkWell(
                                     onTap: () {
-                                      _handlePressed(context, e.bookingId);
+                                      _handlePressed(
+                                          context, e.bookingId, e.name);
                                     },
                                     child: Image.asset(
                                       "assets/bubble-chat.png",
@@ -445,10 +446,14 @@ class _BookingsScreenAdminState extends State<BookingsScreenAdmin> {
     );
   }
 
-  void _handlePressed(BuildContext context, String bookingId) async {
+  void _handlePressed(
+      BuildContext context, String bookingId, String? name) async {
     final navigator = Navigator.of(context);
-    final room = await FirebaseChatCore.instance
-        .createRoom(isAdmin ? currentUser : adminUser, roomId: bookingId);
+    final room = await FirebaseChatCore.instance.createRoom(
+      currentUser,
+      roomId: bookingId,
+      roomName: name,
+    );
 
     await navigator.push(
       MaterialPageRoute(

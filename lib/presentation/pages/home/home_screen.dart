@@ -26,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
     widgetList = const [
       DashboardScreen(),
       BookingsScreen(),
-      ChatScreen(),
+      ChatListScreen(),
       ProfileScreen()
     ];
     currentIndex = widget.initialIndex;

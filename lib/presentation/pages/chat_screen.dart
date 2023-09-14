@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:hakathon_service/presentation/pages/chat/rooms.dart';
 
-class ChatScreen extends StatefulWidget {
-  const  ChatScreen({Key? key}) : super(key: key);
+class ChatListScreen extends StatefulWidget {
+  const ChatListScreen({Key? key}) : super(key: key);
 
   @override
-  State<ChatScreen> createState() => _ChatScreenState();
+  State<ChatListScreen> createState() => _ChatListScreenState();
 }
 
-class _ChatScreenState extends State<ChatScreen> {
+class _ChatListScreenState extends State<ChatListScreen> {
   @override
   Widget build(BuildContext context) {
-    return const  Text("Chat");
+    return RoomsPage();
   }
 }
