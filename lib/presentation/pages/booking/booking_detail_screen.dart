@@ -5,12 +5,8 @@ import 'package:hakathon_service/domain/entities/booking_entity.dart';
 import 'package:hakathon_service/domain/entities/booking_status.dart';
 import 'package:hakathon_service/domain/entities/service_provider_type.dart';
 import 'package:hakathon_service/presentation/cubit/booking_cubit.dart';
-import 'package:hakathon_service/presentation/pages/chat/chat.dart';
-import 'package:hakathon_service/presentation/pages/chat/core/firebase_chat_core.dart';
 import 'package:hakathon_service/utils/constants.dart';
 import 'package:intl/intl.dart';
-
-import '../../cubit/booking_cubit.dart';
 
 class BookingDetailScreen extends StatefulWidget {
   const BookingDetailScreen({Key? key, required this.bookingId})
@@ -54,82 +50,123 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
           ),
         ),
       ),
-      body: BlocProvider(
-        create: (_) => BookingCubit(),
-        child: StreamBuilder(
-          stream: querySnapshot.snapshots(),
-          builder:
-              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            if (!snapshot.hasData) {
+      body: StreamBuilder(
+        stream: querySnapshot.snapshots(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (!snapshot.hasData) {
+            return Container();
+          } else {
+            final data = snapshot.data;
+
+            if (data?.docs.length == 0) {
               return Container();
-            } else {
-              final data = snapshot.data;
+            }
+            var doc = data?.docs[0];
 
-              if (data?.docs.length == 0) {
-                return Container();
-              }
-              var doc = data?.docs[0];
-
-              BookingEntity e = BookingEntity.fromDoc(doc);
-              return Container(
-                padding: const EdgeInsets.all(16),
-                child: Stack(
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            BookingEntity e = BookingEntity.fromDoc(doc);
+            return Container(
+              padding: const EdgeInsets.all(16),
+              child: Stack(
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(bottom: 16),
+                        padding: const EdgeInsets.all(16),
+                        width: MediaQuery.of(context).size.width - 32,
+                        child: Stack(
                           children: [
-                            ClipOval(
-                              child: Image.asset(
-                                "assets/aircon_service.jpg",
-                                fit: BoxFit.fitHeight,
-                                width: 70,
-                                height: 70,
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 16,
-                            ),
-                            Expanded(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        e.bookingStatus.name,
-                                        textAlign: TextAlign.start,
-                                        style: TextStyle(
-                                          color: e.bookingStatus.getColor,
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 16,
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Container(
+                                      height: 64,
+                                      width: 64,
+                                      decoration: const BoxDecoration(
+                                          color: colorPrimaryLight,
+                                          shape: BoxShape.circle),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(14.0),
+                                        child: Image.asset(
+                                          e.serviceType.imgUrl,
+                                          color: colorPrimary,
                                         ),
                                       ),
-                                      Text(
-                                        e.name ?? "",
-                                        textAlign: TextAlign.end,
-                                        style: const TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 14,
-                                          color: Color(0xff84888d),
-                                        ),
+                                    ),
+                                    const SizedBox(
+                                      width: 16,
+                                    ),
+                                    Expanded(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Expanded(
+                                                child: Text(
+                                                  e.name ?? "",
+                                                  textAlign: TextAlign.start,
+                                                  style: const TextStyle(
+                                                    //color: e.bookingStatus.getColor,
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize: 16,
+                                                  ),
+                                                ),
+                                              ),
+                                              Container(
+                                                padding: EdgeInsets.all(8),
+                                                decoration: BoxDecoration(
+                                                  color: colorPrimaryLight,
+                                                  border: Border.all(
+                                                    color:
+                                                        colorPrimaryLight, // Border color
+                                                    width: 2.0, // Border width
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                    Radius.circular(
+                                                        50.0), // Stadium border shape
+                                                  ),
+                                                ),
+                                                child: Text(
+                                                  e.bookingStatus.name,
+                                                  textAlign: TextAlign.end,
+                                                  style: const TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 10,
+                                                    color: colorPrimary,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          const SizedBox(
+                                            height: 8,
+                                          ),
+                                          Text(
+                                            e.serviceName,
+                                            style: const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 14,
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            height: 8,
+                                          ),
+                                        ],
                                       ),
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    height: 8,
-                                  ),
-                                  Text(
-                                    e.serviceName,
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16,
                                     ),
                                   ],
                                 ),
@@ -292,10 +329,6 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
                                           fontStyle: FontStyle.normal,
                                           color: Color(0xFFFFFFFF),
 
-  void _handlePressed(BuildContext context, String bookingId) async {
-    final navigator = Navigator.of(context);
-    final room = await FirebaseChatCore.instance
-        .createRoom(isAdmin ? currentUser : adminUser, roomId: bookingId);
                                           // height: 19/19,
                                         ),
                                       ),
@@ -334,12 +367,6 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
                                           fontStyle: FontStyle.normal,
                                           color: Color(0xFFFFFFFF),
 
-    navigator.pop();
-    await navigator.push(
-      MaterialPageRoute(
-        builder: (context) => ChatPage(
-          room: room,
-        ),
                                           // height: 19/19,
                                         ),
                                       ),
