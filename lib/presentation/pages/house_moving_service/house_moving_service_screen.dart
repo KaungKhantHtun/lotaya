@@ -383,10 +383,10 @@ class _HouseMovingServiceScreenState extends State<HouseMovingServiceScreen> {
   }
 
   calculateDistance() async {
-    if (_fromLatLng == null && _toLatLng == null) return;
-    final s = CalculateDistance();
-    _estimate = await s.calculateEstimateDistance(_fromLatLng!, _toLatLng!);
-    setState(() {});
+    // if (_fromLatLng == null && _toLatLng == null) return;
+    // final s = CalculateDistance();
+    // _estimate = await s.calculateEstimateDistance(_fromLatLng!, _toLatLng!);
+    // setState(() {});
   }
 
   void addCustomIcon() {

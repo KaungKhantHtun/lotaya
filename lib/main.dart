@@ -1,5 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hakathon_service/domain/entities/service_provider_entity.dart';
+import 'package:hakathon_service/presentation/cubit/booking_cubit.dart';
+import 'package:hakathon_service/presentation/pages/home/home_screen.dart';
 
+import 'domain/entities/service_provider_type.dart';
+import 'package:hakathon_service/presentation/cubit/booking_cubit.dart';
+import 'package:hakathon_service/presentation/pages/booking/bookings_screen.dart';
+import 'presentation/pages/home/home_screen.dart';
 import 'presentation/pages/onboarding/onboarding_screen.dart';
 import 'services/firebase_service.dart';
 
@@ -45,10 +53,12 @@ class _MyAppState extends State<MyApp> {
       // home: CleaningServiceScreen(
       //   serviceProvider: serviceProviderEntity,
       // ),
-      // home: const HomeScreen(
-      //   initialIndex: 0,
-      // ),
-      home: OnboardingScreen(),
+      home: BlocProvider(
+        create: (context) => BookingCubit(),
+        child: HomeScreen(
+          initialIndex: 0,
+        ),
+      ),
       // home: FreelancerScreen(),
     );
   }

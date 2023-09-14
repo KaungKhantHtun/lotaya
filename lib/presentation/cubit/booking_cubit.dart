@@ -11,10 +11,15 @@ class BookingCubit extends Cubit<BookingState> {
   String bookingTable = "booking";
   String profileTable = "profile";
 
-  updateStatus(String id, String status) {
-    print(id);
-    final DocumentReference docRef = firestore.collection(bookingTable).doc(id);
-    docRef.update(
+  updateStatus(String bookingId, String status) async {
+    // final DocumentReference docRef = firestore.collection(bookingTable).where();
+
+    QuerySnapshot querySnapshot = await firestore
+        .collection(bookingTable) // Replace with your collection name
+        .where('bookingId', isEqualTo: bookingId)
+        .limit(1) // Replace with your field and condition
+        .get();
+    querySnapshot.docs.first.reference.update(
       {
         "bookingStatus": status,
       },

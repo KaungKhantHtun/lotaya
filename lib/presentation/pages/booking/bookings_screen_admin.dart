@@ -335,7 +335,7 @@ class _BookingsScreenAdminState extends State<BookingsScreenAdmin> {
                                     ),
                                     onPressed: () => context
                                         .read<BookingCubit>()
-                                        .updateStatus(doc!.id,
+                                        .updateStatus(e.bookingId,
                                             BookingStatus.pendingPayment.name),
                                     icon: Icon(
                                       Icons.check_circle_outline,
@@ -344,7 +344,8 @@ class _BookingsScreenAdminState extends State<BookingsScreenAdmin> {
                                   ),
                                 ],
                               ),
-                            if (e.bookingStatus == BookingStatus.bookingAccepted)
+                            if (e.bookingStatus ==
+                                BookingStatus.bookingAccepted)
                               SizedBox(
                                 height: 36,
                                 width: double.infinity,
@@ -379,8 +380,8 @@ class _BookingsScreenAdminState extends State<BookingsScreenAdmin> {
                                   ),
                                 ),
                               ),
-
-                              if (e.bookingStatus == BookingStatus.serviceProcessing)
+                            if (e.bookingStatus ==
+                                BookingStatus.serviceProcessing)
                               SizedBox(
                                 height: 36,
                                 width: double.infinity,

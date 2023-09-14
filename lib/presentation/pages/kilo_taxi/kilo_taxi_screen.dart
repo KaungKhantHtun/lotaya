@@ -27,7 +27,6 @@ class _KiloTaxiScreenState extends State<KiloTaxiScreen> {
   TextEditingController _toController = TextEditingController();
   LatLng? _fromLatLng;
   LatLng? _toLatLng;
-  DistanceAndDuration? _estimate;
   DateTime now = DateTime.now();
   DateTime dateTimeSelected = DateTime.now().toLocal();
 
@@ -36,6 +35,8 @@ class _KiloTaxiScreenState extends State<KiloTaxiScreen> {
 
   BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
 
+  double? distance;
+  String? duration;
   TextEditingController _noteController = TextEditingController();
   TextEditingController _timeController = TextEditingController();
 
@@ -45,6 +46,15 @@ class _KiloTaxiScreenState extends State<KiloTaxiScreen> {
         text: DateFormat('hh:mm a').format(dateTimeSelected));
     super.initState();
   }
+
+  // getMap() async {
+  //   await Future.delayed(Duration(seconds: 3));
+  //   return SizedBox(
+  //     height: 200,
+  //     child: GoogleMap(
+  //         initialCameraPosition: CameraPosition(target: LatLng(11.1, 11.4))),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -59,15 +69,81 @@ class _KiloTaxiScreenState extends State<KiloTaxiScreen> {
               height: MediaQuery.of(context).size.height - kToolbarHeight - 48,
               child: Column(
                 children: [
+                  if (_fromLatLng != null && _toLatLng != null)
+                    SizedBox(
+                      height: 200,
+                      child: RouteDirectionMap(
+                        from: _fromLatLng!,
+                        to: _toLatLng!,
+                      ),
+                    ),
+                  // FutureBuilder(
+                  //     future: getMap(),
+                  //     builder: (context, AsyncSnapshot snapshot) {
+                  //       if (snapshot.hasData) {
+                  //         return snapshot.data;
+                  //       } else
+                  //         return SizedBox();
+                  //     }),
+                  // if (_estimate != null)
+                  //   FutureBuilder(
+                  //       future: MapRoutService()
+                  //           .getDirection(_fromLatLng!, _toLatLng!),
+                  //       builder: (BuildContext context,
+                  //           AsyncSnapshot<Widget> snapshot) {
+                  //         if (snapshot.hasData) {
+                  //           return snapshot.data ??
+                  //               Container(
+                  //                 color: Colors.amber,
+                  //                 height: 100,
+                  //               );
+                  //         } else
+                  //           return SizedBox(
+                  //             height: 100,
+                  //           );
+                  //       }),
                   _buildFromLocationWidget(),
                   const SizedBox(
                     height: 8,
                   ),
                   _buildToLocationWidget(),
-                  if (_estimate != null)
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  if (distance != null)
+                    Row(
                       children: [
+                        Expanded(
+                            child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 24, horizontal: 16),
+                                decoration: const BoxDecoration(
+                                  color: Colors.white,
+                                ),
+                                child: Row(
+                                  children: [
+                                    Image.asset(
+                                      "assets/distance.png",
+                                      height: 24,
+                                    ),
+                                    const SizedBox(
+                                      width: 16,
+                                    ),
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        const Text("Distance"),
+                                        const SizedBox(
+                                          height: 8,
+                                        ),
+                                        Text("$distance Km")
+                                      ],
+                                    )
+                                  ],
+                                ))),
                         const SizedBox(
                           height: 8,
                         ),
@@ -86,22 +162,7 @@ class _KiloTaxiScreenState extends State<KiloTaxiScreen> {
                                           "assets/distance.png",
                                           height: 24,
                                         ),
-                                        const SizedBox(
-                                          width: 16,
-                                        ),
-                                        Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            const Text("Distance"),
-                                            const SizedBox(
-                                              height: 8,
-                                            ),
-                                            Text("${_estimate?.distance.text}")
-                                          ],
-                                        )
+                                        Text("$duration")
                                       ],
                                     ))),
                             const SizedBox(
@@ -133,7 +194,7 @@ class _KiloTaxiScreenState extends State<KiloTaxiScreen> {
                                             const SizedBox(
                                               height: 8,
                                             ),
-                                            Text("${_estimate?.duration.text}")
+                                            Text(duration.toString())
                                           ],
                                         )
                                       ],
@@ -167,7 +228,7 @@ class _KiloTaxiScreenState extends State<KiloTaxiScreen> {
                                       height: 8,
                                     ),
                                     Text(
-                                        "${(_estimate!.distance.value * 0.6).round() + 1500} Ks")
+                                        "${(distance ?? 1 * 600).round() + 1500} Ks")
                                   ],
                                 )
                               ],
@@ -177,11 +238,35 @@ class _KiloTaxiScreenState extends State<KiloTaxiScreen> {
                   const SizedBox(
                     height: 8,
                   ),
-                  _buildTimePicker(),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  NoteFieldWidget(noteController: _noteController),
+                  if (distance != null)
+                    Container(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 16, horizontal: 16),
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                        ),
+                        child: Row(
+                          children: [
+                            Image.asset(
+                              "assets/receipt.png",
+                              height: 24,
+                            ),
+                            const SizedBox(
+                              width: 16,
+                            ),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text("Fee"),
+                                const SizedBox(
+                                  height: 8,
+                                ),
+                                Text("${(distance! * 600).round() + 1500} Ks")
+                              ],
+                            )
+                          ],
+                        )),
                   const Spacer(),
                   Align(
                     alignment: Alignment.bottomCenter,
@@ -236,7 +321,7 @@ class _KiloTaxiScreenState extends State<KiloTaxiScreen> {
       serviceTime: dateTimeSelected,
       bookingCreatedTime: DateTime.now(),
       bookingStatus: BookingStatus.serviceRequested,
-      price: (_estimate!.distance.value * 0.6).round() + 1500,
+      price: (distance ?? 1 * 600).round() + 1500,
       note: _noteController.text,
       fromLat: _fromLatLng?.latitude,
       fromLong: _fromLatLng?.longitude,
@@ -334,8 +419,14 @@ class _KiloTaxiScreenState extends State<KiloTaxiScreen> {
 
   calculateDistance() async {
     if (_fromLatLng == null && _toLatLng == null) return;
-    final s = CalculateDistance();
-    _estimate = await s.calculateEstimateDistance(_fromLatLng!, _toLatLng!);
+    // final s = CalculateDistance();
+    // _estimate = await s.calculateEstimateDistance(_fromLatLng!, _toLatLng!);
+    // setState(() {});
+    final mapRouteService = MapRoutService();
+    distance =
+        await mapRouteService.calculateDistance(_fromLatLng!, _toLatLng!);
+    duration =
+        await mapRouteService.calculateEsimateTime(_fromLatLng!, _toLatLng!);
     setState(() {});
   }
 
