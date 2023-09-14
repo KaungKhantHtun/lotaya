@@ -131,269 +131,277 @@ class _BookingsScreenState extends State<BookingsScreen> {
           ),
         ],
       ),
-      body: StreamBuilder(
-        stream: querySnapshot.snapshots(),
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (!snapshot.hasData) {
-            return Container();
-          } else {
-            final data = snapshot.data;
+      body: BlocProvider(
+        create: (_) => BookingCubit(),
+        child: StreamBuilder(
+          stream: querySnapshot.snapshots(),
+          builder:
+              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (!snapshot.hasData) {
+              return Container();
+            } else {
+              final data = snapshot.data;
 
-            return ListView.builder(
-                itemCount: data?.size,
-                padding: const EdgeInsets.all(16),
-                itemBuilder: (context, index) {
-                  var doc = data?.docs[index];
+              return ListView.builder(
+                  itemCount: data?.size,
+                  padding: const EdgeInsets.all(16),
+                  itemBuilder: (context, index) {
+                    var doc = data?.docs[index];
 
-                  BookingEntity e = BookingEntity.fromDoc(doc);
+                    BookingEntity e = BookingEntity.fromDoc(doc);
 
-                  return Container(
-                    margin: const EdgeInsets.only(bottom: 16),
-                    padding: const EdgeInsets.all(16),
-                    width: MediaQuery.of(context).size.width - 32,
-                    decoration: BoxDecoration(
-                      // color: Colors.green,
-                      borderRadius: BorderRadius.circular(8.0),
-                      border: Border.all(
-                        color: Colors.grey.shade300,
+                    return Container(
+                      margin: const EdgeInsets.only(bottom: 16),
+                      padding: const EdgeInsets.all(16),
+                      width: MediaQuery.of(context).size.width - 32,
+                      decoration: BoxDecoration(
+                        // color: Colors.green,
+                        borderRadius: BorderRadius.circular(8.0),
+                        border: Border.all(
+                          color: Colors.grey.shade300,
+                        ),
                       ),
-                    ),
-                    child: Stack(
-                      children: [
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                ClipOval(
-                                  child: Image.asset(
-                                    "assets/aircon_service.jpg",
-                                    fit: BoxFit.fitHeight,
-                                    width: 70,
-                                    height: 70,
+                      child: Stack(
+                        children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  ClipOval(
+                                    child: Image.asset(
+                                      "assets/aircon_service.jpg",
+                                      fit: BoxFit.fitHeight,
+                                      width: 70,
+                                      height: 70,
+                                    ),
                                   ),
-                                ),
-                                const SizedBox(
-                                  width: 16,
-                                ),
-                                Expanded(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            e.bookingStatus.name,
-                                            textAlign: TextAlign.start,
-                                            style: TextStyle(
-                                              color: e.bookingStatus.getColor,
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 16,
-                                            ),
-                                          ),
-                                          Flexible(
-                                            child: Text(
-                                              e.name ?? "",
-                                              textAlign: TextAlign.end,
-                                              style: const TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 14,
-                                                color: Color(0xff84888d),
+                                  const SizedBox(
+                                    width: 16,
+                                  ),
+                                  Expanded(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              e.bookingStatus.name,
+                                              textAlign: TextAlign.start,
+                                              style: TextStyle(
+                                                color: e.bookingStatus.getColor,
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 16,
                                               ),
                                             ),
+                                            Flexible(
+                                              child: Text(
+                                                e.name ?? "",
+                                                textAlign: TextAlign.end,
+                                                style: const TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 14,
+                                                  color: Color(0xff84888d),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(
+                                          height: 8,
+                                        ),
+                                        Text(
+                                          e.serviceName,
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 16,
                                           ),
-                                        ],
-                                      ),
-                                      const SizedBox(
-                                        height: 8,
-                                      ),
-                                      Text(
-                                        e.serviceName,
-                                        style: const TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16,
+                                        ),
+                                        const SizedBox(
+                                          height: 8,
+                                        ),
+                                        const Text(
+                                          "aircon service & Repair & Install and Maintenance.aircon service & Repair & Install and Maintenance.",
+                                          style: const TextStyle(
+                                            fontSize: 13,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 8,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const Divider(),
+                              const SizedBox(
+                                height: 8,
+                              ),
+                              Row(
+                                children: [
+                                  const Text("Time: "),
+                                  Text(
+                                    DateFormat('hh:mm a').format(e.serviceTime),
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 16,
+                              ),
+                              Row(
+                                children: [
+                                  const Text("Date: "),
+                                  Text(
+                                    DateFormat('d MMM, y')
+                                        .format(e.bookingCreatedTime),
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 16,
+                              ),
+                              Row(
+                                children: [
+                                  const Text("Amount: "),
+                                  Text(
+                                    "${e.price ?? 0} KS",
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 16,
+                              ),
+                              Row(
+                                children: const [
+                                  Text("Vendor: "),
+                                  Text(
+                                    "Yet to be assigned",
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 16,
+                              ),
+                              if (e.bookingStatus ==
+                                  BookingStatus.pendingPayment)
+                                SizedBox(
+                                  height: 36,
+                                  width: double.infinity,
+                                  child: TextButton(
+                                    onPressed: () async {
+                                      context.read<BookingCubit>().updateStatus(
+                                            e.bookingId,
+                                            BookingStatus.bookingAccepted.name,
+                                          );
+                                    },
+                                    style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all<Color>(
+                                              colorPrimary),
+                                      shape: MaterialStateProperty.all<
+                                          RoundedRectangleBorder>(
+                                        RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
                                         ),
                                       ),
-                                      const SizedBox(
-                                        height: 8,
+                                    ),
+                                    child: const Text(
+                                      "Make Payment",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        fontStyle: FontStyle.normal,
+                                        color: Color(0xFFFFFFFF),
+
+                                        // height: 19/19,
                                       ),
-                                      const Text(
-                                        "aircon service & Repair & Install and Maintenance.aircon service & Repair & Install and Maintenance.",
-                                        style: const TextStyle(
-                                          fontSize: 13,
+                                    ),
+                                  ),
+                                ),
+                              if (e.bookingStatus ==
+                                  BookingStatus.serviceFinished)
+                                SizedBox(
+                                  height: 36,
+                                  width: double.infinity,
+                                  child: TextButton(
+                                    onPressed: () async {
+                                      context.read<BookingCubit>().updateStatus(
+                                            e.bookingId,
+                                            BookingStatus.completed.name,
+                                          );
+                                    },
+                                    style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all<Color>(
+                                              colorPrimary),
+                                      shape: MaterialStateProperty.all<
+                                          RoundedRectangleBorder>(
+                                        RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
                                         ),
                                       ),
-                                      const SizedBox(
-                                        height: 8,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const Divider(),
-                            const SizedBox(
-                              height: 8,
-                            ),
-                            Row(
-                              children: [
-                                const Text("Time: "),
-                                Text(
-                                  DateFormat('hh:mm a').format(e.serviceTime),
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 16,
-                            ),
-                            Row(
-                              children: [
-                                const Text("Date: "),
-                                Text(
-                                  DateFormat('d MMM, y')
-                                      .format(e.bookingCreatedTime),
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 16,
-                            ),
-                            Row(
-                              children: [
-                                const Text("Amount: "),
-                                Text(
-                                  "${e.price ?? 0} KS",
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 16,
-                            ),
-                            Row(
-                              children: const [
-                                Text("Vendor: "),
-                                Text(
-                                  "Yet to be assigned",
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 16,
-                            ),
-                            if (e.bookingStatus == BookingStatus.pendingPayment)
-                              SizedBox(
-                                height: 36,
-                                width: double.infinity,
-                                child: TextButton(
-                                  onPressed: () async {
-                                    context.read<BookingCubit>().updateStatus(
-                                          e.bookingId,
-                                          BookingStatus.bookingAccepted.name,
-                                        );
-                                  },
-                                  style: ButtonStyle(
-                                    backgroundColor:
-                                        MaterialStateProperty.all<Color>(
-                                            colorPrimary),
-                                    shape: MaterialStateProperty.all<
-                                        RoundedRectangleBorder>(
-                                      RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                      ),
                                     ),
-                                  ),
-                                  child: const Text(
-                                    "Make Payment",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w400,
-                                      fontStyle: FontStyle.normal,
-                                      color: Color(0xFFFFFFFF),
+                                    child: const Text(
+                                      "Yes, Service is Done",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        fontStyle: FontStyle.normal,
+                                        color: Color(0xFFFFFFFF),
 
-                                      // height: 19/19,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            if (e.bookingStatus ==
-                                BookingStatus.serviceFinished)
-                              SizedBox(
-                                height: 36,
-                                width: double.infinity,
-                                child: TextButton(
-                                  onPressed: () async {
-                                    context.read<BookingCubit>().updateStatus(
-                                          e.bookingId,
-                                          BookingStatus.completed.name,
-                                        );
-                                  },
-                                  style: ButtonStyle(
-                                    backgroundColor:
-                                        MaterialStateProperty.all<Color>(
-                                            colorPrimary),
-                                    shape: MaterialStateProperty.all<
-                                        RoundedRectangleBorder>(
-                                      RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
+                                        // height: 19/19,
                                       ),
                                     ),
                                   ),
-                                  child: const Text(
-                                    "Yes, Service is Done",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w400,
-                                      fontStyle: FontStyle.normal,
-                                      color: Color(0xFFFFFFFF),
-
-                                      // height: 19/19,
-                                    ),
-                                  ),
                                 ),
-                              ),
-                          ],
-                        ),
-                        Positioned(
-                          bottom: 54,
-                          right: 0,
-                          child: InkWell(
-                            onTap: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => BookingDetailScreen(
-                                        bookingId: e.bookingId,
-                                      )));
-                            },
-                            child: Text(
-                              "View Details",
-                              style: TextStyle(
-                                color: colorPrimary,
-                              ),
-                            ),
-                            // child: Image.asset(
-                            //   "assets/bubble-chat.png",
-                            //   width: 30,
-                            // ),
+                            ],
                           ),
-                        ),
-                      ],
-                    ),
-                  );
-                });
-          }
-        },
+                          Positioned(
+                            bottom: 54,
+                            right: 0,
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => BookingDetailScreen(
+                                          bookingId: e.bookingId,
+                                        )));
+                              },
+                              child: Text(
+                                "View Details",
+                                style: TextStyle(
+                                  color: colorPrimary,
+                                ),
+                              ),
+                              // child: Image.asset(
+                              //   "assets/bubble-chat.png",
+                              //   width: 30,
+                              // ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  });
+            }
+          },
+        ),
       ),
     );
   }

@@ -256,7 +256,9 @@ class _KiloTaxiScreenState extends State<KiloTaxiScreen> {
       toAddr: _toController.text,
     );
     try {
-      await bookingList.add(booking.toJson());
+          await bookingList.add(booking.toJson()).then((value) {
+        bookingList.doc(value.id).update({"bookingId": value.id});
+      });
       Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => const HomeScreen(
                 initialIndex: 1,

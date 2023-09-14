@@ -326,7 +326,9 @@ class _LaundryOrderConfirmScreenState extends State<LaundryOrderConfirmScreen> {
       totalLaundryPrice: widget.laundryBookingConfirmEntity.totalPrice,
     );
     try {
-      await bookingList.add(booking.toJson());
+      await bookingList.add(booking.toJson()).then((value) {
+        bookingList.doc(value.id).update({"bookingId": value.id});
+      });
       Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => const HomeScreen(
                 initialIndex: 1,

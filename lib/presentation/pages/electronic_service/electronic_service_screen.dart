@@ -631,7 +631,9 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
       electronicServiceName: selectedServiceName,
     );
     try {
-      await bookingList.add(booking.toJson());
+      await bookingList.add(booking.toJson()).then((value) {
+        bookingList.doc(value.id).update({"bookingId": value.id});
+      });
       Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => const HomeScreen(
                 initialIndex: 1,
