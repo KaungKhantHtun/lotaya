@@ -346,9 +346,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) =>
-                                        ElectronicServiceScreen(
-                                            serviceProvider:
-                                                serviceProviderEntity),
+                                        ElectronicServiceScreen(),
                                   ),
                                 );
                               },
@@ -360,8 +358,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => LaundryServiceScreen(
-                                        serviceProvider: serviceProviderEntity),
+                                    builder: (context) =>
+                                        LaundryServiceScreen(),
                                   ),
                                 );
                               },
@@ -373,8 +371,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => CleaningServiceScreen(
-                                        serviceProvider: serviceProviderEntity),
+                                    builder: (context) =>
+                                        CleaningServiceScreen(),
                                   ),
                                 );
                               },
@@ -395,9 +393,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) =>
-                                        HouseMovingServiceScreen(
-                                            serviceProvider:
-                                                serviceProviderEntity),
+                                        HouseMovingServiceScreen(),
                                   ),
                                 );
                               },
