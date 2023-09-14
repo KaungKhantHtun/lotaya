@@ -52,7 +52,6 @@ class _HouseMovingServiceScreenState extends State<HouseMovingServiceScreen> {
 
   LatLng? _fromLatLng;
   LatLng? _toLatLng;
-  DistanceAndDuration? _estimate;
   late CarEntity _selectedCar;
 
   List<CarEntity> carList = [
@@ -170,7 +169,7 @@ class _HouseMovingServiceScreenState extends State<HouseMovingServiceScreen> {
                   const SizedBox(
                     height: 16,
                   ),
-               TotalCostWidget(price:price),
+                  TotalCostWidget(price: price),
                   const SizedBox(
                     height: 16,
                   ),
@@ -401,8 +400,6 @@ class _HouseMovingServiceScreenState extends State<HouseMovingServiceScreen> {
       },
     );
   }
-
-
 
   // Widget _buildHeader() {
   //   return Container(
