@@ -417,8 +417,8 @@ class _CleaningServiceScreenState extends State<CleaningServiceScreen> {
                     : "$actualMaxSize sqft",
               ),
               values: RangeValues(
-                  actualMinSize?.toDouble() ?? defaultMinSize.toDouble(),
-                  actualMaxSize?.toDouble() ?? defaultMaxSize.toDouble()),
+                  actualMinSize.toDouble() ?? defaultMinSize.toDouble(),
+                  actualMaxSize.toDouble() ?? defaultMaxSize.toDouble()),
               onChanged: (values) {
                 setState(
                   () {
