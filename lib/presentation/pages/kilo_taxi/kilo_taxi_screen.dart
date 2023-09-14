@@ -17,7 +17,6 @@ class _KiloTaxiScreenState extends State<KiloTaxiScreen> {
   TextEditingController _toController = TextEditingController();
   LatLng? _fromLatLng;
   LatLng? _toLatLng;
-  DistanceAndDuration? _estimate;
 
   int selectedDevice = 1;
   int selectdType = 0;
@@ -35,6 +34,9 @@ class _KiloTaxiScreenState extends State<KiloTaxiScreen> {
 
   BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
 
+  double? distance;
+  String? duration;
+
   @override
   void initState() {
     super.initState();
@@ -44,8 +46,16 @@ class _KiloTaxiScreenState extends State<KiloTaxiScreen> {
       day.add(const Duration(hours: 13, minutes: 10)),
       day.add(const Duration(hours: 14, minutes: 10)),
     ];
-    
   }
+
+  // getMap() async {
+  //   await Future.delayed(Duration(seconds: 3));
+  //   return SizedBox(
+  //     height: 200,
+  //     child: GoogleMap(
+  //         initialCameraPosition: CameraPosition(target: LatLng(11.1, 11.4))),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -60,6 +70,39 @@ class _KiloTaxiScreenState extends State<KiloTaxiScreen> {
               height: MediaQuery.of(context).size.height - kToolbarHeight - 48,
               child: Column(
                 children: [
+                  if (_fromLatLng != null && _toLatLng != null)
+                    SizedBox(
+                      height: 200,
+                      child: RouteDirectionMap(
+                        from: _fromLatLng!,
+                        to: _toLatLng!,
+                      ),
+                    ),
+                  // FutureBuilder(
+                  //     future: getMap(),
+                  //     builder: (context, AsyncSnapshot snapshot) {
+                  //       if (snapshot.hasData) {
+                  //         return snapshot.data;
+                  //       } else
+                  //         return SizedBox();
+                  //     }),
+                  // if (_estimate != null)
+                  //   FutureBuilder(
+                  //       future: MapRoutService()
+                  //           .getDirection(_fromLatLng!, _toLatLng!),
+                  //       builder: (BuildContext context,
+                  //           AsyncSnapshot<Widget> snapshot) {
+                  //         if (snapshot.hasData) {
+                  //           return snapshot.data ??
+                  //               Container(
+                  //                 color: Colors.amber,
+                  //                 height: 100,
+                  //               );
+                  //         } else
+                  //           return SizedBox(
+                  //             height: 100,
+                  //           );
+                  //       }),
                   _buildFromLocationWidget(),
                   const SizedBox(
                     height: 8,
@@ -68,7 +111,7 @@ class _KiloTaxiScreenState extends State<KiloTaxiScreen> {
                   const SizedBox(
                     height: 8,
                   ),
-                  if (_estimate != null)
+                  if (distance != null)
                     Row(
                       children: [
                         Expanded(
@@ -97,7 +140,7 @@ class _KiloTaxiScreenState extends State<KiloTaxiScreen> {
                                         const SizedBox(
                                           height: 8,
                                         ),
-                                        Text("${_estimate?.distance.text}")
+                                        Text("$distance Km")
                                       ],
                                     )
                                   ],
@@ -131,7 +174,7 @@ class _KiloTaxiScreenState extends State<KiloTaxiScreen> {
                                         const SizedBox(
                                           height: 8,
                                         ),
-                                        Text("${_estimate?.duration.text}")
+                                        Text("$duration")
                                       ],
                                     )
                                   ],
@@ -141,7 +184,7 @@ class _KiloTaxiScreenState extends State<KiloTaxiScreen> {
                   const SizedBox(
                     height: 8,
                   ),
-                  if (_estimate != null)
+                  if (distance != null)
                     Container(
                         padding: const EdgeInsets.symmetric(
                             vertical: 16, horizontal: 16),
@@ -165,8 +208,7 @@ class _KiloTaxiScreenState extends State<KiloTaxiScreen> {
                                 const SizedBox(
                                   height: 8,
                                 ),
-                                Text(
-                                    "${(_estimate!.distance.value * 0.6).round() + 1500} Ks")
+                                Text("${(distance! * 600).round() + 1500} Ks")
                               ],
                             )
                           ],
@@ -283,12 +325,16 @@ class _KiloTaxiScreenState extends State<KiloTaxiScreen> {
     );
   }
 
-
-
   calculateDistance() async {
     if (_fromLatLng == null && _toLatLng == null) return;
-    final s = CalculateDistance();
-    _estimate = await s.calculateEstimateDistance(_fromLatLng!, _toLatLng!);
+    // final s = CalculateDistance();
+    // _estimate = await s.calculateEstimateDistance(_fromLatLng!, _toLatLng!);
+    // setState(() {});
+    final mapRouteService = MapRoutService();
+    distance =
+        await mapRouteService.calculateDistance(_fromLatLng!, _toLatLng!);
+    duration =
+        await mapRouteService.calculateEsimateTime(_fromLatLng!, _toLatLng!);
     setState(() {});
   }
 
@@ -330,6 +376,4 @@ class _KiloTaxiScreenState extends State<KiloTaxiScreen> {
       ),
     );
   }
-
-
 }

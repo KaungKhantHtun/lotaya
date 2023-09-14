@@ -7,7 +7,7 @@ class BookingEntity {
   final String bookingId;
   final String name;
   final ServiceProviderType serviceType;
-  final String serviceProviderId;
+  //final String serviceProviderId;
   final String serviceName;
   final DateTime serviceTime;
   final DateTime bookingCreatedTime;
@@ -22,7 +22,7 @@ class BookingEntity {
     required this.bookingId,
     required this.name,
     required this.serviceType,
-    required this.serviceProviderId,
+    //required this.serviceProviderId,
     required this.serviceName,
     required this.serviceTime,
     required this.bookingCreatedTime,
@@ -38,7 +38,7 @@ class BookingEntity {
       "bookingId": bookingId,
       "name": name,
       "serviceType": serviceType.name,
-      "serviceProviderId": serviceProviderId,
+      // "serviceProviderId": serviceProviderId,
       "serviceName": serviceName,
       "serviceTime": serviceTime,
       "bookingCreatedTime": bookingCreatedTime,
@@ -56,7 +56,7 @@ class BookingEntity {
       bookingId: map["bookingId"] ?? "",
       name: map["name"],
       serviceType: ServiceProviderType.getServiceProvider(map["serviceType"]),
-      serviceProviderId: map["serviceProviderId"],
+      //  serviceProviderId: map["serviceProviderId"],
       serviceName: map["serviceName"],
       serviceTime: map["serviceTime"],
       bookingCreatedTime: map["bookingCreatedTime"],
@@ -69,8 +69,6 @@ class BookingEntity {
     );
   }
 
-
-
   static BookingEntity fromDoc(QueryDocumentSnapshot<Object?>? doc) {
     return BookingEntity(
       bookingId: doc?.data().toString().contains("bookingId") ?? false
@@ -82,10 +80,10 @@ class BookingEntity {
       serviceType: doc?.data().toString().contains("serviceType") ?? false
           ? ServiceProviderType.getServiceProvider(doc?.get("serviceType"))
           : ServiceProviderType.electronic,
-      serviceProviderId:
-          doc?.data().toString().contains("serviceProviderId") ?? false
-              ? doc?.get("serviceProviderId")
-              : "",
+      // serviceProviderId:
+      //     doc?.data().toString().contains("serviceProviderId") ?? false
+      //         ? doc?.get("serviceProviderId")
+      //         : "",
       serviceName: doc?.data().toString().contains("serviceName") ?? false
           ? doc?.get("serviceName")
           : "",

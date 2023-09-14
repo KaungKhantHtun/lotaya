@@ -257,7 +257,7 @@ class _LaundryOrderConfirmScreenState extends State<LaundryOrderConfirmScreen> {
       bookingId: "123",
       name: widget.serviceProvider.serviceName,
       serviceType: widget.serviceProvider.serviceType,
-      serviceProviderId: widget.serviceProvider.serviceId,
+      // serviceProviderId: widget.serviceProvider.serviceId,
       serviceName: "Laundry",
       serviceTime: DateTime.now(),
       bookingCreatedTime: DateTime.now(),

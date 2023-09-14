@@ -48,7 +48,8 @@ class _HouseMovingServiceScreenState extends State<HouseMovingServiceScreen> {
 
   LatLng? _fromLatLng;
   LatLng? _toLatLng;
-  DistanceAndDuration? _estimate;
+  String? distance;
+  String? duration;
 
   List<CarEntity> carList = [
     CarEntity(
@@ -340,10 +341,10 @@ class _HouseMovingServiceScreenState extends State<HouseMovingServiceScreen> {
   }
 
   calculateDistance() async {
-    if (_fromLatLng == null && _toLatLng == null) return;
-    final s = CalculateDistance();
-    _estimate = await s.calculateEstimateDistance(_fromLatLng!, _toLatLng!);
-    setState(() {});
+    // if (_fromLatLng == null && _toLatLng == null) return;
+    // final s = CalculateDistance();
+    // _estimate = await s.calculateEstimateDistance(_fromLatLng!, _toLatLng!);
+    // setState(() {});
   }
 
   void addCustomIcon() {
@@ -703,7 +704,7 @@ class _HouseMovingServiceScreenState extends State<HouseMovingServiceScreen> {
       bookingId: "house123",
       name: widget.serviceProvider.serviceName,
       serviceType: widget.serviceProvider.serviceType,
-      serviceProviderId: widget.serviceProvider.serviceId,
+     // serviceProviderId: widget.serviceProvider.serviceId,
       serviceName: "House Moving",
       serviceTime: DateTime(
         selectedServiceDate.year,
