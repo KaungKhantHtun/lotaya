@@ -66,7 +66,6 @@ class _KiloTaxiScreenState extends State<KiloTaxiScreen> {
         body: SingleChildScrollView(
           child: Container(
               margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-              height: MediaQuery.of(context).size.height - kToolbarHeight - 48,
               child: Column(
                 children: [
                   if (_fromLatLng != null && _toLatLng != null)
@@ -77,31 +76,9 @@ class _KiloTaxiScreenState extends State<KiloTaxiScreen> {
                         to: _toLatLng!,
                       ),
                     ),
-                  // FutureBuilder(
-                  //     future: getMap(),
-                  //     builder: (context, AsyncSnapshot snapshot) {
-                  //       if (snapshot.hasData) {
-                  //         return snapshot.data;
-                  //       } else
-                  //         return SizedBox();
-                  //     }),
-                  // if (_estimate != null)
-                  //   FutureBuilder(
-                  //       future: MapRoutService()
-                  //           .getDirection(_fromLatLng!, _toLatLng!),
-                  //       builder: (BuildContext context,
-                  //           AsyncSnapshot<Widget> snapshot) {
-                  //         if (snapshot.hasData) {
-                  //           return snapshot.data ??
-                  //               Container(
-                  //                 color: Colors.amber,
-                  //                 height: 100,
-                  //               );
-                  //         } else
-                  //           return SizedBox(
-                  //             height: 100,
-                  //           );
-                  //       }),
+                  const SizedBox(
+                    height: 8,
+                  ),
                   _buildFromLocationWidget(),
                   const SizedBox(
                     height: 8,
@@ -114,106 +91,16 @@ class _KiloTaxiScreenState extends State<KiloTaxiScreen> {
                     Row(
                       children: [
                         Expanded(
-                            child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 24, horizontal: 16),
-                                decoration: const BoxDecoration(
-                                  color: Colors.white,
-                                ),
-                                child: Row(
-                                  children: [
-                                    Image.asset(
-                                      "assets/distance.png",
-                                      height: 24,
-                                    ),
-                                    const SizedBox(
-                                      width: 16,
-                                    ),
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        const Text("Distance"),
-                                        const SizedBox(
-                                          height: 8,
-                                        ),
-                                        Text("$distance Km")
-                                      ],
-                                    )
-                                  ],
-                                ))),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        Row(
-                          children: [
-                            Expanded(
-                                child: Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 24, horizontal: 16),
-                                    decoration: const BoxDecoration(
-                                      color: Colors.white,
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        Image.asset(
-                                          "assets/distance.png",
-                                          height: 24,
-                                        ),
-                                        Text("$duration")
-                                      ],
-                                    ))),
-                            const SizedBox(
-                              width: 8,
-                            ),
-                            Expanded(
-                                child: Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 24, horizontal: 16),
-                                    decoration: const BoxDecoration(
-                                      color: Colors.white,
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        Image.asset(
-                                          "assets/time.png",
-                                          height: 24,
-                                        ),
-                                        const SizedBox(
-                                          width: 16,
-                                        ),
-                                        Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            const Text("Duration"),
-                                            const SizedBox(
-                                              height: 8,
-                                            ),
-                                            Text(duration.toString())
-                                          ],
-                                        )
-                                      ],
-                                    ))),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        Container(
+                          child: Container(
                             padding: const EdgeInsets.symmetric(
-                                vertical: 16, horizontal: 16),
+                                vertical: 24, horizontal: 16),
                             decoration: const BoxDecoration(
                               color: Colors.white,
                             ),
                             child: Row(
                               children: [
                                 Image.asset(
-                                  "assets/receipt.png",
+                                  "assets/distance.png",
                                   height: 24,
                                 ),
                                 const SizedBox(
@@ -223,51 +110,87 @@ class _KiloTaxiScreenState extends State<KiloTaxiScreen> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    const Text("Fee"),
+                                    const Text("Distance"),
                                     const SizedBox(
                                       height: 8,
                                     ),
-                                    Text(
-                                        "${(distance ?? 1 * 600).round() + 1500} Ks")
+                                    Text("$distance Km")
                                   ],
                                 )
                               ],
-                            )),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 8,
+                        ),
+                        Expanded(
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 24, horizontal: 16),
+                            decoration: const BoxDecoration(
+                              color: Colors.white,
+                            ),
+                            child: Row(
+                              children: [
+                                Image.asset(
+                                  "assets/time.png",
+                                  height: 24,
+                                ),
+                                const SizedBox(
+                                  width: 16,
+                                ),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text("Duration"),
+                                    const SizedBox(
+                                      height: 8,
+                                    ),
+                                    Text(duration.toString())
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
                       ],
                     ),
-                  const SizedBox(
-                    height: 8,
-                  ),
                   if (distance != null)
                     Container(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 16, horizontal: 16),
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                        ),
-                        child: Row(
-                          children: [
-                            Image.asset(
-                              "assets/receipt.png",
-                              height: 24,
-                            ),
-                            const SizedBox(
-                              width: 16,
-                            ),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text("Fee"),
-                                const SizedBox(
-                                  height: 8,
-                                ),
-                                Text("${(distance! * 600).round() + 1500} Ks")
-                              ],
-                            )
-                          ],
-                        )),
-                  const Spacer(),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 16, horizontal: 16),
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                      ),
+                      child: Row(
+                        children: [
+                          Image.asset(
+                            "assets/receipt.png",
+                            height: 24,
+                          ),
+                          const SizedBox(
+                            width: 16,
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text("Fee"),
+                              const SizedBox(
+                                height: 8,
+                              ),
+                              Text("${(distance! * 600).round() + 1500} Ks")
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                  _buildTimePicker(),
+                  SizedBox(
+                    height: 16,
+                  ),
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: Column(
