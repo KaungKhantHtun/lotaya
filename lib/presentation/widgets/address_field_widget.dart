@@ -35,7 +35,8 @@ class _AddressFieldWidgetState extends State<AddressFieldWidget> {
       },
       decoration: InputDecoration(
         hintText: 'Your Address',
-        border: const OutlineInputBorder(),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(16)),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         suffixIcon: IconButton(
           icon: const Icon(Icons.gps_fixed),
           onPressed: () {

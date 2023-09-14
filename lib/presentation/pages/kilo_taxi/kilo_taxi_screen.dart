@@ -11,7 +11,6 @@ import 'package:time_picker_sheet/widget/time_picker.dart';
 
 import '../../../domain/entities/booking_entity.dart';
 import '../../../domain/entities/service_provider_type.dart';
-import '../../widgets/note_field_widget.dart';
 import '../home/home_screen.dart';
 // import 'package:intl/intl.dart';
 
@@ -295,6 +294,9 @@ class _KiloTaxiScreenState extends State<KiloTaxiScreen> {
               },
         style: ElevatedButton.styleFrom(
           backgroundColor: colorPrimary,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
         ),
         child: Padding(
           padding: const EdgeInsets.all(16.0),

@@ -20,9 +20,10 @@ class LaundryServiceScreen extends StatefulWidget {
 
 class _LaundryServiceScreenState extends State<LaundryServiceScreen> {
   Map<WearType, List<ClothEntity>> clothMap = {
-    WearType.outWear: originalClothList,
-    WearType.casualWear: originalClothList,
-    WearType.formalWear: originalClothList,
+    WearType.clothes: clothList,
+    WearType.outWear: outWearList,
+    WearType.homeAccessories: homeAccessoriesList,
+    WearType.others: othersList,
   };
   List<LaundryServiceType> serviceList = [
     LaundryServiceType.dryCleaning,
@@ -174,7 +175,7 @@ class _LaundryServiceScreenState extends State<LaundryServiceScreen> {
                       ...clothMap.entries.map((list) {
                         ExpandableController _controller = ExpandableController(
                             initialExpanded:
-                                list.key == WearType.outWear ? true : false);
+                                list.key == WearType.clothes ? true : false);
 
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 16.0),
@@ -228,11 +229,20 @@ class _LaundryServiceScreenState extends State<LaundryServiceScreen> {
                                                 MainAxisAlignment.start,
                                             children: [
                                               CircleAvatar(
+                                                radius: 20,
                                                 backgroundColor: colorPrimary
-                                                    .withOpacity(0.3),
-                                                child: Image.asset(
-                                                  e.imgUrl,
-                                                  width: 30,
+                                                    .withOpacity(0.2),
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 4,
+                                                          top: 4,
+                                                          right: 4,
+                                                          bottom: 4),
+                                                  child: Image.asset(
+                                                    e.imgUrl,
+                                                    width: 30,
+                                                  ),
                                                 ),
                                               ),
                                               const SizedBox(
@@ -430,36 +440,32 @@ class _LaundryServiceScreenState extends State<LaundryServiceScreen> {
           List<ClothWithCountEntity> clothList = [];
           countMap.keys.forEach((type) {
             countMap[type]!.forEach((id, count) {
-              clothList.add(
-                ClothWithCountEntity(
-                    name: originalClothList
-                        .where((element) => element.id == id)
-                        .first
-                        .name,
-                    imgUrl: originalClothList
-                        .where((element) => element.id == id)
-                        .first
-                        .imgUrl,
-                    serviceType: type,
-                    price: originalClothList
-                        .where((element) => element.id == id)
-                        .first
-                        .getPrice(type),
-                    clothId: id,
-                    count: count),
-              );
+              List<ClothEntity> resultList = originalClothList
+                  .where((element) => element.id == id)
+                  .toList();
+              if (resultList.isNotEmpty) {
+                clothList.add(
+                  ClothWithCountEntity(
+                      name: originalClothList
+                          .where((element) => element.id == id)
+                          .first
+                          .name,
+                      imgUrl: originalClothList
+                          .where((element) => element.id == id)
+                          .first
+                          .imgUrl,
+                      serviceType: type,
+                      price: originalClothList
+                          .where((element) => element.id == id)
+                          .first
+                          .getPrice(type),
+                      clothId: id,
+                      count: count),
+                );
+              }
             });
           });
-          // clothMap.values.forEach((element) {
-          //   element.map((e) {
-          //     return ClothWithCountEntity(
-          //         serviceType: serviceType,
-          //         price: price,
-          //         clothId: clothId,
-          //         count: count);
-          //   });
-          //   // clothList.addAll();
-          // });
+          clothList.removeWhere((element) => element.count == 0);
           LaundryBookingConfirmEntity bookingConfirm =
               LaundryBookingConfirmEntity(
             clothList: clothList,
@@ -476,6 +482,9 @@ class _LaundryServiceScreenState extends State<LaundryServiceScreen> {
       style: ElevatedButton.styleFrom(
         backgroundColor:
             totalCount == 0 ? Colors.grey.shade500 : colorSecondary,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
       ),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -517,10 +526,6 @@ class _LaundryServiceScreenState extends State<LaundryServiceScreen> {
   }
 
   double getPrice(String clothId) {
-    List<ClothEntity> clothList = [];
-    clothMap.values.forEach((element) {
-      clothList.addAll(element);
-    });
     double price = 0;
     List<ClothEntity> list =
         clothList.where((element) => element.id == clothId).toList();

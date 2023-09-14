@@ -26,7 +26,7 @@ class ElectronicServiceScreen extends StatefulWidget {
 class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
   String selectedServiceDevice = "Fridge";
   String selectedServiceName = "General Service";
-
+  bool showTotal = false;
   int selectedDevice = 1;
 
   int selectIdType = 0;
@@ -138,6 +138,7 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
                     serviceProviderController: _serviceProviderController,
                     onChanged: (value) {
                       _serviceProviderController.text = value;
+                      showTotal = true;
                       setState(() {});
                     },
                   ),
@@ -150,7 +151,7 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
                       _addressController.text = address;
                       lat = latlng.latitude;
                       long = latlng.longitude;
-
+                      showTotal = true;
                       setState(() {});
                     },
                   ),
@@ -161,10 +162,7 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
                   const SizedBox(
                     height: 16,
                   ),
-                  TotalCostWidget(price: price),
-                  const SizedBox(
-                    height: 16,
-                  ),
+                  if (showTotal) TotalCostWidget(price: price),
                   _buildContinueButton(),
                 ],
               ),
@@ -386,6 +384,7 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
           selectedDevice = index;
           selectedServiceDevice = name;
           price = priceMap[selectedServiceDevice]?[selectedServiceName] ?? 0;
+          showTotal = true;
         });
       },
       child: Container(
@@ -427,6 +426,7 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
           selectIdType = index;
           selectedServiceName = name;
           price = priceMap[selectedServiceDevice]?[selectedServiceName] ?? 0;
+          showTotal = true;
         });
       },
       child: Container(
@@ -479,6 +479,7 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
                             DateTime(day.year, day.month, day.day, 13, 10),
                             DateTime(day.year, day.month, day.day, 14, 10),
                           ];
+                          showTotal = true;
                         });
                       },
                       child: Container(
@@ -537,6 +538,7 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
               setState(() {
                 selectedServiceTime = hourList[index];
                 selectedTime = index;
+                showTotal = true;
               });
             }
           },
@@ -582,6 +584,9 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
               },
         style: ElevatedButton.styleFrom(
           backgroundColor: colorPrimary,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
         ),
         child: Padding(
           padding: const EdgeInsets.all(16.0),

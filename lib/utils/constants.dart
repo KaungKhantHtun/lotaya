@@ -29,31 +29,173 @@ const TextStyle regularStyle = TextStyle(
 );
 
 const String mapApiKey = "AIzaSyBcQNwTBaKpuGRkJWDCytVvG0v7nqZRrwc";
-List<ClothEntity> originalClothList = [
+List<ClothEntity> clothList = [
   ClothEntity(
-      id: "1",
-      name: "Coat",
-      imgUrl: "assets/jacket.png",
-      wearType: WearType.outWear,
-      dryCleanPrice: 500,
+      id: "c1",
+      name: "Top",
+      imgUrl: "assets/clothes/top.png",
+      wearType: WearType.clothes,
+      dryCleanPrice: 250,
+      washAndIconPrice: 200,
+      ironPrice: 100),
+  ClothEntity(
+      id: "c2",
+      name: "Jeans",
+      imgUrl: "assets/clothes/jeans.png",
+      wearType: WearType.clothes,
+      dryCleanPrice: 250,
+      washAndIconPrice: 250,
+      ironPrice: 100),
+  ClothEntity(
+      id: "c3",
+      name: "Dress",
+      imgUrl: "assets/clothes/dress.png",
+      wearType: WearType.clothes,
+      dryCleanPrice: 250,
+      washAndIconPrice: 250,
+      ironPrice: 100),
+  ClothEntity(
+      id: "c4",
+      name: "Trousers",
+      imgUrl: "assets/clothes/trousers.png",
+      wearType: WearType.clothes,
+      dryCleanPrice: 250,
       washAndIconPrice: 250,
       ironPrice: 200),
   ClothEntity(
-      id: "2",
-      name: "Coat",
-      imgUrl: "assets/jacket.png",
-      wearType: WearType.outWear,
+      id: "c5",
+      name: "Child Cloth",
+      imgUrl: "assets/clothes/child.png",
+      wearType: WearType.clothes,
+      dryCleanPrice: 150,
+      washAndIconPrice: 150,
+      ironPrice: 100),
+];
+List<ClothEntity> outWearList = [
+  ClothEntity(
+      id: "outer1",
+      name: "Hoodie",
+      imgUrl: "assets/clothes/hoodie.png",
+      wearType: WearType.clothes,
       dryCleanPrice: 500,
-      washAndIconPrice: 250,
+      washAndIconPrice: 500,
+      ironPrice: 100),
+  ClothEntity(
+      id: "outer2",
+      name: "Blazer",
+      imgUrl: "assets/clothes/blazer.png",
+      wearType: WearType.clothes,
+      dryCleanPrice: 500,
+      washAndIconPrice: 500,
+      ironPrice: 100),
+  ClothEntity(
+      id: "outer3",
+      name: "Coat",
+      imgUrl: "assets/clothes/coat.png",
+      wearType: WearType.clothes,
+      dryCleanPrice: 500,
+      washAndIconPrice: 500,
+      ironPrice: 100),
+  ClothEntity(
+      id: "outer4",
+      name: "Sweater",
+      imgUrl: "assets/clothes/sweater.png",
+      wearType: WearType.clothes,
+      dryCleanPrice: 500,
+      washAndIconPrice: 500,
+      ironPrice: 100),
+  ClothEntity(
+      id: "outer5",
+      name: "Leather",
+      imgUrl: "assets/clothes/leather-jacket.png",
+      wearType: WearType.clothes,
+      dryCleanPrice: 1000,
+      washAndIconPrice: 500,
       ironPrice: 200),
   ClothEntity(
-      id: "3",
-      name: "Coat",
-      imgUrl: "assets/jacket.png",
-      wearType: WearType.outWear,
-      dryCleanPrice: 500,
-      washAndIconPrice: 250,
+      id: "outer6",
+      name: "Jacket",
+      imgUrl: "assets/clothes/jacket.png",
+      wearType: WearType.clothes,
+      dryCleanPrice: 700,
+      washAndIconPrice: 500,
       ironPrice: 200),
+];
+
+List<ClothEntity> homeAccessoriesList = [
+  ClothEntity(
+      id: "h1",
+      name: "Bed Sheets",
+      imgUrl: "assets/clothes/bed-sheets.png",
+      wearType: WearType.homeAccessories,
+      dryCleanPrice: 1200,
+      washAndIconPrice: 1200,
+      ironPrice: 200),
+  ClothEntity(
+      id: "h2",
+      name: "Pillows",
+      imgUrl: "assets/clothes/pillows.png",
+      wearType: WearType.homeAccessories,
+      dryCleanPrice: 700,
+      washAndIconPrice: 700,
+      ironPrice: 200),
+  ClothEntity(
+      id: "h3",
+      name: "Mattress",
+      imgUrl: "assets/clothes/mattress.png",
+      wearType: WearType.homeAccessories,
+      dryCleanPrice: 3000,
+      washAndIconPrice: 3000,
+      ironPrice: 200),
+  ClothEntity(
+      id: "h4",
+      name: "Sofa",
+      imgUrl: "assets/clothes/sofa.png",
+      wearType: WearType.homeAccessories,
+      dryCleanPrice: 3000,
+      washAndIconPrice: 3000,
+      ironPrice: 200),
+  ClothEntity(
+      id: "h5",
+      name: "Carpet",
+      imgUrl: "assets/clothes/carpet.png",
+      wearType: WearType.homeAccessories,
+      dryCleanPrice: 3000,
+      washAndIconPrice: 3000,
+      ironPrice: 200),
+];
+List<ClothEntity> othersList = [
+  ClothEntity(
+      id: "j1",
+      name: "Shoes",
+      imgUrl: "assets/clothes/shoes.png",
+      wearType: WearType.others,
+      dryCleanPrice: 700,
+      washAndIconPrice: 700,
+      ironPrice: 200),
+  ClothEntity(
+      id: "j2",
+      name: "Travel Bag",
+      imgUrl: "assets/clothes/travel-bag.png",
+      wearType: WearType.others,
+      dryCleanPrice: 3500,
+      washAndIconPrice: 3000,
+      ironPrice: 200),
+  ClothEntity(
+      id: "j3",
+      name: "School Bag",
+      imgUrl: "assets/clothes/school-bag.png",
+      wearType: WearType.others,
+      dryCleanPrice: 1500,
+      washAndIconPrice: 1500,
+      ironPrice: 200),
+];
+
+final List<ClothEntity> originalClothList = [
+  ...clothList,
+  ...outWearList,
+  ...homeAccessoriesList,
+  ...othersList,
 ];
 
 const currentUser = User(

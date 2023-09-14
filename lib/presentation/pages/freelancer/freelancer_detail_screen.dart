@@ -45,6 +45,7 @@ class _FreelacerDetailScreenState extends State<FreelacerDetailScreen> {
     DateTime.now().day,
   );
   List<DateTime> hourList = [];
+  bool showTotal = false;
 
   @override
   void initState() {
@@ -279,6 +280,7 @@ class _FreelacerDetailScreenState extends State<FreelacerDetailScreen> {
                       _addressController.text = address;
                       lat = latlng.latitude;
                       long = latlng.longitude;
+                      showTotal = true;
                       setState(() {});
                     },
                   ),
@@ -289,7 +291,7 @@ class _FreelacerDetailScreenState extends State<FreelacerDetailScreen> {
                   const SizedBox(
                     height: 16,
                   ),
-                  TotalCostWidget(price: price),
+                  if (showTotal) TotalCostWidget(price: price),
                   const SizedBox(
                     height: 16,
                   ),
@@ -314,6 +316,9 @@ class _FreelacerDetailScreenState extends State<FreelacerDetailScreen> {
               },
         style: ElevatedButton.styleFrom(
           backgroundColor: colorPrimary,
+             shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
         ),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -339,9 +344,7 @@ class _FreelacerDetailScreenState extends State<FreelacerDetailScreen> {
       bookingId: "123",
       name: widget.name,
       serviceType: ServiceProviderType.freelancer,
-      // serviceProviderId: widget.serviceProvider.serviceId,
       serviceName: widget.type,
-
       serviceTime: DateTime(
         selectedServiceDate.year,
         selectedServiceDate.month,
@@ -405,6 +408,7 @@ class _FreelacerDetailScreenState extends State<FreelacerDetailScreen> {
                             DateTime(day.year, day.month, day.day, 14, 10),
                           ];
                         });
+                        showTotal = true;
                       },
                       child: Container(
                         width: (MediaQuery.of(context).size.width -
@@ -426,10 +430,6 @@ class _FreelacerDetailScreenState extends State<FreelacerDetailScreen> {
                               "${day.day}",
                               textAlign: TextAlign.center,
                             ),
-                            // Text(
-                            //   DateFormat.E().format(day),
-                            //   textAlign: TextAlign.center,
-                            // ),
                             Text(
                               DateFormat.MMM().format(day),
                               textAlign: TextAlign.center,
@@ -462,6 +462,7 @@ class _FreelacerDetailScreenState extends State<FreelacerDetailScreen> {
               setState(() {
                 selectedServiceTime = hourList[index];
                 selectedTime = index;
+                showTotal = true;
               });
             }
           },
@@ -506,66 +507,68 @@ class _FreelacerDetailScreenState extends State<FreelacerDetailScreen> {
   int _selectedWorkingHour = 1;
 
   Widget _buildWorkingHourWidget() {
-    return Row(
-      children: [
-        Expanded(
-          child: DropdownButton<int>(
-            hint: Text("Select Working Hour"),
-            isExpanded: true,
-            underline: Container(
-                padding: const EdgeInsets.only(top: 16),
-                child: const Divider(color: colorPrimary)),
-            // dropdownColor: colorPrimary,
-            iconEnabledColor: colorPrimary,
-            iconDisabledColor: colorPrimary,
-            focusColor: colorPrimary,
-            value: _selectedWorkingHour,
-            icon: Container(
-              padding: const EdgeInsets.only(bottom: 8),
-              child: const Icon(
-                Icons.arrow_drop_down,
-                color: colorPrimary,
-                size: 24,
-              ),
-            ),
-            onChanged: (newValue) {
-              setState(() {
-                _selectedWorkingHour = newValue!;
-              });
-            },
-            selectedItemBuilder: (context) {
-              return _workingHourList.map<Widget>((int item) {
-                return Container(
-                  padding: const EdgeInsets.only(left: 12, bottom: 16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Image.asset(
-                        "assets/working_hour.png",
-                        width: 24,
-                        height: 24,
-                        color: colorPrimary,
-                      ),
-                      const SizedBox(
-                        width: 8,
-                      ),
-                      Text("$item ${(item > 1) ? " hours" : " hour"}"),
-                    ],
-                  ),
-                );
-              }).toList();
-              // Container(height: 10, color: Colors.red);
-            },
-
-            items: _workingHourList.map((int item) {
-              return DropdownMenuItem<int>(
-                value: item,
-                child: Text("$item ${(item > 1) ? " hours" : " hour"}"),
-              );
-            }).toList(),
-          ),
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16.0),
+        border: Border.all(
+          color: Colors.grey,
+          width: 1.0,
         ),
-      ],
+      ),
+      child: Center(
+        child: DropdownButton<int>(
+          hint: const Text("Select Working Hour"),
+          borderRadius: BorderRadius.circular(16.0),
+          isExpanded: true,
+          iconEnabledColor: colorPrimary,
+          iconDisabledColor: colorPrimary,
+          focusColor: colorPrimary,
+          underline: const SizedBox(),
+          value: _selectedWorkingHour,
+          icon: Container(
+            padding: const EdgeInsets.only(right: 8),
+            child: const Icon(
+              Icons.arrow_drop_down,
+              color: colorPrimary,
+              size: 24,
+            ),
+          ),
+          onChanged: (newValue) {
+            setState(() {
+              _selectedWorkingHour = newValue!;
+              showTotal = true;
+            });
+          },
+          selectedItemBuilder: (context) {
+            return _workingHourList.map<Widget>((int item) {
+              return Container(
+                padding: const EdgeInsets.only(left: 12, bottom: 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Image.asset(
+                      "assets/working_hour.png",
+                      width: 24,
+                      height: 24,
+                      color: colorPrimary,
+                    ),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    Text("$item ${(item > 1) ? " hours" : " hour"}"),
+                  ],
+                ),
+              );
+            }).toList();
+          },
+          items: _workingHourList.map((int item) {
+            return DropdownMenuItem<int>(
+              value: item,
+              child: Text("$item ${(item > 1) ? " hours" : " hour"}"),
+            );
+          }).toList(),
+        ),
+      ),
     );
   }
 }

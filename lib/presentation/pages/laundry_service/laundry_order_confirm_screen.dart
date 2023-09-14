@@ -103,7 +103,7 @@ class _LaundryOrderConfirmScreenState extends State<LaundryOrderConfirmScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: const [
                             Expanded(
-                              flex: 2,
+                              flex: 3,
                               child: Text(
                                 "Cloth",
                                 maxLines: 2,
@@ -136,6 +136,7 @@ class _LaundryOrderConfirmScreenState extends State<LaundryOrderConfirmScreen> {
                               flex: 2,
                               child: Text(
                                 "Total",
+                                textAlign: TextAlign.right,
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                             ),
@@ -156,8 +157,12 @@ class _LaundryOrderConfirmScreenState extends State<LaundryOrderConfirmScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Expanded(
-                                  flex: 2,
-                                  child: Text(e.name),
+                                  flex: 3,
+                                  child: Text(
+                                    e.name,
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold),
+                                  ),
                                 ),
                                 Expanded(
                                   flex: 3,
@@ -178,8 +183,10 @@ class _LaundryOrderConfirmScreenState extends State<LaundryOrderConfirmScreen> {
                                 ),
                                 Expanded(
                                   flex: 2,
-                                  child:
-                                      Text("${(e.count * e.price).toInt()} Ks"),
+                                  child: Text(
+                                    "${(e.count * e.price).toInt()} Ks",
+                                    textAlign: TextAlign.right,
+                                  ),
                                 ),
                               ],
                             ),
@@ -195,17 +202,22 @@ class _LaundryOrderConfirmScreenState extends State<LaundryOrderConfirmScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             const Expanded(
-                              flex: 4,
+                              flex: 3,
                               child: Text(
                                 "Total",
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
+                            ),
+                            const Expanded(
+                              flex: 5,
+                              child: SizedBox(),
                             ),
                             Expanded(
                               flex: 2,
                               child: Text(
                                 widget.laundryBookingConfirmEntity.totalCount
                                     .toString(),
+                                textAlign: TextAlign.center,
                                 style: const TextStyle(
                                     fontWeight: FontWeight.bold),
                               ),
@@ -273,6 +285,9 @@ class _LaundryOrderConfirmScreenState extends State<LaundryOrderConfirmScreen> {
               },
         style: ElevatedButton.styleFrom(
           backgroundColor: colorPrimary,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
         ),
         child: Padding(
           padding: const EdgeInsets.all(16.0),

@@ -194,8 +194,8 @@ class BookingEntity {
           ? doc?.get("lat")
           : null,
       price: doc?.data().toString().contains("price") ?? false
-          ? doc?.get("price")
-          : null,
+          ? double.tryParse(doc?.get("price").toString() ?? "") ?? 0
+          : 0,
       note: doc?.data().toString().contains("note") ?? false
           ? doc?.get("note")
           : null,
@@ -213,7 +213,7 @@ class BookingEntity {
               ? doc?.get("electronicServiceName")
               : null,
       clothList: doc?.data().toString().contains("clothList") ?? false
-          ? doc?.get("clothList")
+          ? convertSnapshotToList(doc?.get("clothList"))
           : [],
       totalClothCount:
           doc?.data().toString().contains("totalClothCount") ?? false
@@ -281,5 +281,14 @@ class BookingEntity {
     );
   }
 
-  //
+  static List<ClothWithCountEntity> convertSnapshotToList(dynamic data) {
+    List<ClothWithCountEntity> clothList = [];
+
+    if (data == null) return clothList;
+    (data as List).forEach((e) {
+      clothList.add(ClothWithCountEntity.fromJson(e));
+    });
+
+    return clothList;
+  }
 }

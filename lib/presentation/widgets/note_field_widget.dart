@@ -14,9 +14,11 @@ class _NoteFieldWidgetState extends State<NoteFieldWidget> {
       controller: widget.noteController,
       maxLines: 4, // Allows unlimited lines of text
       keyboardType: TextInputType.multiline,
-      decoration: const InputDecoration(
+      decoration: InputDecoration(
         hintText: 'Note for service (optional)',
-        border: OutlineInputBorder(),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(16)),
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       ),
     );
   }

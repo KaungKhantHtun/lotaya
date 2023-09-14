@@ -54,8 +54,10 @@ class _ServiceProviderSelectState extends State<ServiceProviderSelect> {
       },
       decoration: InputDecoration(
         // label: const Text("Service Provider(optional)"),
+
         hintText: 'Select Service Provider (optional)',
-        border: const OutlineInputBorder(),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(16)),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         suffixIcon: IconButton(
           icon: const Icon(Icons.arrow_drop_down),
           onPressed: () {

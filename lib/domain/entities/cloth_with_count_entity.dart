@@ -21,7 +21,7 @@ class ClothWithCountEntity {
       required this.count});
   double get totalPrice => count * price;
 
-  ClothWithCountEntity fromJson(Map<String, dynamic> json) {
+  static ClothWithCountEntity fromJson(Map<String, dynamic> json) {
     return ClothWithCountEntity(
       name: json['name'],
       imgUrl: json['imgUrl'],

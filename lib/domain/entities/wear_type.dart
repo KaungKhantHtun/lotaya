@@ -1,19 +1,22 @@
 enum WearType {
-  outWear("Outwear"),
-  casualWear("Casual wear"),
-  formalWear("Formal wear");
+  others("Others"),
+  clothes("Clothes"),
+  outWear("OutWear"),
+  homeAccessories("Home Accessories");
 
   final String name;
   const WearType(this.name);
   static WearType getWearType(String value) {
     switch (value) {
-      case "Casual wear":
-        return WearType.casualWear;
-      case "Formal wear":
-        return WearType.formalWear;
-      case "Outwear":
-      default:
+      case "Clothes":
+        return WearType.clothes;
+      case "OutWear":
         return WearType.outWear;
+      case "Home Accessories":
+        return WearType.homeAccessories;
+      case "Others":
+      default:
+        return WearType.others;
     }
   }
 }

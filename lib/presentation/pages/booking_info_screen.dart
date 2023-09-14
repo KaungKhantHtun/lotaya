@@ -330,6 +330,9 @@ class _BookingInfoScreenState extends State<BookingInfoScreen> {
                     onPressed: () {},
                     style: ElevatedButton.styleFrom(
                       backgroundColor: colorPrimary,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
                     ),
                     child: Container(
                       padding: const EdgeInsets.all(16),

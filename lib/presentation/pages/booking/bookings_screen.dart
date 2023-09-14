@@ -71,8 +71,10 @@ class _BookingsScreenState extends State<BookingsScreen> {
     //   booking2,
     //   booking2,
     // ];
+
     querySnapshot = FirebaseFirestore.instance.collection(bookingTable);
     optionList = serviceTypeList.map((e) => e.name).toList();
+    selectedServiceProviderType = optionList;
     super.initState();
   }
 
@@ -80,15 +82,6 @@ class _BookingsScreenState extends State<BookingsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          icon: const Icon(
-            Icons.arrow_back,
-            color: colorPrimary,
-          ),
-        ),
         backgroundColor: Colors.white,
         centerTitle: false,
         title: GestureDetector(
@@ -134,52 +127,7 @@ class _BookingsScreenState extends State<BookingsScreen> {
         actions: [
           Padding(
             padding: const EdgeInsets.all(12.0),
-            // DropDownMultiSelect comes from multiselect
-            child: SizedBox(
-              width: 200,
-              child: DropDownMultiSelect<String>(
-                onChanged: (List<String> x) {
-                  setState(() {
-                    selectedServiceProviderType = x;
-                  });
-                  if (selectedServiceProviderType.length == 1) {
-                    querySnapshot = FirebaseFirestore.instance
-                        .collection(bookingTable)
-                        .where('serviceType',
-                            isEqualTo: selectedServiceProviderType.first);
-                  } else if (selectedServiceProviderType.length > 1) {
-                    querySnapshot = FirebaseFirestore.instance
-                        .collection(bookingTable)
-                        .where('serviceType',
-                            whereIn: selectedServiceProviderType);
-                  } else {
-                    querySnapshot =
-                        FirebaseFirestore.instance.collection(bookingTable);
-                  }
-                },
-                options: optionList,
-                childBuilder: (selectedValues) {
-                  return Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                    child: Text(
-                      selectedValues.length == optionList.length
-                          ? "All"
-                          : selectedValues.join(", "),
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 13,
-                      ),
-                    ),
-                  );
-                },
-                // menuItembuilder: (option) {
-                //   // return Text(option.name);
-                // },
-                selectedValues: selectedServiceProviderType,
-                whenEmpty: 'Choose Service Type',
-              ),
-            ),
+            child: _buildFilter(),
           ),
         ],
       ),
@@ -380,7 +328,8 @@ class _BookingsScreenState extends State<BookingsScreen> {
                                   ),
                                 ),
                               ),
-                              if (e.bookingStatus == BookingStatus.serviceFinished)
+                            if (e.bookingStatus ==
+                                BookingStatus.serviceFinished)
                               SizedBox(
                                 height: 36,
                                 width: double.infinity,
@@ -445,6 +394,58 @@ class _BookingsScreenState extends State<BookingsScreen> {
                 });
           }
         },
+      ),
+    );
+  }
+
+  SizedBox _buildFilter() {
+    return SizedBox(
+      width: 200,
+      child: DropDownMultiSelect<String>(
+        onChanged: (List<String> x) {
+          setState(() {
+            selectedServiceProviderType = x;
+          });
+          if (selectedServiceProviderType.length == 1) {
+            querySnapshot = FirebaseFirestore.instance
+                .collection(bookingTable)
+                .where('serviceType',
+                    isEqualTo: selectedServiceProviderType.first);
+          } else if (selectedServiceProviderType.length > 1) {
+            querySnapshot = FirebaseFirestore.instance
+                .collection(bookingTable)
+                .where('serviceType', whereIn: selectedServiceProviderType);
+          } else {
+            querySnapshot = FirebaseFirestore.instance.collection(bookingTable);
+          }
+        },
+        options: optionList,
+        childBuilder: (selectedValues) {
+          return Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+            child: Text(
+              selectedValues.length == optionList.length
+                  ? "All"
+                  : selectedValues.join(", "),
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 13,
+              ),
+            ),
+          );
+        },
+        // menuItembuilder: (option) {
+        //   // return Text(option.name);
+        // },
+        selectedValues: selectedServiceProviderType,
+        // whenEmpty: 'Choose Service Type',
+        // decoration: InputDecoration(
+        //   contentPadding: EdgeInsets.all(4),
+        // ),
+
+        hint: const Text('Choose Service Type'),
+        icon: const Icon(Icons.arrow_drop_down),
+        whenEmpty: "All",
       ),
     );
   }
