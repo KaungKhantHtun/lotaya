@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hakathon_service/domain/entities/booking_status.dart';
-import 'package:hakathon_service/domain/entities/service_provider_entity.dart';
-import 'package:hakathon_service/domain/entities/service_provider_type.dart';
 import 'package:hakathon_service/presentation/pages/cleaning_service/cleaning_service_screen.dart';
 import 'package:hakathon_service/presentation/pages/electronic_service/electronic_service_screen.dart';
 import 'package:hakathon_service/presentation/pages/freelancer/freelancer_list_screen.dart';
@@ -15,7 +13,6 @@ import 'package:lottie/lottie.dart';
 import '../../domain/entities/booking_entity.dart';
 import '../../utils/constants.dart';
 import 'booking/booking_detail_screen.dart';
-import 'categories_list.dart';
 import 'house_moving_service/house_moving_service_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -27,14 +24,6 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   late Query<Map<String, dynamic>> querySnapshot;
-
-  ServiceProviderEntity serviceProviderEntity = ServiceProviderEntity(
-      serviceId: "1",
-      serviceName: "Home Appliance Repair",
-      about: "We offer professional reparing service on-demand",
-      priceRate: 5000,
-      serviceType: ServiceProviderType.electronic,
-      rating: 5);
 
   @override
   void initState() {

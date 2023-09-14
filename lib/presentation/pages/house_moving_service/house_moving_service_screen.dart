@@ -6,17 +6,19 @@ import 'package:hakathon_service/domain/entities/booking_status.dart';
 import 'package:hakathon_service/domain/entities/car_entity.dart';
 import 'package:hakathon_service/presentation/widgets/note_field_widget.dart';
 import 'package:hakathon_service/services/distance_service.dart';
-import 'package:hakathon_service/services/map_service.dart';
 import 'package:hakathon_service/utils/constants.dart';
 import 'package:intl/intl.dart';
 
-import '../../../domain/entities/service_provider_entity.dart';
+import '../../../domain/entities/service_provider_type.dart';
 import '../../../services/location_service.dart';
+import '../../widgets/service_provider_select.dart';
+import '../../widgets/total_cost_widget.dart';
 import '../home/home_screen.dart';
 
 class HouseMovingServiceScreen extends StatefulWidget {
-  const HouseMovingServiceScreen({super.key, required this.serviceProvider});
-  final ServiceProviderEntity serviceProvider;
+  const HouseMovingServiceScreen({
+    super.key,
+  });
 
   @override
   State<HouseMovingServiceScreen> createState() =>
@@ -45,11 +47,13 @@ class _HouseMovingServiceScreenState extends State<HouseMovingServiceScreen> {
 
   final TextEditingController _fromController = TextEditingController();
   final TextEditingController _toController = TextEditingController();
+  final TextEditingController _serviceProviderController =
+      TextEditingController();
 
   LatLng? _fromLatLng;
   LatLng? _toLatLng;
-  String? distance;
-  String? duration;
+  DistanceAndDuration? _estimate;
+  late CarEntity _selectedCar;
 
   List<CarEntity> carList = [
     CarEntity(
@@ -73,6 +77,8 @@ class _HouseMovingServiceScreenState extends State<HouseMovingServiceScreen> {
   @override
   void initState() {
     super.initState();
+    _selectedCar = carList.first;
+    price = _selectedCar.price.toDouble();
     hourList = [
       DateTime(movingDate.year, movingDate.month, movingDate.day, 11),
       DateTime(movingDate.year, movingDate.month, movingDate.day, 12, 10),
@@ -104,13 +110,22 @@ class _HouseMovingServiceScreenState extends State<HouseMovingServiceScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: colorPrimary,
+        centerTitle: true,
+        title: const Text(
+          "HOME MOVING",
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
       ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildHeader(),
+            // _buildHeader(),
             Container(
               margin: const EdgeInsets.all(16),
               child: Column(
@@ -140,7 +155,22 @@ class _HouseMovingServiceScreenState extends State<HouseMovingServiceScreen> {
                   const SizedBox(
                     height: 16,
                   ),
+                  ServiceProviderSelect(
+                    type: ServiceProviderType.houseMoving,
+                    serviceProviderController: _serviceProviderController,
+                    onChanged: (value) {
+                      _serviceProviderController.text = value;
+                      setState(() {});
+                    },
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
                   NoteFieldWidget(noteController: _noteController),
+                  const SizedBox(
+                    height: 16,
+                  ),
+               TotalCostWidget(price:price),
                   const SizedBox(
                     height: 16,
                   ),
@@ -261,82 +291,94 @@ class _HouseMovingServiceScreenState extends State<HouseMovingServiceScreen> {
 
   int selectedCarIndex = 0;
   Widget _buildCarTypeWidget() {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        children: carList.map(
-          (e) {
-            int index = carList.indexOf(e);
-            return Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                InkWell(
-                  onTap: () {
-                    selectedCarIndex = index;
-                    setState(() {});
-                  },
-                  child: Container(
-                    // width: 100,
-                    height: 80,
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: selectedCarIndex == index
-                          ? colorPrimary.withOpacity(0.4)
-                          : colorPrimary.withOpacity(0.1),
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    child: Center(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Column(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          "Car Type",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 16),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: carList.map(
+              (e) {
+                int index = carList.indexOf(e);
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        selectedCarIndex = index;
+                        _selectedCar = e;
+                        price = _selectedCar.price.toDouble();
+                        setState(() {});
+                      },
+                      child: Container(
+                        // width: 100,
+                        height: 80,
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: selectedCarIndex == index
+                              ? colorPrimary.withOpacity(0.4)
+                              : colorPrimary.withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        child: Center(
+                          child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Text(
-                                e.name,
-                                textAlign: TextAlign.start,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.black,
-                                ),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    e.name,
+                                    textAlign: TextAlign.start,
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 8,
+                                  ),
+                                  Text(
+                                    "${e.price} Ks",
+                                    textAlign: TextAlign.start,
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ],
                               ),
                               const SizedBox(
-                                height: 8,
+                                width: 16,
                               ),
-                              Text(
-                                "${e.price} Ks",
-                                textAlign: TextAlign.start,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.black,
-                                ),
+                              Image.asset(
+                                e.imgUrl,
+                                width: 50,
+                                height: 50,
                               ),
                             ],
                           ),
-                          const SizedBox(
-                            width: 16,
-                          ),
-                          Image.asset(
-                            e.imgUrl,
-                            width: 50,
-                            height: 50,
-                          ),
-                        ],
+                        ),
                       ),
                     ),
-                  ),
-                ),
-                if (index != carList.length - 1)
-                  const SizedBox(
-                    width: 16,
-                  )
-              ],
-            );
-          },
-        ).toList(),
-      ),
+                    if (index != carList.length - 1)
+                      const SizedBox(
+                        width: 16,
+                      )
+                  ],
+                );
+              },
+            ).toList(),
+          ),
+        ),
+      ],
     );
   }
 
@@ -360,113 +402,115 @@ class _HouseMovingServiceScreenState extends State<HouseMovingServiceScreen> {
     );
   }
 
-  Widget _buildHeader() {
-    return Container(
-      height: 200,
-      padding: const EdgeInsets.all(16),
-      decoration: const BoxDecoration(
-        color: headerSectionColor,
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(40),
-          bottomRight: Radius.circular(40),
-        ),
-      ),
-      child: Center(
-        child: Row(
-          children: [
-            Expanded(
-              flex: 3,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  Row(
-                    children: [
-                      ...List.generate(
-                        widget.serviceProvider.rating,
-                        (index) => const Icon(
-                          Icons.star,
-                          color: colorSecondary,
-                          size: 16,
-                        ),
-                      ).toList(),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 4,
-                  ),
-                  Text(
-                    widget.serviceProvider.serviceName,
-                    style: headerStyle,
-                    textAlign: TextAlign.left,
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  Flexible(
-                    child: Text(
-                      widget.serviceProvider.about,
-                      style: regularStyle.copyWith(color: fontColorGrey),
-                      textAlign: TextAlign.left,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  Text(
-                    "${widget.serviceProvider.priceRate} Ks/Hr",
-                    style: regularStyle.copyWith(
-                        color: colorPrimary, fontWeight: FontWeight.w600),
-                    textAlign: TextAlign.left,
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              flex: 2,
-              child: Container(),
-            ),
-            IconButton(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => MapSample(
-                        markers: [
-                          Marker(
-                            markerId: MarkerId("1"),
-                            position: LatLng(16.844171, 96.085055),
-                            icon: markerIcon,
-                          ),
-                          Marker(
-                            markerId: MarkerId("2"),
-                            position: LatLng(16.845986, 96.087491),
-                            icon: markerIcon,
-                          ),
-                          Marker(
-                            markerId: MarkerId("3"),
-                            position: LatLng(16.840941, 96.087332),
-                            icon: markerIcon,
-                          ),
-                          Marker(
-                            markerId: MarkerId("4"),
-                            position: LatLng(16.840868, 96.085035),
-                            icon: markerIcon,
-                          )
-                        ],
-                      ),
-                    ));
-              },
-              icon: Image.asset("assets/map.png"),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+
+
+  // Widget _buildHeader() {
+  //   return Container(
+  //     height: 200,
+  //     padding: const EdgeInsets.all(16),
+  //     decoration: const BoxDecoration(
+  //       color: headerSectionColor,
+  //       borderRadius: BorderRadius.only(
+  //         bottomLeft: Radius.circular(40),
+  //         bottomRight: Radius.circular(40),
+  //       ),
+  //     ),
+  //     child: Center(
+  //       child: Row(
+  //         children: [
+  //           Expanded(
+  //             flex: 3,
+  //             child: Column(
+  //               mainAxisAlignment: MainAxisAlignment.start,
+  //               crossAxisAlignment: CrossAxisAlignment.start,
+  //               children: [
+  //                 const SizedBox(
+  //                   height: 30,
+  //                 ),
+  //                 Row(
+  //                   children: [
+  //                     ...List.generate(
+  //                       widget.serviceProvider.rating,
+  //                       (index) => const Icon(
+  //                         Icons.star,
+  //                         color: colorSecondary,
+  //                         size: 16,
+  //                       ),
+  //                     ).toList(),
+  //                   ],
+  //                 ),
+  //                 const SizedBox(
+  //                   height: 4,
+  //                 ),
+  //                 Text(
+  //                   widget.serviceProvider.serviceName,
+  //                   style: headerStyle,
+  //                   textAlign: TextAlign.left,
+  //                 ),
+  //                 const SizedBox(
+  //                   height: 16,
+  //                 ),
+  //                 Flexible(
+  //                   child: Text(
+  //                     widget.serviceProvider.about,
+  //                     style: regularStyle.copyWith(color: fontColorGrey),
+  //                     textAlign: TextAlign.left,
+  //                   ),
+  //                 ),
+  //                 const SizedBox(
+  //                   height: 8,
+  //                 ),
+  //                 // Text(
+  //                 //   "${widget.serviceProvider.priceRate} Ks/Hr",
+  //                 //   style: regularStyle.copyWith(
+  //                 //       color: colorPrimary, fontWeight: FontWeight.w600),
+  //                 //   textAlign: TextAlign.left,
+  //                 // ),
+  //               ],
+  //             ),
+  //           ),
+  //           Expanded(
+  //             flex: 2,
+  //             child: Container(),
+  //           ),
+  //           IconButton(
+  //             onPressed: () {
+  //               Navigator.push(
+  //                   context,
+  //                   MaterialPageRoute(
+  //                     builder: (context) => MapSample(
+  //                       markers: [
+  //                         Marker(
+  //                           markerId: MarkerId("1"),
+  //                           position: LatLng(16.844171, 96.085055),
+  //                           icon: markerIcon,
+  //                         ),
+  //                         Marker(
+  //                           markerId: MarkerId("2"),
+  //                           position: LatLng(16.845986, 96.087491),
+  //                           icon: markerIcon,
+  //                         ),
+  //                         Marker(
+  //                           markerId: MarkerId("3"),
+  //                           position: LatLng(16.840941, 96.087332),
+  //                           icon: markerIcon,
+  //                         ),
+  //                         Marker(
+  //                           markerId: MarkerId("4"),
+  //                           position: LatLng(16.840868, 96.085035),
+  //                           icon: markerIcon,
+  //                         )
+  //                       ],
+  //                     ),
+  //                   ));
+  //             },
+  //             icon: Image.asset("assets/map.png"),
+  //           ),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 
   List<String> _floorList = const [
     "1st Floor",
@@ -675,9 +719,11 @@ class _HouseMovingServiceScreenState extends State<HouseMovingServiceScreen> {
     return SizedBox(
       width: MediaQuery.of(context).size.width - 32,
       child: ElevatedButton(
-        onPressed: () async {
-          await doBooking();
-        },
+        onPressed: _fromController.text.isEmpty || _toController.text.isEmpty
+            ? null
+            : () async {
+                await doBooking();
+              },
         style: ElevatedButton.styleFrom(
           backgroundColor: colorPrimary,
         ),
@@ -702,9 +748,9 @@ class _HouseMovingServiceScreenState extends State<HouseMovingServiceScreen> {
         FirebaseFirestore.instance.collection(bookingTable);
     BookingEntity booking = BookingEntity(
       bookingId: "house123",
-      name: widget.serviceProvider.serviceName,
-      serviceType: widget.serviceProvider.serviceType,
-     // serviceProviderId: widget.serviceProvider.serviceId,
+      name: _serviceProviderController.text,
+      serviceType: ServiceProviderType.houseMoving,
+      // serviceProviderId: widget.serviceProvider.serviceId,
       serviceName: "House Moving",
       serviceTime: DateTime(
         selectedServiceDate.year,
@@ -720,6 +766,19 @@ class _HouseMovingServiceScreenState extends State<HouseMovingServiceScreen> {
       long: _fromLatLng?.longitude,
       price: price,
       note: _noteController.text,
+
+      fromLat: _fromLatLng?.latitude,
+      fromLong: _fromLatLng?.longitude,
+      toLat: _toLatLng?.latitude,
+      toLong: _toLatLng?.longitude,
+      fromAddr: _fromController.text,
+      toAddr: _toController.text,
+      floorNo: _selectedFloor,
+      // car:,
+      carName: _selectedCar.name,
+      carImgUrl: _selectedCar.imgUrl,
+      carSize: _selectedCar.size,
+      carPrice: _selectedCar.price,
     );
     try {
       await bookingList.add(booking.toJson());

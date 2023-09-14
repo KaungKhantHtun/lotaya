@@ -29,15 +29,15 @@ class UserEntity {
     };
   }
 
-  static UserEntity fromJson(Map<String, dynamic> map) {
+  static UserEntity fromJson(Map<String, dynamic>? map) {
     return UserEntity(
-        userId: map["userId"],
-        dob: map["dob"], // "1999-04-28"
-        name: map["name"],
-        nrc: map["nrc"],
-        msisdn: map["msisdn"],
-        gender: map["gender"], // "Male", "Female"
-        kycStatus: map["kyc_status"]);
+        userId: map?["userId"],
+        dob: map?["dob"], // "1999-04-28"
+        name: map?["name"],
+        nrc: map?["nrc"],
+        msisdn: map?["msisdn"],
+        gender: map?["gender"], // "Male", "Female"
+        kycStatus: map?["kyc_status"]);
   }
   // static BookingEntity fromDoc(QueryDocumentSnapshot<Object?>? doc) {
   //   return BookingEntity(
@@ -45,7 +45,7 @@ class UserEntity {
   //         ? doc?.get("bookingId")
   //         : "",
 
-  static UserEntity fromDoc(QueryDocumentSnapshot<Object?>? doc) {
+  static UserEntity fromDoc(DocumentSnapshot<Map<String, dynamic>>? doc) {
     return UserEntity(
       userId: doc?.data().toString().contains("userId") ?? false
           ? doc?.get("userId")

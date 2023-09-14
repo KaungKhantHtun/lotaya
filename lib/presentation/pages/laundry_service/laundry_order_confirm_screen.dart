@@ -2,21 +2,20 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hakathon_service/domain/entities/booking_entity.dart';
 import 'package:hakathon_service/domain/entities/booking_status.dart';
+import 'package:hakathon_service/domain/entities/service_provider_type.dart';
 import 'package:hakathon_service/presentation/widgets/address_field_widget.dart';
 import 'package:hakathon_service/presentation/widgets/note_field_widget.dart';
 
 import '../../../domain/entities/laundry_booking_confirm_entity.dart';
-import '../../../domain/entities/service_provider_entity.dart';
 import '../../../utils/constants.dart';
+import '../../widgets/service_provider_select.dart';
 import '../home/home_screen.dart';
 
 class LaundryOrderConfirmScreen extends StatefulWidget {
   const LaundryOrderConfirmScreen({
     super.key,
-    required this.serviceProvider,
     required this.laundryBookingConfirmEntity,
   });
-  final ServiceProviderEntity serviceProvider;
   final LaundryBookingConfirmEntity laundryBookingConfirmEntity;
 
   @override
@@ -27,13 +26,15 @@ class LaundryOrderConfirmScreen extends StatefulWidget {
 class _LaundryOrderConfirmScreenState extends State<LaundryOrderConfirmScreen> {
   TextEditingController _addressController = TextEditingController();
   TextEditingController _noteController = TextEditingController();
-
+  TextEditingController _serviceProviderController = TextEditingController();
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
   }
 
+  double lat = 0.0;
+  double long = 0.0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,7 +58,7 @@ class _LaundryOrderConfirmScreenState extends State<LaundryOrderConfirmScreen> {
                     ),
                     Icon(
                       Icons.arrow_back_ios,
-                      color: Colors.black,
+                      color: Colors.white,
                       size: 16,
                     ),
                   ],
@@ -69,13 +70,13 @@ class _LaundryOrderConfirmScreenState extends State<LaundryOrderConfirmScreen> {
         title: const Text(
           "Confirm Booking",
           style: TextStyle(
-            color: Colors.black,
+            color: Colors.white,
             fontSize: 14,
             fontWeight: FontWeight.w600,
           ),
         ),
         centerTitle: true,
-        backgroundColor: Colors.white,
+        backgroundColor: colorPrimary,
         elevation: 0,
       ),
       body: Container(
@@ -104,7 +105,16 @@ class _LaundryOrderConfirmScreenState extends State<LaundryOrderConfirmScreen> {
                             Expanded(
                               flex: 2,
                               child: Text(
-                                "Cloth Type",
+                                "Cloth",
+                                maxLines: 2,
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            Expanded(
+                              flex: 3,
+                              child: Text(
+                                "Service",
+                                maxLines: 2,
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                             ),
@@ -150,18 +160,26 @@ class _LaundryOrderConfirmScreenState extends State<LaundryOrderConfirmScreen> {
                                   child: Text(e.name),
                                 ),
                                 Expanded(
+                                  flex: 3,
+                                  child: Text(e.serviceType.name),
+                                ),
+                                Expanded(
                                   flex: 2,
-                                  child: Text(e.price.toString()),
+                                  child: Text(
+                                    e.price.toInt().toString(),
+                                  ),
                                 ),
                                 Expanded(
                                   flex: 2,
                                   child: Text(
                                     e.count.toString(),
+                                    textAlign: TextAlign.center,
                                   ),
                                 ),
                                 Expanded(
                                   flex: 2,
-                                  child: Text("${e.count * e.price} Ks"),
+                                  child:
+                                      Text("${(e.count * e.price).toInt()} Ks"),
                                 ),
                               ],
                             ),
@@ -209,7 +227,26 @@ class _LaundryOrderConfirmScreenState extends State<LaundryOrderConfirmScreen> {
               const SizedBox(
                 height: 16,
               ),
-              AddressFieldWidget(addressController: _addressController),
+              ServiceProviderSelect(
+                type: ServiceProviderType.laundry,
+                serviceProviderController: _serviceProviderController,
+                onChanged: (value) {
+                  _serviceProviderController.text = value;
+                  setState(() {});
+                },
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              AddressFieldWidget(
+                addressController: _addressController,
+                onChanged: (address, latlng) {
+                  _addressController.text = address;
+                  lat = latlng.latitude;
+                  long = latlng.longitude;
+                  setState(() {});
+                },
+              ),
               const SizedBox(
                 height: 16,
               ),
@@ -229,9 +266,11 @@ class _LaundryOrderConfirmScreenState extends State<LaundryOrderConfirmScreen> {
     return SizedBox(
       width: MediaQuery.of(context).size.width - 32,
       child: ElevatedButton(
-        onPressed: () async {
-          await doBooking();
-        },
+        onPressed: _addressController.text.isEmpty
+            ? null
+            : () async {
+                await doBooking();
+              },
         style: ElevatedButton.styleFrom(
           backgroundColor: colorPrimary,
         ),
@@ -255,8 +294,8 @@ class _LaundryOrderConfirmScreenState extends State<LaundryOrderConfirmScreen> {
     double long = 34;
     BookingEntity booking = BookingEntity(
       bookingId: "123",
-      name: widget.serviceProvider.serviceName,
-      serviceType: widget.serviceProvider.serviceType,
+      name: _serviceProviderController.text,
+      serviceType: ServiceProviderType.laundry,
       // serviceProviderId: widget.serviceProvider.serviceId,
       serviceName: "Laundry",
       serviceTime: DateTime.now(),
@@ -267,6 +306,9 @@ class _LaundryOrderConfirmScreenState extends State<LaundryOrderConfirmScreen> {
       long: long,
       price: widget.laundryBookingConfirmEntity.totalPrice,
       note: _noteController.text,
+      clothList: widget.laundryBookingConfirmEntity.clothList,
+      totalClothCount: widget.laundryBookingConfirmEntity.totalCount,
+      totalLaundryPrice: widget.laundryBookingConfirmEntity.totalPrice,
     );
     try {
       await bookingList.add(booking.toJson());

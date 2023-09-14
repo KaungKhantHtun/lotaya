@@ -7,13 +7,12 @@ import 'package:hakathon_service/domain/entities/wear_type.dart';
 import 'package:hakathon_service/utils/constants.dart';
 
 import '../../../domain/entities/laundry_service_type.dart';
-import '../../../domain/entities/service_provider_entity.dart';
 import 'laundry_order_confirm_screen.dart';
 
 class LaundryServiceScreen extends StatefulWidget {
-  LaundryServiceScreen({Key? key, required this.serviceProvider})
-      : super(key: key);
-  final ServiceProviderEntity serviceProvider;
+  LaundryServiceScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<LaundryServiceScreen> createState() => _LaundryServiceScreenState();
@@ -64,6 +63,7 @@ class _LaundryServiceScreenState extends State<LaundryServiceScreen> {
     return Scaffold(
       backgroundColor: colorPrimary,
       appBar: AppBar(
+        backgroundColor: colorPrimary,
         leading: Padding(
           padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12),
           child: InkWell(
@@ -83,7 +83,7 @@ class _LaundryServiceScreenState extends State<LaundryServiceScreen> {
                     ),
                     Icon(
                       Icons.arrow_back_ios,
-                      color: Colors.black,
+                      color: Colors.white,
                       size: 16,
                     ),
                   ],
@@ -95,13 +95,12 @@ class _LaundryServiceScreenState extends State<LaundryServiceScreen> {
         title: const Text(
           "LAUNDRY",
           style: TextStyle(
-            color: Colors.black,
+            color: Colors.white,
             fontSize: 14,
             fontWeight: FontWeight.w600,
           ),
         ),
         centerTitle: true,
-        backgroundColor: Colors.white,
         elevation: 0,
       ),
       body: Stack(
@@ -437,6 +436,10 @@ class _LaundryServiceScreenState extends State<LaundryServiceScreen> {
                         .where((element) => element.id == id)
                         .first
                         .name,
+                    imgUrl: originalClothList
+                        .where((element) => element.id == id)
+                        .first
+                        .imgUrl,
                     serviceType: type,
                     price: originalClothList
                         .where((element) => element.id == id)
@@ -467,7 +470,6 @@ class _LaundryServiceScreenState extends State<LaundryServiceScreen> {
 
           Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => LaundryOrderConfirmScreen(
-                  serviceProvider: widget.serviceProvider,
                   laundryBookingConfirmEntity: bookingConfirm)));
         }
       },

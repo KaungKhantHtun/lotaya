@@ -149,10 +149,10 @@ packages:
     dependency: transitive
     description:
       name: dio
-      sha256: ce75a1b40947fea0a0e16ce73337122a86762e38b982e1ccb909daa3b9bc4197
+      sha256: "7d328c4d898a61efc3cd93655a0955858e29a0aa647f0f9e02d59b3bb275e2e8"
       url: "https://pub.dev"
     source: hosted
-    version: "5.3.2"
+    version: "4.0.6"
   equatable:
     dependency: transitive
     description:
@@ -193,14 +193,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.2"
-  file:
-    dependency: transitive
-    description:
-      name: file
-      sha256: "1b92bec4fc2a72f59a8e15af5f52cd441e4a7860b49499d69dfa817af20e925d"
-      url: "https://pub.dev"
-    source: hosted
-    version: "6.1.4"
   file_picker:
     dependency: "direct main"
     description:
@@ -387,6 +379,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.16"
+  flutter_polyline_points:
+    dependency: "direct main"
+    description:
+      name: flutter_polyline_points
+      sha256: "02699e69142f51a248d784b6e3eec524194467fca5f7c4da19699ce2368b6980"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   flutter_rating_bar:
     dependency: "direct main"
     description:
@@ -449,10 +449,10 @@ packages:
     dependency: "direct main"
     description:
       name: google_geocoding_api
-      sha256: "5b01146ff8bf5dd6f59b0b38515b5b784b9e1007a3fc7929a6638c2de7d2c5d8"
+      sha256: c90ec55a9481fb85db8d7066e3e8b74b2790262b8743e1778a852be6eca00210
       url: "https://pub.dev"
     source: hosted
-    version: "1.4.1"
+    version: "1.2.0"
   google_maps:
     dependency: transitive
     description:
@@ -461,6 +461,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.3.0"
+  google_maps_directions:
+    dependency: "direct main"
+    description:
+      name: google_maps_directions
+      sha256: "9038944f27cce2fb26b7b1c7e039d2afd1630f12d7d62d22974ca5af349b6a41"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.3+4"
   google_maps_flutter:
     dependency: "direct main"
     description:
@@ -501,6 +509,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.5.4+1"
+  google_maps_routes:
+    dependency: "direct main"
+    description:
+      name: google_maps_routes
+      sha256: "6bfff0deefe49f1e1d0d12f0b119bb56afb772469160b88d2b725d85048b8ddf"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.2"
+  google_maps_widget:
+    dependency: "direct main"
+    description:
+      name: google_maps_widget
+      sha256: "20c62ddfcaced246eb6895c7261f21b0ce47e32f5e3c48ff67df946c56b86f14"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.5+1"
   html:
     dependency: transitive
     description:
@@ -845,62 +869,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.1"
-  shared_preferences:
-    dependency: "direct main"
-    description:
-      name: shared_preferences
-      sha256: b7f41bad7e521d205998772545de63ff4e6c97714775902c199353f8bf1511ac
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.2.1"
-  shared_preferences_android:
-    dependency: transitive
-    description:
-      name: shared_preferences_android
-      sha256: "8568a389334b6e83415b6aae55378e158fbc2314e074983362d20c562780fb06"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.2.1"
-  shared_preferences_foundation:
-    dependency: transitive
-    description:
-      name: shared_preferences_foundation
-      sha256: "7bf53a9f2d007329ee6f3df7268fd498f8373602f943c975598bbb34649b62a7"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.3.4"
-  shared_preferences_linux:
-    dependency: transitive
-    description:
-      name: shared_preferences_linux
-      sha256: c2eb5bf57a2fe9ad6988121609e47d3e07bb3bdca5b6f8444e4cf302428a128a
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.3.1"
-  shared_preferences_platform_interface:
-    dependency: transitive
-    description:
-      name: shared_preferences_platform_interface
-      sha256: d4ec5fc9ebb2f2e056c617112aa75dcf92fc2e4faaf2ae999caa297473f75d8a
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.3.1"
-  shared_preferences_web:
-    dependency: transitive
-    description:
-      name: shared_preferences_web
-      sha256: d762709c2bbe80626ecc819143013cc820fa49ca5e363620ee20a8b15a3e3daf
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.2.1"
-  shared_preferences_windows:
-    dependency: transitive
-    description:
-      name: shared_preferences_windows
-      sha256: f763a101313bd3be87edffe0560037500967de9c394a714cd598d945517f694f
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.3.1"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -970,6 +938,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.4.16"
+  time_picker_sheet:
+    dependency: "direct main"
+    description:
+      name: time_picker_sheet
+      sha256: a70de6b3a7e3040f0217e12ea636cc62a02d51cc3e8c2fb6c9828582d862c422
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.2+1"
   typed_data:
     dependency: transitive
     description:

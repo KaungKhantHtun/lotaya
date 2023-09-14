@@ -251,7 +251,7 @@ class _BookingsScreenState extends State<BookingsScreen> {
                                           ),
                                           Flexible(
                                             child: Text(
-                                              e.name,
+                                              e.name ?? "",
                                               textAlign: TextAlign.end,
                                               style: const TextStyle(
                                                 fontWeight: FontWeight.bold,

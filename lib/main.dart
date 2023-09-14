@@ -5,6 +5,10 @@ import 'package:hakathon_service/presentation/cubit/booking_cubit.dart';
 import 'package:hakathon_service/presentation/pages/home/home_screen.dart';
 
 import 'domain/entities/service_provider_type.dart';
+import 'package:hakathon_service/presentation/cubit/booking_cubit.dart';
+import 'package:hakathon_service/presentation/pages/booking/bookings_screen.dart';
+import 'presentation/pages/home/home_screen.dart';
+import 'presentation/pages/onboarding/onboarding_screen.dart';
 import 'services/firebase_service.dart';
 
 void main() async {
@@ -25,14 +29,6 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
   }
-
-  ServiceProviderEntity serviceProviderEntity = ServiceProviderEntity(
-      serviceId: "1",
-      serviceName: "Home Appliance Repair",
-      about: "We offer professional reparing service on-demand",
-      priceRate: 5000,
-      serviceType: ServiceProviderType.electronic,
-      rating: 5);
 
   @override
   Widget build(BuildContext context) {
