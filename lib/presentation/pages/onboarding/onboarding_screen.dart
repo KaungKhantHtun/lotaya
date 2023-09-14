@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:hakathon_service/utils/constants.dart';
 
@@ -54,6 +57,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             ),
           ),
         ),
+        title: const Text(
+          "Registeration",
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        centerTitle: true,
         backgroundColor: colorPrimary,
       ),
       body: Container(
@@ -63,22 +74,38 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                "Registeration",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              const SizedBox(
-                height: 24,
-              ),
+              // const Text(
+              //   "Registeration",
+              //   style: TextStyle(
+              //     fontSize: 20,
+              //     fontWeight: FontWeight.w600,
+              //   ),
+              // ),
+              // const SizedBox(
+              //   height: 24,
+              // ),
               Form(
                 key: _formkey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
+                    Center(
+                      child: _buildImagePickerWidget(),
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    _buildTextFieldWidget(
+                      label: "Phone Number",
+                      controller: _phnoController,
+                      inputType: TextInputType.phone,
+                    ),
+                    _buildTextFieldWidget(
+                      label: "Email",
+                      controller: _emailController,
+                      inputType: TextInputType.emailAddress,
+                    ),
                     _buildTextFieldWidget(
                       label: "Field (Profession)",
                       controller: _fieldController,
@@ -96,19 +123,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ),
                     _buildTextFieldWidget(
                       label: "Description",
-                      maxlines: 2,
+                      maxlines: 5,
                       controller: _descriptionController,
                       inputType: TextInputType.multiline,
-                    ),
-                    _buildTextFieldWidget(
-                      label: "Phone Number",
-                      controller: _phnoController,
-                      inputType: TextInputType.phone,
-                    ),
-                    _buildTextFieldWidget(
-                      label: "Email",
-                      controller: _emailController,
-                      inputType: TextInputType.emailAddress,
                     ),
                     SizedBox(
                       width: double.infinity,
@@ -160,7 +177,19 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           keyboardType: inputType,
           maxLines: maxlines,
           decoration: const InputDecoration(
-            border: OutlineInputBorder(),
+            border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(16.0))),
+            //  border: OutlineInputBorder(
+            //   borderRadius: BorderRadius.all(Radius.circular(16.0)),
+
+            //   borderSide: BorderSide.none, // Remove border
+            // ),
+            contentPadding: EdgeInsets.only(
+              top: 8,
+              right: 16,
+              left: 16,
+              bottom: 8,
+            ),
           ),
         ),
         const SizedBox(
@@ -168,5 +197,60 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         ),
       ],
     );
+  }
+
+  double imageSize = 90;
+  Widget _buildImagePickerWidget() {
+    return Stack(
+      children: [
+        Container(
+          width: 98,
+          height: 100,
+          // color: Colors.blue,
+        ),
+        Positioned(
+          child: ClipOval(
+            child: Image.asset("assets/profile.jpg",
+                width: imageSize, height: imageSize),
+          ),
+        ),
+        Positioned(
+          bottom: 8,
+          right: 8,
+          child: InkWell(
+            onTap: () {
+              pickImages();
+            },
+            child: Container(
+              width: 25,
+              height: 25,
+              decoration: BoxDecoration(
+                color: colorPrimary,
+                borderRadius: BorderRadius.circular(25),
+              ),
+              child: const Center(
+                child: Icon(
+                  Icons.edit,
+                  color: Colors.white,
+                  size: 18,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  late File file;
+  Future<void> pickImages() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+    if (result != null) {
+      String path = result.files.single.path ?? "";
+      file = File(path);
+    } else {
+      // User canceled the picker
+    }
   }
 }

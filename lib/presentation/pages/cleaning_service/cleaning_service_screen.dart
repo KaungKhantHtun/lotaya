@@ -44,6 +44,9 @@ class _CleaningServiceScreenState extends State<CleaningServiceScreen> {
   BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
 
   TextEditingController _serviceProviderController = TextEditingController();
+  TextEditingController _sizeController = TextEditingController();
+
+  final _formkey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -99,58 +102,89 @@ class _CleaningServiceScreenState extends State<CleaningServiceScreen> {
             // _buildHeader(),
             Container(
               margin: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _buildServiceList(),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  _buildSizeSlider(),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  _buildDatePicker(),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  _buildTimePicker(),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  ServiceProviderSelect(
-                    type: ServiceProviderType.homeCleaning,
-                    serviceProviderController: _serviceProviderController,
-                    onChanged: (value) {
-                      _serviceProviderController.text = value;
-                      setState(() {});
-                    },
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  AddressFieldWidget(
-                    addressController: _addressController,
-                    onChanged: (address, latlng) {
-                      _addressController.text = address;
-                      lat = latlng.latitude;
-                      long = latlng.longitude;
-                      setState(() {});
-                    },
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  NoteFieldWidget(noteController: _noteController),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  TotalCostWidget(price: price),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  _buildContinueButton(),
-                ],
+              child: Form(
+                key: _formkey,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildServiceList(),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    TextFormField(
+                      controller: _sizeController,
+                      keyboardType: TextInputType.number,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Enter Size";
+                        } else {
+                          int size = int.tryParse(value) ?? 0;
+                          if (size < 50) {
+                            return "Our available room size is 50sqft to 500 sqft.";
+                          }
+                          if (size > 5000) {
+                            return "Our available room size is 50sqft to 500 sqft.";
+                          }
+                        }
+                      },
+                      decoration: const InputDecoration(
+                        label: Text("Enter Room Size"),
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                        border: OutlineInputBorder(),
+                        suffixText: "sqft",
+                        suffixStyle: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black54,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    _buildDatePicker(),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    _buildTimePicker(),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    ServiceProviderSelect(
+                      type: ServiceProviderType.homeCleaning,
+                      serviceProviderController: _serviceProviderController,
+                      onChanged: (value) {
+                        _serviceProviderController.text = value;
+                        setState(() {});
+                      },
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    AddressFieldWidget(
+                      addressController: _addressController,
+                      onChanged: (address, latlng) {
+                        _addressController.text = address;
+                        lat = latlng.latitude;
+                        long = latlng.longitude;
+                        setState(() {});
+                      },
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    NoteFieldWidget(noteController: _noteController),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    TotalCostWidget(price: price),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    _buildContinueButton(),
+                  ],
+                ),
               ),
             ),
           ],
@@ -381,60 +415,60 @@ class _CleaningServiceScreenState extends State<CleaningServiceScreen> {
   int defaultMaxSize = 1400;
   int actualMinSize = 50;
   int actualMaxSize = 1400;
-  Widget _buildSizeSlider() {
-    return Container(
-      margin: EdgeInsets.zero,
-      padding: EdgeInsets.zero,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          const Text(
-            "Space Size",
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-          SliderTheme(
-            data: SliderThemeData(
-              activeTickMarkColor: colorPrimary,
-              activeTrackColor: colorPrimary,
-              overlayColor: colorPrimary.withOpacity(0.25),
-              valueIndicatorColor: colorPrimary,
-              thumbColor: Colors.white,
-              overlappingShapeStrokeColor: Colors.white,
-              trackHeight: 2.0,
-            ),
-            child: RangeSlider(
-              inactiveColor: colorPrimary.withOpacity(0.4),
-              min: defaultMinSize.toDouble(),
-              max: defaultMaxSize.toDouble(),
-              divisions: 50,
-              labels: RangeLabels(
-                actualMinSize == null
-                    ? "$defaultMinSize sqft"
-                    : "$actualMinSize sqft",
-                actualMaxSize == null
-                    ? "$defaultMaxSize sqft"
-                    : "$actualMaxSize sqft",
-              ),
-              values: RangeValues(
-                  actualMinSize?.toDouble() ?? defaultMinSize.toDouble(),
-                  actualMaxSize?.toDouble() ?? defaultMaxSize.toDouble()),
-              onChanged: (values) {
-                setState(
-                  () {
-                    actualMinSize = values.start.toInt();
-                    actualMaxSize = values.end.toInt();
-                    price = getPrice(
-                        type: selectedServiceName, size: actualMaxSize);
-                  },
-                );
-              },
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  // Widget _buildSizeSlider() {
+  //   return Container(
+  //     margin: EdgeInsets.zero,
+  //     padding: EdgeInsets.zero,
+  //     child: Column(
+  //       crossAxisAlignment: CrossAxisAlignment.start,
+  //       mainAxisAlignment: MainAxisAlignment.start,
+  //       children: [
+  //         const Text(
+  //           "Space Size",
+  //           style: TextStyle(fontWeight: FontWeight.bold),
+  //         ),
+  //         SliderTheme(
+  //           data: SliderThemeData(
+  //             activeTickMarkColor: colorPrimary,
+  //             activeTrackColor: colorPrimary,
+  //             overlayColor: colorPrimary.withOpacity(0.25),
+  //             valueIndicatorColor: colorPrimary,
+  //             thumbColor: Colors.white,
+  //             overlappingShapeStrokeColor: Colors.white,
+  //             trackHeight: 2.0,
+  //           ),
+  //           child: RangeSlider(
+  //             inactiveColor: colorPrimary.withOpacity(0.4),
+  //             min: defaultMinSize.toDouble(),
+  //             max: defaultMaxSize.toDouble(),
+  //             divisions: 50,
+  //             labels: RangeLabels(
+  //               actualMinSize == null
+  //                   ? "$defaultMinSize sqft"
+  //                   : "$actualMinSize sqft",
+  //               actualMaxSize == null
+  //                   ? "$defaultMaxSize sqft"
+  //                   : "$actualMaxSize sqft",
+  //             ),
+  //             values: RangeValues(
+  //                 actualMinSize?.toDouble() ?? defaultMinSize.toDouble(),
+  //                 actualMaxSize?.toDouble() ?? defaultMaxSize.toDouble()),
+  //             onChanged: (values) {
+  //               setState(
+  //                 () {
+  //                   actualMinSize = values.start.toInt();
+  //                   actualMaxSize = values.end.toInt();
+  //                   price = getPrice(
+  //                       type: selectedServiceName, size: actualMaxSize);
+  //                 },
+  //               );
+  //             },
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   Widget _buildServiceCard(
       {required String name,
@@ -644,7 +678,9 @@ class _CleaningServiceScreenState extends State<CleaningServiceScreen> {
     return SizedBox(
       width: MediaQuery.of(context).size.width - 32,
       child: ElevatedButton(
-        onPressed: _addressController.text.isEmpty
+        onPressed: _addressController.text.isEmpty ||
+                _sizeController.text.isEmpty ||
+                !_formkey.currentState!.validate()
             ? null
             : () async {
                 await doBooking();
