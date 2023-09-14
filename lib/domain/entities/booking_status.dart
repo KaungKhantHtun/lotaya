@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 enum BookingStatus {
-  serviceRequested("Service Requested"),
+  serviceRequested("Service Requested",),
   pendingPayment("Pending Payment"),
   bookingAccepted("Booking Accepted"),
   serviceProcessing("Service Processing"),

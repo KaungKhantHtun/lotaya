@@ -2,6 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hakathon_service/domain/entities/booking_entity.dart';
+import 'package:hakathon_service/domain/entities/booking_status.dart';
+import 'package:hakathon_service/domain/entities/service_provider_type.dart';
+import 'package:hakathon_service/presentation/cubit/booking_cubit.dart';
 import 'package:hakathon_service/presentation/pages/chat/chat.dart';
 import 'package:hakathon_service/presentation/pages/chat/core/firebase_chat_core.dart';
 import 'package:hakathon_service/utils/constants.dart';
@@ -128,133 +131,208 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
                                       fontWeight: FontWeight.bold,
                                       fontSize: 16,
                                     ),
-                                  ),
-                                  const SizedBox(
-                                    height: 8,
-                                  ),
-                                  const Text(
-                                    "aircon service & Repair & Install and Maintenance.aircon service & Repair & Install and Maintenance.",
-                                    style: TextStyle(
-                                      fontSize: 13,
+                                  ],
+                                ),
+                                const Divider(),
+                                const SizedBox(
+                                  height: 32,
+                                ),
+                                Row(
+                                  children: [
+                                    const Text(
+                                      "Date Time: ",
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold),
                                     ),
+                                    Text(
+                                      "${DateFormat('hh:mm a').format(e.serviceTime)}, ${DateFormat('d MMM, y').format(e.bookingCreatedTime)}",
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 16,
+                                ),
+                                Row(
+                                  children: [
+                                    const Text(
+                                      "Cost: ",
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      "${e.price} KS",
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 16,
+                                ),
+                                if (e.serviceType ==
+                                    ServiceProviderType.houseMoving) ...[
+                                  Row(
+                                    children: [
+                                      const Text(
+                                        "Car Type: ",
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      Text("${e.carName}"),
+                                    ],
                                   ),
                                   const SizedBox(
-                                    height: 8,
+                                    height: 16,
+                                  ),
+                                  Row(
+                                    children: [
+                                      const Text(
+                                        "Floor: ",
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      Text(
+                                        "${e.floorNo}",
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 16,
+                                  ),
+                                  Row(
+                                    children: [
+                                      const Text(
+                                        "From: ",
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      Text(
+                                        "${e.fromAddr}",
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 16,
+                                  ),
+                                  Row(
+                                    children: [
+                                      const Text(
+                                        "To: ",
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      Text(
+                                        "${e.toAddr}",
+                                      ),
+                                    ],
                                   ),
                                 ],
-                              ),
-                            ),
-                          ],
-                        ),
-                        const Divider(),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        Row(
-                          children: [
-                            const Text("Time: "),
-                            Text(
-                              DateFormat('hh:mm a').format(e.serviceTime),
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 16,
-                        ),
-                        Row(
-                          children: [
-                            const Text("Date: "),
-                            Text(
-                              DateFormat('d MMM, y')
-                                  .format(e.bookingCreatedTime),
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 16,
-                        ),
-                        Row(
-                          children: [
-                            const Text("Amount: "),
-                            Text(
-                              "${e.price ?? 0} KS",
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 16,
-                        ),
-                        Row(
-                          children: const [
-                            Text("Vendor: "),
-                            Text(
-                              "Yet to be assigned",
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            InkWell(
-                              onTap: () {
-                                _handlePressed(context, widget.bookingId);
-                              },
-                              // child: Text(
-                              //   "View Details",
-                              //   style: TextStyle(
-                              //     color: colorPrimary,
-                              //   ),
-                              // ),
-                              child: Image.asset(
-                                "assets/bubble-chat.png",
-                                width: 30,
-                              ),
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                    // Positioned(
-                    //   bottom: 0,
-                    //   right: 0,
-                    //   child: InkWell(
-                    //     onTap: () {
-                    //       Navigator.of(context).push(MaterialPageRoute(
-                    //           builder: (context) => const ChatScreen()));
-                    //     },
-                    //     // child: Text(
-                    //     //   "View Details",
-                    //     //   style: TextStyle(
-                    //     //     color: colorPrimary,
-                    //     //   ),
-                    //     // ),
-                    //     child: Image.asset(
-                    //       "assets/bubble-chat.png",
-                    //       width: 30,
-                    //     ),
-                    //   ),
-                    // ),
-                  ],
-                ),
-              );
-            }
-          },
-        ),
-      ),
-    );
-  }
+                                if (e.serviceType ==
+                                    ServiceProviderType.kiloTaxi) ...[
+                                  Row(
+                                    children: [
+                                      const Text(
+                                        "From: ",
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      Text(
+                                        "${e.fromAddr}",
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 16,
+                                  ),
+                                  Row(
+                                    children: [
+                                      const Text(
+                                        "To: ",
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      Text(
+                                        "${e.toAddr}",
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                                const SizedBox(
+                                  height: 16,
+                                ),
+                                if (e.bookingStatus ==
+                                    BookingStatus.pendingPayment)
+                                  SizedBox(
+                                    height: 36,
+                                    width: double.infinity,
+                                    child: TextButton(
+                                      onPressed: () async {
+                                        context
+                                            .read<BookingCubit>()
+                                            .updateStatus(
+                                              e.bookingId,
+                                              BookingStatus
+                                                  .bookingAccepted.name,
+                                            );
+                                      },
+                                      style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.all<Color>(
+                                                colorPrimary),
+                                        shape: MaterialStateProperty.all<
+                                            RoundedRectangleBorder>(
+                                          RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                        ),
+                                      ),
+                                      child: const Text(
+                                        "Make Payment",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w400,
+                                          fontStyle: FontStyle.normal,
+                                          color: Color(0xFFFFFFFF),
 
   void _handlePressed(BuildContext context, String bookingId) async {
     final navigator = Navigator.of(context);
     final room = await FirebaseChatCore.instance
         .createRoom(isAdmin ? currentUser : adminUser, roomId: bookingId);
+                                          // height: 19/19,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                if (e.bookingStatus ==
+                                    BookingStatus.serviceFinished)
+                                  SizedBox(
+                                    height: 36,
+                                    width: double.infinity,
+                                    child: TextButton(
+                                      onPressed: () async {
+                                        context
+                                            .read<BookingCubit>()
+                                            .updateStatus(
+                                              e.bookingId,
+                                              BookingStatus.completed.name,
+                                            );
+                                      },
+                                      style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.all<Color>(
+                                                colorPrimary),
+                                        shape: MaterialStateProperty.all<
+                                            RoundedRectangleBorder>(
+                                          RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                        ),
+                                      ),
+                                      child: const Text(
+                                        "Yes, Service is Done",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w400,
+                                          fontStyle: FontStyle.normal,
+                                          color: Color(0xFFFFFFFF),
 
     navigator.pop();
     await navigator.push(
@@ -262,6 +340,25 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
         builder: (context) => ChatPage(
           room: room,
         ),
+                                          // height: 19/19,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  // ),
+                ],
+              ),
+            );
+          }
+        },
       ),
     );
   }
