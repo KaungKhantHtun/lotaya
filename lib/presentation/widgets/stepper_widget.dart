@@ -105,7 +105,7 @@ class _StepperWidgetState extends State<StepperWidget> {
     Color titleColor = Colors.black;
 
     if (step <= activeIndex) {
-      circleColor = Colors.green.shade400;
+      circleColor = colorPrimary;
     } else if (step > activeIndex) {
       circleColor = Colors.grey.shade500;
     }
