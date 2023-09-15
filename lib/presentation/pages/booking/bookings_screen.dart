@@ -3,6 +3,9 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
+import 'package:hakathon_service/bridge/send_money/send_money_interface.dart';
+import 'package:hakathon_service/bridge/send_money/send_money_web_impl.dart';
 import 'package:hakathon_service/domain/entities/booking_entity.dart';
 import 'package:hakathon_service/domain/entities/booking_status.dart';
 import 'package:hakathon_service/domain/entities/service_provider_type.dart';
@@ -198,12 +201,15 @@ class _BookingsScreenState extends State<BookingsScreen> {
 }
 
 class BookingCardWidget extends StatelessWidget {
-  const BookingCardWidget({
+  BookingCardWidget({
     super.key,
     required this.e,
   });
 
   final BookingEntity e;
+
+  final ISendMoneyBridge _iSendMoneyBridge =
+      Get.put(const SendMoneyBridgeImpl());
 
   @override
   Widget build(BuildContext context) {
@@ -356,10 +362,42 @@ class BookingCardWidget extends StatelessWidget {
                     width: double.infinity,
                     child: TextButton(
                       onPressed: () async {
-                        context.read<BookingCubit>().updateStatus(
-                              e.bookingId,
-                              BookingStatus.bookingAccepted.name,
-                            );
+                        await _iSendMoneyBridge
+                            .makePayment(e.price, "9976413584", e.bookingId)
+                            .then(
+                          (value) {
+                            context.read<BookingCubit>().updateStatus(
+                                  e.bookingId,
+                                  BookingStatus.bookingAccepted.name,
+                                );
+                          },
+                        ).catchError((onError) {
+                          if (onError.toString() == "WM-OTHER-003") {
+                            // Get.to(
+                            //   const MainPage(tapIndex: 2),
+                            // );
+                            // final bagProducts = _productController.bagProducts;
+                            // _orderController.createOrder(
+                            //     orderId,
+                            //     bagProducts,
+                            //     addressController.text,
+                            //     "000",
+                            //     wavePay,
+                            //     _productController.totalPrice.value);
+                            // _productController.bagProducts.clear();
+                          } else {
+                            // Get.snackbar(
+                            //   "Error",
+                            //   onError == "WM-OTHER-004"
+                            //       ? "Your payment is not supported yet!"
+                            //       : "Payment Failed!",
+                            //   snackPosition: SnackPosition.BOTTOM,
+                            //   colorText: Colors.white,
+                            //   backgroundColor: Colors.red.shade900,
+                            //   icon: const Icon(Icons.error),
+                            // );
+                          }
+                        });
                       },
                       style: ButtonStyle(
                         backgroundColor:
