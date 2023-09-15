@@ -1,5 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:hakathon_service/bridge/system/system_interface.dart';
+import 'package:hakathon_service/bridge/system/system_web_impl.dart';
 import 'package:hakathon_service/domain/entities/booking_status.dart';
 import 'package:hakathon_service/presentation/pages/cleaning_service/cleaning_service_screen.dart';
 import 'package:hakathon_service/presentation/pages/electronic_service/electronic_service_screen.dart';
@@ -25,6 +28,8 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   late Query<Map<String, dynamic>> querySnapshot;
+
+  final ISystemBridge _iSystemBridge = Get.put(const SystemBridgeImpl());
 
   @override
   void initState() {
@@ -57,6 +62,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
                       children: [
+                        InkWell(
+                          onTap: () {
+                            _iSystemBridge.exist();
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Icon(
+                              Icons.close,
+                              color: colorPrimary,
+                            ),
+                          ),
+                        ),
                         Image.asset(
                           "assets/logo.png",
                           height: 32,
