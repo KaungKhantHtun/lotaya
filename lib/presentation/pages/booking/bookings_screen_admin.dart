@@ -147,7 +147,7 @@ class _BookingsScreenAdminState extends State<BookingsScreenAdmin> {
                 //   // return Text(option.name);
                 // },
                 selectedValues: selectedServiceProviderType,
-                whenEmpty: 'Choose Service Type',
+                // whenEmpty: 'Choose Service Type',
               ),
             ),
           ),

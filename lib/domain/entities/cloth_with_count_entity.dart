@@ -25,9 +25,11 @@ class ClothWithCountEntity {
     return ClothWithCountEntity(
       name: json['name'],
       imgUrl: json['imgUrl'],
-      price: json['price'],
+      price: double.tryParse(json['price'].toString()) ?? 0.0,
+      // json['price'],
       clothId: json['clothId'],
-      count: json['count'],
+      count: int.tryParse(json['count'].toString()) ?? 0,
+      // json['count'],
       serviceType:
           LaundryServiceType.getLaundryServiceType(json['serviceType']),
       wearType: WearType.getWearType(json['wearType']),
