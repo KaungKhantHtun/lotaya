@@ -65,34 +65,34 @@ class _LaundryServiceScreenState extends State<LaundryServiceScreen> {
       backgroundColor: colorPrimary,
       appBar: AppBar(
         backgroundColor: colorPrimary,
-        leading: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12),
-          child: InkWell(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: Colors.grey.shade400),
-              ),
-              child: Center(
-                child: Row(
-                  children: [
-                    SizedBox(
-                      width: 9,
-                    ),
-                    Icon(
-                      Icons.arrow_back_ios,
-                      color: Colors.white,
-                      size: 16,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
+        // leading: Padding(
+        //   padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12),
+        //   child: InkWell(
+        //     onTap: () {
+        //       Navigator.pop(context);
+        //     },
+        //     child: Container(
+        //       decoration: BoxDecoration(
+        //         borderRadius: BorderRadius.circular(8),
+        //         border: Border.all(color: Colors.grey.shade400),
+        //       ),
+        //       child: Center(
+        //         child: Row(
+        //           children: [
+        //             SizedBox(
+        //               width: 9,
+        //             ),
+        //             Icon(
+        //               Icons.arrow_back_ios,
+        //               color: Colors.white,
+        //               size: 16,
+        //             ),
+        //           ],
+        //         ),
+        //       ),
+        //     ),
+        //   ),
+        // ),
         title: const Text(
           "LAUNDRY",
           style: TextStyle(
@@ -207,7 +207,7 @@ class _LaundryServiceScreenState extends State<LaundryServiceScreen> {
                               width: double.infinity,
                               padding: const EdgeInsets.all(16),
                               decoration: BoxDecoration(
-                                color: Colors.grey.shade200,
+                                color: colorPrimaryLight,
                                 borderRadius: BorderRadius.circular(16),
                               ),
                               child: Column(
@@ -230,8 +230,7 @@ class _LaundryServiceScreenState extends State<LaundryServiceScreen> {
                                             children: [
                                               CircleAvatar(
                                                 radius: 20,
-                                                backgroundColor: colorPrimary
-                                                    .withOpacity(0.2),
+                                                backgroundColor: Colors.white,
                                                 child: Padding(
                                                   padding:
                                                       const EdgeInsets.only(
@@ -242,6 +241,7 @@ class _LaundryServiceScreenState extends State<LaundryServiceScreen> {
                                                   child: Image.asset(
                                                     e.imgUrl,
                                                     width: 30,
+                                                    color: colorPrimary,
                                                   ),
                                                 ),
                                               ),
@@ -481,7 +481,7 @@ class _LaundryServiceScreenState extends State<LaundryServiceScreen> {
       },
       style: ElevatedButton.styleFrom(
         backgroundColor:
-            totalCount == 0 ? Colors.grey.shade500 : colorSecondary,
+            totalCount == 0 ? Colors.grey.shade400 : colorSecondary,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
         ),
