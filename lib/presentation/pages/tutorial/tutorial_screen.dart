@@ -1,9 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
-import 'package:hakathon_service/domain/entities/user_entity.dart';
 import 'package:hakathon_service/presentation/pages/home/home_screen.dart';
-import 'package:hakathon_service/services/user_profile_service.dart';
 import 'package:hakathon_service/utils/constants.dart';
 
 class TutorialScreen extends StatefulWidget {
@@ -39,22 +37,7 @@ class _TutorialScreenState extends State<TutorialScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
-    operateUser();
     super.initState();
-  }
-
-  operateUser() async {
-    UserEntity userEntity = await UserProfileService().getUserProfile();
-    bool isNewUser = await UserProfileService().checkMsisdn(userEntity.msisdn);
-    if (isNewUser) {
-      await UserProfileService().createProfile(userEntity);
-    } else {
-      Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => const HomeScreen(
-                initialIndex: 0,
-              )));
-    }
   }
 
   @override

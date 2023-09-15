@@ -1,41 +1,35 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:get/get.dart';
 
-import '../domain/entities/user_entity.dart';
+import '../bridge/user_info/user_info_interface.dart';
+import '../bridge/user_info/user_info_web_impl.dart';
 import '../utils/constants.dart';
 
 class UserProfileService {
   static late String msisdn;
   operateUserProfile() async {
-    UserEntity userEntity = await getUserProfile();
-    bool isNewUser = await checkMsisdn(userEntity.msisdn);
+    UserInfo userInfo = await getUserProfile();
+    bool isNewUser = await checkMsisdn(userInfo.msisdn);
     if (isNewUser) {
-      await UserProfileService().createProfile(userEntity);
+      await UserProfileService().createProfile(userInfo);
     } else {}
   }
 
-  Future<void> createProfile(UserEntity profile) async {
+  Future<void> createProfile(UserInfo userInfo) async {
     final CollectionReference profileList =
         FirebaseFirestore.instance.collection(profileTable);
     try {
-      await profileList.doc(profile.msisdn).set(profile.toJson());
+      await profileList.doc(userInfo.msisdn).set(userInfo.toJson());
     } catch (e) {
       print('Error retrieving data: $e');
     }
   }
 
-  Future<UserEntity> getUserProfile() async {
-    //TODO get user from SDK
-    UserEntity profile = UserEntity(
-      userId: "4566",
-      kycStatus: "LEVEL 2",
-      msisdn: "09401531039",
-      name: "Ei Zin Htun",
-      dob: "24.4.1996",
-      gender: "Female",
-      nrc: "8/HTALANA(N)123456",
-    );
-    msisdn = profile.msisdn;
-    return profile;
+  Future<UserInfo> getUserProfile() async {
+    final IUserInfoBridge _iUserInfoBridge =
+        Get.put(const UserInfoBridgeImpl());
+
+    return await _iUserInfoBridge.getUserInfo();
   }
 
   Future<bool> checkMsisdn(String msisdn) async {
