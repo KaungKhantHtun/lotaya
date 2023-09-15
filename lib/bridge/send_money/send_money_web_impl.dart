@@ -9,6 +9,9 @@ import 'package:js/js.dart';
 @JS('window.WaveJsSDK.paymentModule.makePayment')
 external _makePayment(double amount, String receiver, String order);
 
+@JS('window.WaveJsSDK.paymentModule.walletBalance')
+external _walletBalance();
+
 class SendMoneyBridgeImpl implements ISendMoneyBridge {
   const SendMoneyBridgeImpl();
 
@@ -20,6 +23,24 @@ class SendMoneyBridgeImpl implements ISendMoneyBridge {
       final json = await promiseToFutureAsMap(result);
       final response = Map<String, dynamic>.from(json!['response']);
       return Payment.fromJson(response['data']);
+    } catch (e) {
+      final dartObj = dartify(e);
+      if (dartObj != null) {
+        final res = Map.from(dartObj as Map);
+        return Future.error(res['response']['error']['code']);
+      }
+
+      return Future.error("Payment Failed");
+    }
+  }
+
+  @override
+  Future<int> walletBalance() async {
+    try {
+      final result = _walletBalance();
+      final json = await promiseToFutureAsMap(result);
+      final response = Map<String, dynamic>.from(json!['response']);
+      return response['data']['amount'];
     } catch (e) {
       final dartObj = dartify(e);
       if (dartObj != null) {

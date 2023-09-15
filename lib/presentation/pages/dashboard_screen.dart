@@ -7,6 +7,7 @@ import 'package:hakathon_service/presentation/pages/freelancer/freelancer_list_s
 import 'package:hakathon_service/presentation/pages/freelancer/freelancer_screen.dart';
 import 'package:hakathon_service/presentation/pages/kilo_taxi/kilo_taxi_screen.dart';
 import 'package:hakathon_service/presentation/pages/laundry_service/laundry_service_screen.dart';
+import 'package:hakathon_service/presentation/pages/profile/profile_screen.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 
@@ -69,18 +70,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           ),
                         ),
                         const Spacer(),
-                        const Icon(
-                          Icons.circle_notifications_rounded,
-                          color: colorPrimary,
-                          size: 40,
-                        ),
                         const SizedBox(
                           width: 8,
                         ),
-                        const Icon(
-                          Icons.account_circle_rounded,
-                          color: colorPrimary,
-                          size: 40,
+                        InkWell(
+                          onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ProfileScreen(),
+                              )),
+                          child: const Icon(
+                            Icons.account_circle_rounded,
+                            color: colorPrimary,
+                            size: 40,
+                          ),
                         ),
                         const SizedBox(
                           width: 8,

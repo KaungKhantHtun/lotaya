@@ -21,7 +21,7 @@ class _LoadingWidgetState extends State<LoadingWidget> {
     return Center(
       child: LottieBuilder.asset(
         "assets/lottie/loading.json",
-        width: 50,
+        width: 80,
       ),
     );
   }

@@ -4,6 +4,8 @@ abstract class ISendMoneyBridge {
     String receiverMsisdn,
     String orderId,
   );
+
+  Future<int> walletBalance();
 }
 
 class Payment {
