@@ -38,6 +38,8 @@
   </script>
   <!-- This script adds the flutter initialization JS code -->
   <script src="flutter.js" defer></script>
+  <script src="./js/wavemoney.min.js"></script>
+
   <style>
     .container {
       width: 100vw;
@@ -57,6 +59,14 @@
     <img class="indicator" src="./assets/service_loading.gif" />
   </div>
   <script>
+     document.addEventListener('DOMContentLoaded', function () {
+      try {
+        const sdk = new WaveJsSDK();
+        sdk.init({ clientId: 'wave-money' });
+      } catch (e) {
+        console.log(e);
+      }
+    });
     window.onload = function () {
         setTimeout(function () {
           var loadingIndicator = document.getElementById("loading_indicator");
