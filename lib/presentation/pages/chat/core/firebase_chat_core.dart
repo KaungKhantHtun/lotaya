@@ -100,7 +100,7 @@ class FirebaseChatCore {
   /// Creates a direct chat for 2 people. Add [metadata] for any additional
   /// custom data.
   Future<types.Room> createRoom(types.User otherUser,
-      {Map<String, dynamic>? metadata, roomId}) async {
+      {Map<String, dynamic>? metadata, roomId, roomName}) async {
     final fu = firebaseUser;
 
     if (fu == null) return Future.error('User does not exist');
@@ -179,7 +179,7 @@ class FirebaseChatCore {
       'createdAt': FieldValue.serverTimestamp(),
       'imageUrl': null,
       'metadata': metadata,
-      'name': null,
+      'name': roomName,
       'type': types.RoomType.direct.toShortString(),
       'updatedAt': FieldValue.serverTimestamp(),
       'userIds': userIds,
@@ -288,6 +288,21 @@ class FirebaseChatCore {
             },
           ),
         );
+  }
+
+  Future<String> lastMessages(
+    types.Room room,
+  ) async {
+    var query = getFirebaseFirestore()
+        .collection('${config.roomsCollectionName}/${room.id}/messages')
+        .orderBy('createdAt', descending: true)
+        .limit(1);
+    String text = "";
+
+    return query.snapshots().first.then((value) {
+      text = value.docs.first.data()["text"];
+      return text;
+    });
   }
 
   /// Returns a stream of changes in a room from Firebase.
