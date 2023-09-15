@@ -510,9 +510,10 @@ class _CleaningServiceScreenState extends State<CleaningServiceScreen> {
                 await doBooking();
               },
         style: ElevatedButton.styleFrom(
-          backgroundColor: colorPrimary,      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
+          backgroundColor: colorPrimary,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
         ),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -531,11 +532,15 @@ class _CleaningServiceScreenState extends State<CleaningServiceScreen> {
   double long = 13.456;
   double price = 5000;
   Future<void> doBooking() async {
+    String serviceProviderName = _serviceProviderController.text;
+    if (serviceProviderName == "") {
+      serviceProviderName = electronicList.first.serviceName;
+    }
     final CollectionReference bookingList =
         FirebaseFirestore.instance.collection(bookingTable);
     BookingEntity booking = BookingEntity(
       bookingId: "123",
-      name: _serviceProviderController.text,
+      name: serviceProviderName,
       serviceType: ServiceProviderType.homeCleaning,
       serviceName: selectedServiceName,
       serviceTime: DateTime(

@@ -605,13 +605,16 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
   double long = 13.456;
   double price = 5000;
   Future<void> doBooking() async {
+    String serviceProviderName = _serviceProviderController.text;
+    if (serviceProviderName == "") {
+      serviceProviderName = electronicList.first.serviceName;
+    }
     final CollectionReference bookingList =
         FirebaseFirestore.instance.collection(bookingTable);
     BookingEntity booking = BookingEntity(
       bookingId: "123",
-      name: _serviceProviderController.text,
+      name: serviceProviderName,
       serviceType: ServiceProviderType.electronic,
-      // serviceProviderId: widget.serviceProvider.serviceId,
       serviceName: selectedServiceName,
       serviceTime: DateTime(
         selectedServiceDate.year,

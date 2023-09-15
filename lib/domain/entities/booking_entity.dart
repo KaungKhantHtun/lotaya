@@ -84,7 +84,6 @@ class BookingEntity {
     this.fromAddr,
     this.toAddr,
     this.floorNo,
-    // this.car,
     this.carName,
     this.carImgUrl,
     this.carSize,
@@ -108,8 +107,10 @@ class BookingEntity {
       "name": name,
       "long": long,
       "lat": lat,
+
       "price": price,
       "note": note,
+      "address": address,
       "userName": userName,
       "userMsisdn": userMsisdn,
       "electronicType": electronicType,
@@ -117,6 +118,7 @@ class BookingEntity {
       "clothList": clothList?.map((e) => e.toJson()).toList(),
       "totalClothCount": totalClothCount,
       "totalLaundryPrice": totalLaundryPrice,
+
       "fromLong": fromLong,
       "fromLat": fromLat,
       "toLong": toLong,
@@ -128,6 +130,8 @@ class BookingEntity {
       "carName": carName,
       "carSize": carSize,
       "carPrice": carPrice,
+      "carImgUrl": carImgUrl,
+
       "cleaningPlace": cleaningPlace,
       "cleaningServiceType": cleaningServiceType,
       "spaceSize": spaceSize,

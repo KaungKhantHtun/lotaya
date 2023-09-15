@@ -337,6 +337,7 @@ class _FreelacerDetailScreenState extends State<FreelacerDetailScreen> {
   double long = 13.456;
   double price = 5000;
   Future<void> doBooking() async {
+    
     price = _selectedWorkingHour * widget.hourlyRate.toDouble();
     final CollectionReference bookingList =
         FirebaseFirestore.instance.collection(bookingTable);

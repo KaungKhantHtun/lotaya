@@ -303,13 +303,17 @@ class _LaundryOrderConfirmScreenState extends State<LaundryOrderConfirmScreen> {
   }
 
   Future<void> doBooking() async {
+    String serviceProviderName = _serviceProviderController.text;
+    if (serviceProviderName == "") {
+      serviceProviderName = electronicList.first.serviceName;
+    }
     final CollectionReference bookingList =
         FirebaseFirestore.instance.collection(bookingTable);
     double lat = 23;
     double long = 34;
     BookingEntity booking = BookingEntity(
       bookingId: "123",
-      name: _serviceProviderController.text,
+      name: serviceProviderName,
       serviceType: ServiceProviderType.laundry,
       // serviceProviderId: widget.serviceProvider.serviceId,
       serviceName: "Laundry",

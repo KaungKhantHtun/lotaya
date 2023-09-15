@@ -191,7 +191,7 @@ class _BookingsScreenState extends State<BookingsScreen> {
           }
           print("Option List: $optionList");
           print("selectedServiceProviderType: $selectedServiceProviderType");
-          // setState(() {});
+          setState(() {});
         },
         options: optionList,
         childBuilder: (selectedValues) {
