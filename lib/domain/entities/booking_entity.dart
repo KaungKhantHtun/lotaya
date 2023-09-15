@@ -188,13 +188,13 @@ class BookingEntity {
           ? doc?.get("address")
           : null,
       long: doc?.data().toString().contains("long") ?? false
-          ? doc?.get("long")
+          ? double.tryParse(doc?.get("long").toString() ?? "") ?? 0.0
           : null,
       lat: doc?.data().toString().contains("lat") ?? false
-          ? doc?.get("lat")
+          ? double.tryParse(doc?.get("lat").toString() ?? "") ?? 0.0
           : null,
       price: doc?.data().toString().contains("price") ?? false
-          ? double.tryParse(doc?.get("price").toString() ?? "") ?? 0
+          ? double.tryParse(doc?.get("price").toString() ?? "") ?? 0.0
           : 0,
       note: doc?.data().toString().contains("note") ?? false
           ? doc?.get("note")
@@ -217,23 +217,24 @@ class BookingEntity {
           : [],
       totalClothCount:
           doc?.data().toString().contains("totalClothCount") ?? false
-              ? doc?.get("totalClothCount")
+              ? int.tryParse(doc?.get("totalClothCount").toString() ?? "") ?? 0
               : null,
-      totalLaundryPrice:
-          doc?.data().toString().contains("totalLaundryPrice") ?? false
-              ? doc?.get("totalLaundryPrice")
-              : null,
+      totalLaundryPrice: doc?.data().toString().contains("totalLaundryPrice") ??
+              false
+          ? double.tryParse(doc?.get("totalLaundryPrice").toString() ?? "") ??
+              0.0
+          : null,
       fromLong: doc?.data().toString().contains("fromLong") ?? false
-          ? doc?.get("fromLong")
+          ? double.tryParse(doc?.get("fromLong").toString() ?? "") ?? 0.0
           : null,
       fromLat: doc?.data().toString().contains("fromLat") ?? false
-          ? doc?.get("fromLat")
+          ? double.tryParse(doc?.get("fromLat").toString() ?? "") ?? 0.0
           : null,
       toLong: doc?.data().toString().contains("toLong") ?? false
-          ? doc?.get("toLong")
+          ? double.tryParse(doc?.get("toLong").toString() ?? "") ?? 0.0
           : null,
       toLat: doc?.data().toString().contains("toLat") ?? false
-          ? doc?.get("toLat")
+          ? double.tryParse(doc?.get("toLat").toString() ?? "") ?? 0.0
           : null,
       fromAddr: doc?.data().toString().contains("fromAddr") ?? false
           ? doc?.get("fromAddr")
@@ -254,10 +255,10 @@ class BookingEntity {
           ? doc?.get("carImgUrl")
           : null,
       carSize: doc?.data().toString().contains("carSize") ?? false
-          ? doc?.get("carSize")
+          ? int.tryParse(doc?.get("carSize").toString() ?? "") ?? 0
           : null,
       carPrice: doc?.data().toString().contains("carPrice") ?? false
-          ? doc?.get("carPrice")
+          ? int.tryParse(doc?.get("carPrice").toString() ?? "") ?? 0
           : null,
       cleaningPlace: doc?.data().toString().contains("cleaningPlace") ?? false
           ? doc?.get("cleaningPlace")
@@ -267,16 +268,16 @@ class BookingEntity {
               ? doc?.get("cleaningServiceType")
               : null,
       spaceSize: doc?.data().toString().contains("spaceSize") ?? false
-          ? doc?.get("spaceSize")
+          ? int.tryParse(doc?.get("spaceSize").toString() ?? "") ?? 0
           : null,
       distance: doc?.data().toString().contains("distance") ?? false
-          ? doc?.get("distance")
+          ? int.tryParse(doc?.get("distance").toString() ?? "") ?? 0
           : null,
       duration: doc?.data().toString().contains("duration") ?? false
-          ? doc?.get("duration")
+          ? int.tryParse(doc?.get("duration").toString() ?? "") ?? 0
           : null,
       workingHours: doc?.data().toString().contains("workingHours") ?? false
-          ? doc?.get("workingHours")
+          ? int.tryParse(doc?.get("workingHours").toString() ?? "") ?? 0
           : null,
     );
   }

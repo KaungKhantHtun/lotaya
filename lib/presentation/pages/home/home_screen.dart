@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hakathon_service/services/user_profile_service.dart';
 import 'package:hakathon_service/utils/constants.dart';
 
 import '../booking/bookings_screen.dart';
@@ -22,7 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    operateUser();
+    // operateUser();
     widgetList = const [
       DashboardScreen(),
       BookingsScreen(),
@@ -33,9 +32,9 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
   }
 
-  operateUser() async {
-    await UserProfileService().operateUserProfile();
-  }
+  // operateUser() async {
+  //   await UserProfileService().operateUserProfile();
+  // }
 
   void selectedPage(int index) {
     setState(() {

@@ -55,13 +55,19 @@ class _BookingsScreenState extends State<BookingsScreen> {
   late Query<Map<String, dynamic>> querySnapshot;
   List<ServiceProviderType> serviceTypeList = const [
     ServiceProviderType.electronic,
-    ServiceProviderType.delivery,
     ServiceProviderType.homeCleaning,
     ServiceProviderType.houseMoving,
     ServiceProviderType.laundry,
   ];
   List<String> selectedServiceProviderType = [];
-  List<String> optionList = const [];
+  List<String> optionList = [
+    "Electronic",
+    "Home Cleaning",
+    "House Moving",
+    "Laundry",
+    "Kilo Taxi",
+    "Freelancer",
+  ];
 
   @override
   void initState() {
@@ -75,7 +81,6 @@ class _BookingsScreenState extends State<BookingsScreen> {
     // ];
 
     querySnapshot = FirebaseFirestore.instance.collection(bookingTable);
-    optionList = serviceTypeList.map((e) => e.name).toList();
     selectedServiceProviderType = optionList;
     super.initState();
   }
@@ -92,14 +97,14 @@ class _BookingsScreenState extends State<BookingsScreen> {
               context: context,
               builder: (context) {
                 return AlertDialog(
-                  title: Text("Enter Password"),
+                  title: const Text("Enter Password"),
                   content: Container(
                     //height: 40,
                     color: Colors.grey.shade100,
                     //  padding: EdgeInsets.all(8),
                     child: TextField(
                       obscureText: true,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                           border: InputBorder.none,
                           contentPadding: EdgeInsets.all(8)),
                       onSubmitted: (value) {
@@ -167,10 +172,10 @@ class _BookingsScreenState extends State<BookingsScreen> {
     return SizedBox(
       width: 200,
       child: DropDownMultiSelect<String>(
+        readOnly: true,
         onChanged: (List<String> x) {
-          setState(() {
-            selectedServiceProviderType = x;
-          });
+          selectedServiceProviderType = x;
+
           if (selectedServiceProviderType.length == 1) {
             querySnapshot = FirebaseFirestore.instance
                 .collection(bookingTable)
@@ -181,8 +186,12 @@ class _BookingsScreenState extends State<BookingsScreen> {
                 .collection(bookingTable)
                 .where('serviceType', whereIn: selectedServiceProviderType);
           } else {
+            selectedServiceProviderType = optionList;
             querySnapshot = FirebaseFirestore.instance.collection(bookingTable);
           }
+          print("Option List: $optionList");
+          print("selectedServiceProviderType: $selectedServiceProviderType");
+          // setState(() {});
         },
         options: optionList,
         childBuilder: (selectedValues) {
@@ -199,16 +208,17 @@ class _BookingsScreenState extends State<BookingsScreen> {
             ),
           );
         },
-        // menuItembuilder: (option) {
-        //   // return Text(option.name);
+        // menuItembuilder: (val) {
+        //   return Text(val);
         // },
+
         selectedValues: selectedServiceProviderType,
         // whenEmpty: 'Choose Service Type',
         // decoration: InputDecoration(
         //   contentPadding: EdgeInsets.all(4),
         // ),
 
-        hint: const Text('Choose Service Type'),
+        // hint: const Text('Choose Service Type'),
         icon: const Icon(Icons.arrow_drop_down),
         whenEmpty: "All",
       ),
@@ -280,7 +290,7 @@ class BookingCardWidget extends StatelessWidget {
                                 child: Text(
                                   e.name ?? "",
                                   textAlign: TextAlign.start,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     //color: e.bookingStatus.getColor,
                                     fontWeight: FontWeight.w600,
                                     fontSize: 16,
@@ -288,14 +298,14 @@ class BookingCardWidget extends StatelessWidget {
                                 ),
                               ),
                               Container(
-                                padding: EdgeInsets.all(8),
+                                padding: const EdgeInsets.all(8),
                                 decoration: BoxDecoration(
                                   color: colorPrimaryLight,
                                   border: Border.all(
                                     color: colorPrimaryLight, // Border color
                                     width: 2.0, // Border width
                                   ),
-                                  borderRadius: BorderRadius.all(
+                                  borderRadius: const BorderRadius.all(
                                     Radius.circular(
                                         50.0), // Stadium border shape
                                   ),
@@ -338,7 +348,7 @@ class BookingCardWidget extends StatelessWidget {
                   children: [
                     const Text(
                       "Date Time: ",
-                      style: const TextStyle(fontWeight: FontWeight.bold),
+                      style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     Text(
                       "${DateFormat('hh:mm a').format(e.serviceTime)}, ${DateFormat('d MMM, y').format(e.bookingCreatedTime)}",
@@ -352,10 +362,10 @@ class BookingCardWidget extends StatelessWidget {
                   children: [
                     const Text(
                       "Cost: ",
-                      style: const TextStyle(fontWeight: FontWeight.bold),
+                      style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     Text("${e.price} KS"),
-                    Spacer(),
+                    const Spacer(),
                     InkWell(
                       onTap: () {
                         _handlePressed(context, e.bookingId, e.name);
