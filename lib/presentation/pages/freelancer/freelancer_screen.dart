@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hakathon_service/presentation/pages/freelancer/freelancer_list_screen.dart';
 import 'package:hakathon_service/utils/constants.dart';
 
+import '../../../domain/entities/freelancer_entity.dart';
+
 class FreelancerScreen extends StatefulWidget {
   const FreelancerScreen({super.key});
 
@@ -43,35 +45,43 @@ class _FreelancerScreenState extends State<FreelancerScreen> {
                 children: [
                   ServiceCategoryWidget(
                     imgUrl: "assets/psychologist.png",
-                    label: "Psychologist",
+                    type: FreelancerType.psychologist,
+                    list: psychologistList,
                   ),
                   ServiceCategoryWidget(
                     imgUrl: "assets/driver.png",
-                    label: "Driver",
+                    type: FreelancerType.driver,
+                    list: driverList,
                   ),
                   ServiceCategoryWidget(
                     imgUrl: "assets/tutor.png",
-                    label: "Tutor",
+                    type: FreelancerType.tutor,
+                    list: tutorList,
                   ),
                   ServiceCategoryWidget(
                     imgUrl: "assets/babysitter.png",
-                    label: "Baby Sitter",
+                    type: FreelancerType.babySitter,
+                    list: babySitterList,
                   ),
                   ServiceCategoryWidget(
                     imgUrl: "assets/business.png",
-                    label: "Coach",
+                    type: FreelancerType.coach,
+                    list: coachList,
                   ),
                   ServiceCategoryWidget(
                     imgUrl: "assets/dogwalker.png",
-                    label: "Dog Walker",
+                    type: FreelancerType.dogWalker,
+                    list: dogWalkerList,
                   ),
                   ServiceCategoryWidget(
                     imgUrl: "assets/hairstylist.png",
-                    label: "Hair Stylist",
+                    type: FreelancerType.hairStylist,
+                    list: hairStylistList,
                   ),
                   ServiceCategoryWidget(
                     imgUrl: "assets/gardener.png",
-                    label: "Gardener",
+                    type: FreelancerType.gardener,
+                    list: gardenerList,
                   ),
                 ],
               )
@@ -87,11 +97,13 @@ class ServiceCategoryWidget extends StatelessWidget {
   const ServiceCategoryWidget({
     super.key,
     required this.imgUrl,
-    required this.label,
+    required this.type,
+    required this.list,
   });
 
   final String imgUrl;
-  final String label;
+  final FreelancerType type;
+  final List<FreelancerEntity> list;
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +113,8 @@ class ServiceCategoryWidget extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (context) => FreelancerListScreen(
-                label: label,
+                type: type,
+                list: list,
               ),
             ));
       },
@@ -127,7 +140,7 @@ class ServiceCategoryWidget extends StatelessWidget {
               height: 4,
             ),
             Text(
-              label,
+              type.name,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(fontWeight: FontWeight.w500),
             ),

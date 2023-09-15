@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:hakathon_service/domain/entities/freelancer_entity.dart';
 import 'package:hakathon_service/domain/entities/service_provider_type.dart';
 
 import 'booking_status.dart';
@@ -50,11 +51,14 @@ class BookingEntity {
   final int? spaceSize;
 
   // for kilo taxi
-  int? distance;
-  int? duration;
+  final int? distance;
+  final int? duration;
 
   // for freelancer
-  int? workingHours;
+  final int? workingHours;
+  final String? freelancerName;
+  final FreelancerType? freelancerType;
+  final String? freelancerPhoneNumber;
 
   BookingEntity({
     required this.bookingId,
@@ -94,6 +98,9 @@ class BookingEntity {
     this.distance,
     this.duration,
     this.workingHours,
+    this.freelancerName,
+    this.freelancerType,
+    this.freelancerPhoneNumber,
   });
   Map<String, dynamic> toJson() {
     return {
@@ -138,6 +145,10 @@ class BookingEntity {
       "distance": distance,
       "duration": duration,
       "workingHours": workingHours,
+
+      "freelancerName": freelancerName,
+      "freelancerType": freelancerType?.name ?? "",
+      "freelancerPhoneNumber": freelancerPhoneNumber,
     };
   }
 
@@ -283,6 +294,18 @@ class BookingEntity {
       workingHours: doc?.data().toString().contains("workingHours") ?? false
           ? int.tryParse(doc?.get("workingHours").toString() ?? "") ?? 0
           : null,
+
+      freelancerName: doc?.data().toString().contains("freelancerName") ?? false
+          ? doc?.get("freelancerName").toString() ?? ""
+          : null,
+      freelancerType: doc?.data().toString().contains("freelancerType") ?? false
+          ? FreelancerEntity.getType(
+              doc?.get("freelancerType").toString() ?? "")
+          : null,
+      freelancerPhoneNumber:
+          doc?.data().toString().contains("freelancerPhoneNumber") ?? false
+              ? doc?.get("freelancerPhoneNumber").toString() ?? ""
+              : null,
     );
   }
 

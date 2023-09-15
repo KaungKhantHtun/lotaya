@@ -1,6 +1,6 @@
 enum ServiceProviderType {
   electronic(
-    "Electronic",
+    "Electronic Repair",
     "assets/aircon.png",
   ),
   delivery(
@@ -33,7 +33,7 @@ enum ServiceProviderType {
   const ServiceProviderType(this.name, this.imgUrl);
   static ServiceProviderType getServiceProvider(String s) {
     switch (s) {
-      case "Electronic":
+      case "Electronic Repair":
         return ServiceProviderType.electronic;
       case "Delivery":
         return ServiceProviderType.delivery;

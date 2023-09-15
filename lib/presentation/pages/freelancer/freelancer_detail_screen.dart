@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 import 'package:hakathon_service/domain/entities/booking_entity.dart';
 import 'package:hakathon_service/domain/entities/booking_status.dart';
+import 'package:hakathon_service/domain/entities/freelancer_entity.dart';
 import 'package:hakathon_service/domain/entities/service_provider_type.dart';
 import 'package:hakathon_service/utils/constants.dart';
 import 'package:intl/intl.dart';
@@ -15,19 +15,14 @@ import '../home/home_screen.dart';
 class FreelacerDetailScreen extends StatefulWidget {
   FreelacerDetailScreen({
     super.key,
-    required this.type,
-    required this.imageUrl,
+    required this.freelancer,
+    required this.imgUrl,
     required this.name,
-    required this.hourlyRate,
-    required this.location,
   });
 
-  final String type;
-  final String imageUrl;
+  final FreelancerEntity freelancer;
   final String name;
-  final int hourlyRate;
-  final String location;
-
+  final String imgUrl;
   @override
   State<FreelacerDetailScreen> createState() => _FreelacerDetailScreenState();
 }
@@ -85,7 +80,7 @@ class _FreelacerDetailScreenState extends State<FreelacerDetailScreen> {
         backgroundColor: colorPrimary,
         centerTitle: true,
         title: Text(
-          "${widget.type.toUpperCase()} DETAILS",
+          "${widget.freelancer.type.name.toUpperCase()} DETAILS",
           style: const TextStyle(
             color: Colors.white,
             fontSize: 14,
@@ -98,7 +93,7 @@ class _FreelacerDetailScreenState extends State<FreelacerDetailScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Image.network(
-              widget.imageUrl,
+              widget.imgUrl,
               fit: BoxFit.cover,
               height: 320,
             ),
@@ -109,13 +104,15 @@ class _FreelacerDetailScreenState extends State<FreelacerDetailScreen> {
                 children: [
                   Text(
                     widget.name,
+                    // TODO
+                    // widget.freelancer.name,
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(
                     height: 8,
                   ),
                   Text(
-                    "\$${widget.hourlyRate} Ks/hr",
+                    "${widget.freelancer.hourlyRate} Ks/hr",
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w500,
@@ -230,7 +227,7 @@ class _FreelacerDetailScreenState extends State<FreelacerDetailScreen> {
                         Icons.location_on_outlined,
                       ),
                       Text(
-                        widget.location,
+                        widget.freelancer.location,
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
@@ -253,7 +250,8 @@ class _FreelacerDetailScreenState extends State<FreelacerDetailScreen> {
                     height: 16,
                   ),
                   Text(
-                    faker.lorem.sentence() * 20,
+                    widget.freelancer.bio,
+                    // faker.lorem.sentence() * 20,
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
@@ -337,15 +335,16 @@ class _FreelacerDetailScreenState extends State<FreelacerDetailScreen> {
   double long = 13.456;
   double price = 5000;
   Future<void> doBooking() async {
-    
-    price = _selectedWorkingHour * widget.hourlyRate.toDouble();
+    price = _selectedWorkingHour * widget.freelancer.hourlyRate.toDouble();
     final CollectionReference bookingList =
         FirebaseFirestore.instance.collection(bookingTable);
     BookingEntity booking = BookingEntity(
       bookingId: "123",
+      // TODO
       name: widget.name,
+      // name: widget.freelancer.name,
       serviceType: ServiceProviderType.freelancer,
-      serviceName: widget.type,
+      serviceName: widget.freelancer.type.name,
       serviceTime: DateTime(
         selectedServiceDate.year,
         selectedServiceDate.month,
@@ -361,6 +360,9 @@ class _FreelacerDetailScreenState extends State<FreelacerDetailScreen> {
       price: price,
       note: _noteController.text,
       workingHours: _selectedWorkingHour,
+      freelancerName: widget.name,
+      freelancerType: widget.freelancer.type,
+      freelancerPhoneNumber: widget.freelancer.phoneNumber,
     );
     try {
       await bookingList.add(booking.toJson()).then((value) {
@@ -525,7 +527,6 @@ class _FreelacerDetailScreenState extends State<FreelacerDetailScreen> {
           isExpanded: true,
           iconEnabledColor: colorPrimary,
           iconDisabledColor: colorPrimary,
-          focusColor: colorPrimary,
           underline: const SizedBox(),
           value: _selectedWorkingHour,
           icon: Container(

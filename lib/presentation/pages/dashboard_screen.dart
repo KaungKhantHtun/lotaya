@@ -7,12 +7,9 @@ import 'package:hakathon_service/presentation/pages/freelancer/freelancer_list_s
 import 'package:hakathon_service/presentation/pages/freelancer/freelancer_screen.dart';
 import 'package:hakathon_service/presentation/pages/kilo_taxi/kilo_taxi_screen.dart';
 import 'package:hakathon_service/presentation/pages/laundry_service/laundry_service_screen.dart';
-import 'package:intl/intl.dart';
-import 'package:lottie/lottie.dart';
 
-import '../../domain/entities/booking_entity.dart';
+import '../../domain/entities/freelancer_entity.dart';
 import '../../utils/constants.dart';
-import 'booking/booking_detail_screen.dart';
 import 'house_moving_service/house_moving_service_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -272,7 +269,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                     MaterialPageRoute(
                                       builder: (context) =>
                                           FreelancerListScreen(
-                                        label: "Psychologist",
+                                        type: FreelancerType.driver,
+                                        list: driverList,
                                       ),
                                     ));
                               },
@@ -286,7 +284,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                     MaterialPageRoute(
                                       builder: (context) =>
                                           FreelancerListScreen(
-                                        label: "Psychologist",
+                                        type: FreelancerType.babySitter,
+                                        list: babySitterList,
                                       ),
                                     ));
                               },
@@ -300,7 +299,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                     MaterialPageRoute(
                                       builder: (context) =>
                                           FreelancerListScreen(
-                                        label: "Psychologist",
+                                        type: FreelancerType.psychologist,
+                                        list: psychologistList,
                                       ),
                                     ));
                               },

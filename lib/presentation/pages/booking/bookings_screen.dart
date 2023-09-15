@@ -322,7 +322,7 @@ class BookingCardWidget extends StatelessWidget {
                 Row(
                   children: [
                     const Text(
-                      "Date Time: ",
+                      "Service Date Time: ",
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     Text(

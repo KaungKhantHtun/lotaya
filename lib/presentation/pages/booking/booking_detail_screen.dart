@@ -74,7 +74,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
                 children: [
                   Container(
                     padding: const EdgeInsets.only(
-                        left: 32, right: 32, top: 32, bottom: 32),
+                        left: 32, right: 32, top: 32, bottom: 16),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -176,6 +176,56 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
                     padding: const EdgeInsets.only(left: 32, right: 32),
                     child: Column(
                       children: [
+                        _buildAdditionalFieldsWidget(e),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              "Cost: ",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                              "${e.price} KS",
+                            ),
+                          ],
+                        ),
+                        const Divider(),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        if (e.note != null)
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const Text(
+                                    "Note: ",
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  const SizedBox(
+                                    width: 16,
+                                  ),
+                                  Flexible(
+                                    child: Text(
+                                      e.note ?? "",
+                                      textAlign: TextAlign.end,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const Divider(),
+                              const SizedBox(
+                                height: 16,
+                              ),
+                            ],
+                          ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -196,29 +246,8 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             const Text(
-                              "Cost: ",
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              "${e.price} KS",
-                            ),
-                          ],
-                        ),
-                        const Divider(),
-                        const SizedBox(
-                          height: 16,
-                        ),
-                        _buildAdditionalFieldsWidget(e),
-                        const SizedBox(
-                          height: 16,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text(
                               "Booking Created Datetime: ",
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.bold),
+                              style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                             Text(
                               "${DateFormat('hh:mm a').format(e.bookingCreatedTime)}, ${DateFormat('d MMM, y').format(e.bookingCreatedTime)}",
@@ -396,13 +425,11 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
                       ],
                     ),
                     const Divider(),
+                    const SizedBox(height: 16),
                   ],
                 ),
               )
               .toList(),
-        ),
-        const SizedBox(
-          height: 16,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -664,6 +691,54 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text(
+              "Freelancer Name: ",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            Text(
+              e.freelancerName ?? "",
+            ),
+          ],
+        ),
+        const Divider(),
+        const SizedBox(
+          height: 16,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text(
+              "Freelancer Type: ",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            Text(
+              e.freelancerType?.name ?? "",
+            ),
+          ],
+        ),
+        const Divider(),
+        const SizedBox(
+          height: 16,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text(
+              "Freelancer Ph No: ",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            Text(
+              e.freelancerPhoneNumber ?? "",
+            ),
+          ],
+        ),
+        const Divider(),
+        const SizedBox(
+          height: 16,
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

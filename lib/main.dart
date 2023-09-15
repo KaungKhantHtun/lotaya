@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hakathon_service/presentation/cubit/booking_cubit.dart';
 import 'package:hakathon_service/presentation/pages/home/home_screen.dart';
-import 'package:hakathon_service/presentation/pages/password_page.dart';
 import 'package:hakathon_service/utils/constants.dart';
 
 import 'services/firebase_service.dart';
@@ -51,13 +48,12 @@ class _MyAppState extends State<MyApp> {
       //   serviceProvider: serviceProviderEntity,
       // ),
       // home: TutorialScreen(),
-      home: BlocProvider(
-          create: (context) => BookingCubit(), child: PasswordPage()
-          // const HomeScreen(
-          //   initialIndex: 0,
-          // ),
-          ),
-      // home: FreelancerScreen(),
+      // home: BlocProvider(
+      //     create: (context) => BookingCubit(), child: PasswordPage()
+      home: const HomeScreen(
+        initialIndex: 0,
+      ),
     );
+    // home: FreelancerScreen(),
   }
 }

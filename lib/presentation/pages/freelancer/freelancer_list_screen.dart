@@ -4,10 +4,14 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:hakathon_service/presentation/pages/freelancer/freelancer_detail_screen.dart';
 import 'package:hakathon_service/utils/constants.dart';
 
-class FreelancerListScreen extends StatefulWidget {
-  const FreelancerListScreen({super.key, required this.label});
+import '../../../domain/entities/freelancer_entity.dart';
 
-  final String label;
+class FreelancerListScreen extends StatefulWidget {
+  const FreelancerListScreen(
+      {super.key, required this.type, required this.list});
+
+  final FreelancerType type;
+  final List<FreelancerEntity> list;
 
   @override
   State<FreelancerListScreen> createState() => _FreelancerListScreenState();
@@ -21,7 +25,7 @@ class _FreelancerListScreenState extends State<FreelancerListScreen> {
         backgroundColor: colorPrimary,
         centerTitle: true,
         title: Text(
-          "${widget.label.toUpperCase()}S",
+          "${widget.type.name.toUpperCase()}S",
           style: const TextStyle(
             color: Colors.white,
             fontSize: 14,
@@ -37,23 +41,17 @@ class _FreelancerListScreenState extends State<FreelancerListScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                widget.label,
+                widget.type.name,
                 style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 16,
               ),
-              ListView(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                children: [
-                  FreelancerCardaWidget(widget: widget),
-                  FreelancerCardaWidget(widget: widget),
-                  FreelancerCardaWidget(widget: widget),
-                  FreelancerCardaWidget(widget: widget),
-                  FreelancerCardaWidget(widget: widget),
-                ],
-              )
+              ...widget.list
+                  .map((e) => FreelancerCardWidget(
+                        freelancer: e,
+                      ))
+                  .toList(),
             ],
           ),
         ),
@@ -62,18 +60,18 @@ class _FreelancerListScreenState extends State<FreelancerListScreen> {
   }
 }
 
-class FreelancerCardaWidget extends StatelessWidget {
-  FreelancerCardaWidget({
+class FreelancerCardWidget extends StatelessWidget {
+  FreelancerCardWidget({
     super.key,
-    required this.widget,
+    required this.freelancer,
   });
 
-  final FreelancerListScreen widget;
+  final FreelancerEntity freelancer;
 
   String fakeImage = "https://i.pravatar.cc/300?u=${faker.person.name()}";
   String fakeName = faker.person.name();
   String fakeLocation = faker.address.city();
- int fakeRate = faker.randomGenerator.integer(100000);
+  int fakeRate = faker.randomGenerator.integer(100000);
 
   @override
   Widget build(BuildContext context) {
@@ -123,7 +121,7 @@ class FreelancerCardaWidget extends StatelessWidget {
                                   children: [
                                     Icon(Icons.location_on),
                                     Text(
-                                      fakeLocation,
+                                      freelancer.location,
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
                                           fontSize: 14,
@@ -142,11 +140,10 @@ class FreelancerCardaWidget extends StatelessWidget {
                                     MaterialPageRoute(
                                       builder: (context) =>
                                           FreelacerDetailScreen(
-                                              type: widget.label,
-                                              imageUrl: fakeImage,
-                                              hourlyRate: fakeRate,
-                                              location: fakeLocation,
-                                              name: fakeName),
+                                        freelancer: freelancer,
+                                        name: fakeName,
+                                        imgUrl: fakeImage,
+                                      ),
                                     ),
                                   );
                                 },
@@ -172,7 +169,7 @@ class FreelancerCardaWidget extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        "Specialized: ${widget.label}",
+                        "Specialized: ${freelancer.type.name}",
                         style: TextStyle(
                             fontSize: 14,
                             color: Colors.grey,
@@ -180,7 +177,7 @@ class FreelancerCardaWidget extends StatelessWidget {
                       ),
                       Spacer(),
                       Text(
-                        "Hourly Rate: \$$fakeRate",
+                        "Hourly Rate: ${freelancer.hourlyRate} Ks",
                         style: TextStyle(
                             fontSize: 14,
                             color: Colors.grey,
