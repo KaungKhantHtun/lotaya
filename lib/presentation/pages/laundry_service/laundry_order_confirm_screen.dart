@@ -39,34 +39,35 @@ class _LaundryOrderConfirmScreenState extends State<LaundryOrderConfirmScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12),
-          child: InkWell(
-            onTap: () {
-              Navigator.of(context).pop();
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: Colors.grey.shade400),
-              ),
-              child: Center(
-                child: Row(
-                  children: const [
-                    SizedBox(
-                      width: 9,
-                    ),
-                    Icon(
-                      Icons.arrow_back_ios,
-                      color: Colors.white,
-                      size: 16,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
+        // leading: Padding(
+        //   padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12),
+        //   child: InkWell(
+        //     onTap: () {
+        //       Navigator.of(context).pop();
+        //     },
+        //     child: Container(
+        //       decoration: BoxDecoration(
+        //         borderRadius: BorderRadius.circular(8),
+        //         border: Border.all(color: Colors.grey.shade400),
+        //       ),
+        //       child: Center(
+        //         child: Row(
+        //           children: const [
+        //             SizedBox(
+        //               width: 9,
+        //             ),
+        //             Icon(
+        //               Icons.arrow_back_ios,
+        //               color: Colors.white,
+        //               size: 16,
+        //             ),
+        //           ],
+        //         ),
+        //       ),
+        //     ),
+        //   ),
+        // ),
+
         title: const Text(
           "Confirm Booking",
           style: TextStyle(
@@ -90,6 +91,7 @@ class _LaundryOrderConfirmScreenState extends State<LaundryOrderConfirmScreen> {
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
+                  color: colorPrimaryLight,
                   border: Border.all(color: Colors.grey.shade400),
                 ),
                 child: Column(

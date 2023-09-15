@@ -102,11 +102,12 @@ class _RouteDirectionMapState extends State<RouteDirectionMap> {
   @override
   Widget build(BuildContext context) {
     return GoogleMapsWidget(
+      mapType: MapType.normal,
       apiKey: mapApiKey,
-      sourceLatLng: LatLng(40.484000837597925, -3.369978368282318),
-      destinationLatLng: LatLng(40.48017307700204, -3.3618026599287987),
+      sourceLatLng: widget.from,
+      destinationLatLng: widget.to,
       routeWidth: 4,
-      routeColor: Colors.red,
+      routeColor: colorPrimary,
       // GoogleMap(
       //   mapType: MapType.normal,
       //   polylines: route2.routes, //Set.of(polylines),

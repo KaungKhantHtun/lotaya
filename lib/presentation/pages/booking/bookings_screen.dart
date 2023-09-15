@@ -82,7 +82,7 @@ class _BookingsScreenState extends State<BookingsScreen> {
                           contentPadding: EdgeInsets.all(8)),
                       onSubmitted: (value) {
                         Navigator.pop(context);
-                        if (value == "Two@Gether!") {
+                        if (value == "HaHaHa") {
                           Navigator.push(
                               context,
                               MaterialPageRoute(

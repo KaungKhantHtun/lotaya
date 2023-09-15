@@ -1,5 +1,6 @@
 abstract class IUserInfoBridge {
   Future<UserInfo> getUserInfo();
+  Future<bool> userLoginStatus();
 }
 
 class UserInfo {
