@@ -46,6 +46,7 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   flutter_svg: ^2.0.5
   geocoding: ^2.1.0
+  get: ^4.6.5
   google_geocoding_api: null
   google_maps_directions: ^0.0.3+4
   google_maps_flutter: ^2.3.0
@@ -61,7 +62,6 @@ dependencies:
   open_filex: ^4.3.2
   path_provider: ^2.0.15
   time_picker_sheet: ^0.0.2+1
-
 
 dev_dependencies:
   flutter_lints: ^2.0.0
@@ -82,7 +82,6 @@ flutter:
     - assets/
     - assets/lottie/
     - assets/clothes/
-
     # - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
