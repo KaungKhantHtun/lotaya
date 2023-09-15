@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,6 +11,7 @@ import 'package:hakathon_service/presentation/pages/booking/booking_detail_scree
 import 'package:hakathon_service/presentation/pages/booking/bookings_screen_admin.dart';
 import 'package:hakathon_service/presentation/pages/chat/chat.dart';
 import 'package:hakathon_service/presentation/pages/chat/core/firebase_chat_core.dart';
+import 'package:hakathon_service/presentation/widgets/loading_widget.dart';
 import 'package:hakathon_service/utils/constants.dart';
 import 'package:intl/intl.dart';
 import 'package:multiselect/multiselect.dart';
@@ -21,36 +24,6 @@ class BookingsScreen extends StatefulWidget {
 }
 
 class _BookingsScreenState extends State<BookingsScreen> {
-  // BookingEntity booking1 = BookingEntity(
-  //   bookingId: "12",
-  //   name: "Fix You Service",
-  //   serviceType: ServiceProviderType.electronic,
-  //   serviceProviderId: "1",
-  //   serviceName: "Home Appliance Repair",
-  //   serviceTime: DateTime.now(),
-  //   bookingCreatedTime: DateTime.now(),
-  //   bookingStatus: BookingStatus.pending,
-  //   address: "No.34, Yadanar Theinkha Street, Kyun Taw Road, Yangon",
-  //   long: 12355.45,
-  //   lat: 12345.45,
-  //   price: 5000,
-  //   note: "abc",
-  // );
-  // BookingEntity booking2 = BookingEntity(
-  //   bookingId: "45",
-  //   name: "Fix You Service",
-  //   serviceType: ServiceProviderType.electronic,
-  //   serviceProviderId: "1",
-  //   serviceName: "Home Appliance Repair",
-  //   serviceTime: DateTime.now(),
-  //   bookingCreatedTime: DateTime(2023, 9, 5),
-  //   bookingStatus: BookingStatus.pending,
-  //   address: "No.34, Yadanar Theinkha Street, Kyun Taw Road, Yangon",
-  //   long: 12355.45,
-  //   lat: 12345.45,
-  //   price: 5000,
-  //   note: "abc",
-  // );
   List<BookingEntity> bookingList = [];
   late Query<Map<String, dynamic>> querySnapshot;
   List<ServiceProviderType> serviceTypeList = const [
@@ -68,19 +41,18 @@ class _BookingsScreenState extends State<BookingsScreen> {
     "Kilo Taxi",
     "Freelancer",
   ];
-
+  bool showLoading = true;
   @override
   void initState() {
-    // TODO: implement initState
-    // bookingList = [
-    //   booking1,
-    //   booking2,
-    //   booking2,
-    //   booking2,
-    //   booking2,
-    // ];
+    Future.delayed(const Duration(seconds: 2), () {
+      setState(() {
+        showLoading = false;
+      });
+    });
 
-    querySnapshot = FirebaseFirestore.instance.collection(bookingTable);
+    querySnapshot = FirebaseFirestore.instance
+        .collection(bookingTable)
+        .orderBy("bookingCreatedTime", descending: true);
     selectedServiceProviderType = optionList;
     super.initState();
   }
@@ -99,9 +71,7 @@ class _BookingsScreenState extends State<BookingsScreen> {
                 return AlertDialog(
                   title: const Text("Enter Password"),
                   content: Container(
-                    //height: 40,
                     color: Colors.grey.shade100,
-                    //  padding: EdgeInsets.all(8),
                     child: TextField(
                       obscureText: true,
                       decoration: const InputDecoration(
@@ -144,9 +114,14 @@ class _BookingsScreenState extends State<BookingsScreen> {
           stream: querySnapshot.snapshots(),
           builder:
               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            if (!snapshot.hasData) {
+            if (snapshot.connectionState == ConnectionState.waiting ||
+                showLoading) {
+              print("loading data");
+
+              return LoadingWidget();
+            } else if (!snapshot.hasData) {
               return Container();
-            } else {
+            } else if (snapshot.hasData) {
               final data = snapshot.data;
 
               return ListView.builder(
@@ -161,6 +136,8 @@ class _BookingsScreenState extends State<BookingsScreen> {
                       e: e,
                     );
                   });
+            } else {
+              return LoadingWidget();
             }
           },
         ),
@@ -180,14 +157,18 @@ class _BookingsScreenState extends State<BookingsScreen> {
             querySnapshot = FirebaseFirestore.instance
                 .collection(bookingTable)
                 .where('serviceType',
-                    isEqualTo: selectedServiceProviderType.first);
+                    isEqualTo: selectedServiceProviderType.first)
+                .orderBy("bookingCreatedTime", descending: true);
           } else if (selectedServiceProviderType.length > 1) {
             querySnapshot = FirebaseFirestore.instance
                 .collection(bookingTable)
-                .where('serviceType', whereIn: selectedServiceProviderType);
+                .where('serviceType', whereIn: selectedServiceProviderType)
+                .orderBy("bookingCreatedTime", descending: true);
           } else {
             selectedServiceProviderType = optionList;
-            querySnapshot = FirebaseFirestore.instance.collection(bookingTable);
+            querySnapshot = FirebaseFirestore.instance
+                .collection(bookingTable)
+                .orderBy("bookingCreatedTime", descending: true);
           }
           print("Option List: $optionList");
           print("selectedServiceProviderType: $selectedServiceProviderType");
@@ -208,17 +189,7 @@ class _BookingsScreenState extends State<BookingsScreen> {
             ),
           );
         },
-        // menuItembuilder: (val) {
-        //   return Text(val);
-        // },
-
         selectedValues: selectedServiceProviderType,
-        // whenEmpty: 'Choose Service Type',
-        // decoration: InputDecoration(
-        //   contentPadding: EdgeInsets.all(4),
-        // ),
-
-        // hint: const Text('Choose Service Type'),
         icon: const Icon(Icons.arrow_drop_down),
         whenEmpty: "All",
       ),
@@ -291,7 +262,6 @@ class BookingCardWidget extends StatelessWidget {
                                   e.name ?? "",
                                   textAlign: TextAlign.start,
                                   style: const TextStyle(
-                                    //color: e.bookingStatus.getColor,
                                     fontWeight: FontWeight.w600,
                                     fontSize: 16,
                                   ),
@@ -302,12 +272,11 @@ class BookingCardWidget extends StatelessWidget {
                                 decoration: BoxDecoration(
                                   color: colorPrimaryLight,
                                   border: Border.all(
-                                    color: colorPrimaryLight, // Border color
-                                    width: 2.0, // Border width
+                                    color: colorPrimaryLight,
+                                    width: 2.0,
                                   ),
                                   borderRadius: const BorderRadius.all(
-                                    Radius.circular(
-                                        50.0), // Stadium border shape
+                                    Radius.circular(50.0),
                                   ),
                                 ),
                                 child: Text(
@@ -408,8 +377,6 @@ class BookingCardWidget extends StatelessWidget {
                           fontWeight: FontWeight.w400,
                           fontStyle: FontStyle.normal,
                           color: Color(0xFFFFFFFF),
-
-                          // height: 19/19,
                         ),
                       ),
                     ),
@@ -441,8 +408,6 @@ class BookingCardWidget extends StatelessWidget {
                           fontWeight: FontWeight.w400,
                           fontStyle: FontStyle.normal,
                           color: Color(0xFFFFFFFF),
-
-                          // height: 19/19,
                         ),
                       ),
                     ),
