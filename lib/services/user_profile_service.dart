@@ -7,7 +7,7 @@ class UserProfileService {
   static late String msisdn;
   operateUserProfile() async {
     UserEntity userEntity = await getUserProfile();
-    bool isNewUser = await checkUserId(userEntity.userId);
+    bool isNewUser = await checkMsisdn(userEntity.msisdn);
     if (isNewUser) {
       await UserProfileService().createProfile(userEntity);
     } else {}
@@ -38,12 +38,12 @@ class UserProfileService {
     return profile;
   }
 
-  Future<bool> checkUserId(String userId) async {
+  Future<bool> checkMsisdn(String msisdn) async {
     final CollectionReference profileList =
         FirebaseFirestore.instance.collection(profileTable);
     late DocumentSnapshot<Object?> snapshot;
     try {
-      snapshot = await profileList.doc(userId).get();
+      snapshot = await profileList.doc(msisdn).get();
     } catch (e) {
       print('Error retrieving data: $e');
     }
