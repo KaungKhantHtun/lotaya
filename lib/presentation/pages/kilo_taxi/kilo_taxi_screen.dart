@@ -186,6 +186,9 @@ class _KiloTaxiScreenState extends State<KiloTaxiScreen> {
                         ],
                       ),
                     ),
+                  SizedBox(
+                    height: 8,
+                  ),
                   _buildTimePicker(),
                   SizedBox(
                     height: 16,
@@ -256,7 +259,7 @@ class _KiloTaxiScreenState extends State<KiloTaxiScreen> {
       toAddr: _toController.text,
     );
     try {
-          await bookingList.add(booking.toJson()).then((value) {
+      await bookingList.add(booking.toJson()).then((value) {
         bookingList.doc(value.id).update({"bookingId": value.id});
       });
       Navigator.of(context).push(MaterialPageRoute(

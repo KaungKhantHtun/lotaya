@@ -1,16 +1,3 @@
-# hakathon_service
-
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+1. ssh -i ~/.ssh/hackathon_instance_3.pem ec2-user@52.76.200.229 (local terminal)
+2. scp -i ~/.ssh/hackathon_instance_3.pem -r /Users/kaungkhanthtoonm1/Development/Hackathon/hakathon_service/build/web/ ec2-user@52.76.200.229:/home/ec2-user/ (local terminal)
+3. mv ~/web/* /var/www/html/  (remote terminal)
