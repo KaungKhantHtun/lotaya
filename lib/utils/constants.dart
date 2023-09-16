@@ -537,33 +537,33 @@ final List<FreelancerEntity> coachList = [
 ];
 final List<FreelancerEntity> nurseList = [
   FreelancerEntity(
-      type: FreelancerType.dogWalker,
+      type: FreelancerType.nurse,
       imgUrl: "assets/freelancer/f7.png",
-      name: "Jame",
+      name: "Aung Thu",
       hourlyRate: 15000,
       location: "Yangon",
       bio:
-          "Good day, doggie friends! I'm Jame , an experienced dog walker with a passion for outdoor adventures. ",
+          "I assist busy Personal Injury Attorneys to keep their legal practice running smoothly as well as free up their time to work on the more complex aspects of their current cases so that they can take on larger case volumes.",
       age: 30,
       phoneNumber: "0945566789"),
   FreelancerEntity(
-      type: FreelancerType.dogWalker,
+      type: FreelancerType.nurse,
       imgUrl: "assets/freelancer/f8.png",
-      name: "John",
+      name: "Kyaw Lwin",
       hourlyRate: 15000,
       location: "Manadalay",
       bio:
-          "Hey there, pet parents! I'm , your reliable dog walker with 5 years experenice. ",
+          "I am a Registered Nurse here in the Philippines, and the USA, specifically in Texas. I am very keen on details, flexible and I have a strong background in the US Healthcare system. I have extensive experience in Prior Authorizations, including processing requests and reviewing the medical necessity of each request.",
       age: 30,
       phoneNumber: " 09667555678 "),
   FreelancerEntity(
-      type: FreelancerType.dogWalker,
+      type: FreelancerType.nurse,
       imgUrl: "assets/freelancer/f2.png",
       name: "Su Su ",
       hourlyRate: 15000,
       location: "Manadalay",
       bio:
-          "Greetings, dog lovers! I'm Su Su , a certified dog walker with a passion for pups and a commitment to their well-being. ",
+          "’m licensed nurse in Pakistan with bedside experience of (Surgical and Medical ICU, Cardiac Emergency, Tele Nurse) patient care experience of 2.5 years.",
       age: 30,
       phoneNumber: " 097865310"),
 ];
