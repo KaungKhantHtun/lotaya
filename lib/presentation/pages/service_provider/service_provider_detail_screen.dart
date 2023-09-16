@@ -63,7 +63,6 @@ class _ServiceProviderDetailScreenState
               margin: EdgeInsets.all(16),
               child: Image.asset(
                 widget.service.imgUrl,
-                fit: BoxFit.cover,
                 height: 320,
               ),
             ),
@@ -195,11 +194,14 @@ class _ServiceProviderDetailScreenState
                       const Icon(
                         Icons.location_on_outlined,
                       ),
-                      Text(
-                        widget.service.address,
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
+                      Flexible(
+                        child: Text(
+                          widget.service.address,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
                     ],

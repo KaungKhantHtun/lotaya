@@ -19,6 +19,7 @@ class _TermsAndConditonsWidgetState extends State<TermsAndConditonsWidget> {
         backgroundColor: colorPrimaryLight,
         foregroundColor: colorPrimary,
         centerTitle: true,
+        title: Text("Terms and Conditions"),
         actions: [
           IconButton(
             onPressed: () {
@@ -43,14 +44,7 @@ class _TermsAndConditonsWidgetState extends State<TermsAndConditonsWidget> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              const Text(
-                "Terms and Conditions of Service",
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              const SizedBox(
+              SizedBox(
                 height: 16,
               ),
               ...termsAndConditonList.map((e) => _buildTermAndConditionItem(e)),
