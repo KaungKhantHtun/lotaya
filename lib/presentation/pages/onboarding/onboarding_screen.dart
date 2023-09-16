@@ -280,7 +280,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               child: imageBytes == null
                   ? Image.asset("assets/profile.jpg",
                       width: imageSize, height: imageSize)
-                  : Image.memory(bytes)),
+                  : Image.memory(bytes, width: imageSize, height: imageSize)),
         ),
         Positioned(
           bottom: 8,
