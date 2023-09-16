@@ -445,6 +445,53 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               },
                             ),
                           ],
+                        ),
+                        const SizedBox(
+                          height: 32,
+                        ),
+                        Text(
+                          "Promotions",
+                          style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 24,
+                        ),
+                        SizedBox(
+                          height: 100,
+                          child: ListView(
+                            shrinkWrap: true,
+                            scrollDirection: Axis.horizontal,
+                            
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(16),
+                                child: Image.asset(
+                                  "assets/discount10.jpeg",
+                                ),
+                              ),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(16),
+                                child: Image.asset(
+                                  "assets/discount10.jpeg",
+                                ),
+                              ),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(16),
+                                child: Image.asset(
+                                  "assets/discount10.jpeg",
+                                ),
+                              ),
+                            ],
+                          ),
                         )
                       ],
                     ),

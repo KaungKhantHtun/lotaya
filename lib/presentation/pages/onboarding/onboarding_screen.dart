@@ -37,40 +37,40 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12),
-          child: InkWell(
-            onTap: () {
-              Navigator.of(context).pop();
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(
-                  // color: Colors.grey.shade400,
-                  color: colorPrimary,
-                ),
-              ),
-              child: Center(
-                child: Row(
-                  children: const [
-                    SizedBox(
-                      width: 9,
-                    ),
-                    Icon(
-                      Icons.arrow_back_ios,
-                      // color: Colors.white,
-                      color: colorPrimary,
-                      size: 16,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
+        // leading: Padding(
+        //   padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12),
+        //   child: InkWell(
+        //     onTap: () {
+        //       Navigator.of(context).pop();
+        //     },
+        //     child: Container(
+        //       decoration: BoxDecoration(
+        //         borderRadius: BorderRadius.circular(8),
+        //         border: Border.all(
+        //           // color: Colors.grey.shade400,
+        //           color: colorPrimary,
+        //         ),
+        //       ),
+        //       child: Center(
+        //         child: Row(
+        //           children: const [
+        //             SizedBox(
+        //               width: 9,
+        //             ),
+        //             Icon(
+        //               Icons.arrow_back_ios,
+        //               // color: Colors.white,
+        //               color: colorPrimary,
+        //               size: 16,
+        //             ),
+        //           ],
+        //         ),
+        //       ),
+        //     ),
+        //   ),
+        // ),
         title: const Text(
-          "Registeration",
+          "Registration",
           style: TextStyle(
             fontSize: 20,
             color: colorPrimary,

@@ -369,6 +369,7 @@ class _HouseMovingServiceScreenState extends State<HouseMovingServiceScreen> {
   }
 
   List<String> _floorList = const [
+    "Ground Floor",
     "1st Floor",
     "2nd Floor",
     "3rd Floor",
@@ -377,7 +378,7 @@ class _HouseMovingServiceScreenState extends State<HouseMovingServiceScreen> {
         "6th Floor"
         "7th Floor"
   ];
-  String _selectedFloor = "1st Floor";
+  String _selectedFloor = "Ground Floor";
 
   Widget _buildFloorWidget() {
     return Container(
