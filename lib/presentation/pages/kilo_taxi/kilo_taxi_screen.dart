@@ -77,15 +77,16 @@ class _KiloTaxiScreenState extends State<KiloTaxiScreen> {
               child: Column(
                 children: [
                   if (_fromLatLng != null && _toLatLng != null)
-                    SizedBox(
+                    Container(
                       height: 200,
+                      padding: EdgeInsets.only(bottom: 24),
                       child: RouteDirectionMap(
                         from: _fromLatLng!,
                         to: _toLatLng!,
                       ),
                     ),
                   const SizedBox(
-                    height: 32,
+                    height: 8,
                   ),
                   _buildFromLocationWidget(),
                   const SizedBox(

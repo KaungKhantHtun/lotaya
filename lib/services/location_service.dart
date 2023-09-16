@@ -56,7 +56,7 @@ class _LocationPageState extends State<LocationPage> {
     );
 
     getAddress();
-    Future.delayed(Duration(seconds: 1)).then(
+    Future.delayed(Duration(seconds: 0)).then(
       (value) {
         setState(() {});
       },
