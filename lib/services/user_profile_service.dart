@@ -6,7 +6,7 @@ import '../bridge/user_info/user_info_web_impl.dart';
 import '../utils/constants.dart';
 
 class UserProfileService {
-  static String? msisdn;
+  static String msisdn = "9976413584";
   operateUserProfile() async {
     UserInfo userInfo = await getUserProfile();
     msisdn = userInfo.msisdn;

@@ -10,6 +10,7 @@ import 'package:intl/intl.dart';
 
 import '../../../domain/entities/service_provider_type.dart';
 import '../../../services/location_service.dart';
+import '../../../services/user_profile_service.dart';
 import '../../widgets/service_provider_select.dart';
 import '../../widgets/total_cost_widget.dart';
 import '../home/home_screen.dart';
@@ -611,6 +612,7 @@ class _HouseMovingServiceScreenState extends State<HouseMovingServiceScreen> {
     final CollectionReference bookingList =
         FirebaseFirestore.instance.collection(bookingTable);
     BookingEntity booking = BookingEntity(
+      msisdn: UserProfileService.msisdn,
       bookingId: "house123",
       name: serviceProviderName,
       serviceType: ServiceProviderType.houseMoving,

@@ -27,7 +27,7 @@ class SendMoneyBridgeImpl implements ISendMoneyBridge {
       final dartObj = dartify(e);
       if (dartObj != null) {
         final res = Map.from(dartObj as Map);
-        return Future.error(res['response']['error']['code']);
+        return Future.error(res['response']['error']);
       }
 
       return Future.error("Payment Failed");
@@ -45,7 +45,7 @@ class SendMoneyBridgeImpl implements ISendMoneyBridge {
       final dartObj = dartify(e);
       if (dartObj != null) {
         final res = Map.from(dartObj as Map);
-        return Future.error(res['response']['error']['code']);
+        return Future.error(res['response']['error']);
       }
 
       return Future.error("Payment Failed");

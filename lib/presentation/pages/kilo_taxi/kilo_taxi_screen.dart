@@ -11,6 +11,7 @@ import 'package:time_picker_sheet/widget/time_picker.dart';
 
 import '../../../domain/entities/booking_entity.dart';
 import '../../../domain/entities/service_provider_type.dart';
+import '../../../services/user_profile_service.dart';
 import '../home/home_screen.dart';
 // import 'package:intl/intl.dart';
 
@@ -241,6 +242,7 @@ class _KiloTaxiScreenState extends State<KiloTaxiScreen> {
     final CollectionReference bookingList =
         FirebaseFirestore.instance.collection(bookingTable);
     BookingEntity booking = BookingEntity(
+      msisdn: UserProfileService.msisdn,
       bookingId: "123",
       name: "Kilo Taxi Service ",
       serviceType: ServiceProviderType.kiloTaxi,

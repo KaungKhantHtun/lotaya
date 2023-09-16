@@ -7,6 +7,7 @@ import 'package:hakathon_service/presentation/widgets/address_field_widget.dart'
 import 'package:hakathon_service/presentation/widgets/note_field_widget.dart';
 
 import '../../../domain/entities/laundry_booking_confirm_entity.dart';
+import '../../../services/user_profile_service.dart';
 import '../../../utils/constants.dart';
 import '../../widgets/service_provider_select.dart';
 import '../home/home_screen.dart';
@@ -314,6 +315,7 @@ class _LaundryOrderConfirmScreenState extends State<LaundryOrderConfirmScreen> {
     double lat = 23;
     double long = 34;
     BookingEntity booking = BookingEntity(
+      msisdn: UserProfileService.msisdn,
       bookingId: "123",
       name: serviceProviderName,
       serviceType: ServiceProviderType.laundry,

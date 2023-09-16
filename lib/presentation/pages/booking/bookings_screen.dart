@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:hakathon_service/bridge/send_money/send_money_interface.dart';
 import 'package:hakathon_service/bridge/send_money/send_money_web_impl.dart';
@@ -10,7 +11,6 @@ import 'package:hakathon_service/domain/entities/booking_entity.dart';
 import 'package:hakathon_service/domain/entities/booking_status.dart';
 import 'package:hakathon_service/domain/entities/service_provider_type.dart';
 import 'package:hakathon_service/presentation/cubit/booking_cubit.dart';
-import 'package:hakathon_service/presentation/pages/booking/booking_detail_screen.dart';
 import 'package:hakathon_service/presentation/pages/booking/bookings_screen_admin.dart';
 import 'package:hakathon_service/presentation/pages/chat/chat.dart';
 import 'package:hakathon_service/presentation/pages/chat/core/firebase_chat_core.dart';
@@ -18,6 +18,9 @@ import 'package:hakathon_service/presentation/widgets/loading_widget.dart';
 import 'package:hakathon_service/utils/constants.dart';
 import 'package:intl/intl.dart';
 import 'package:multiselect/multiselect.dart';
+
+import '../../widgets/toast_widget.dart';
+import 'booking_detail_screen.dart';
 
 class BookingsScreen extends StatefulWidget {
   const BookingsScreen({Key? key}) : super(key: key);
@@ -28,7 +31,14 @@ class BookingsScreen extends StatefulWidget {
 
 class _BookingsScreenState extends State<BookingsScreen> {
   List<BookingEntity> bookingList = [];
-  late Query<Map<String, dynamic>> querySnapshot;
+//TODO add msisdn
+
+  Query<Map<String, dynamic>> querySnapshot = FirebaseFirestore.instance
+      .collection(bookingTable)
+      // .where("msisdn", isEqualTo: UserProfileService.msisdn)
+      .limit(10)
+      .orderBy("bookingCreatedTime", descending: true);
+
   List<ServiceProviderType> serviceTypeList = const [
     ServiceProviderType.electronic,
     ServiceProviderType.homeCleaning,
@@ -45,6 +55,7 @@ class _BookingsScreenState extends State<BookingsScreen> {
     "Freelancer",
   ];
   bool showLoading = true;
+
   @override
   void initState() {
     Future.delayed(const Duration(seconds: 2), () {
@@ -53,9 +64,6 @@ class _BookingsScreenState extends State<BookingsScreen> {
       });
     });
 
-    querySnapshot = FirebaseFirestore.instance
-        .collection(bookingTable)
-        .orderBy("bookingCreatedTime", descending: true);
     selectedServiceProviderType = optionList;
     super.initState();
   }
@@ -200,13 +208,23 @@ class _BookingsScreenState extends State<BookingsScreen> {
   }
 }
 
-class BookingCardWidget extends StatelessWidget {
-  BookingCardWidget({
-    super.key,
-    required this.e,
-  });
-
+class BookingCardWidget extends StatefulWidget {
+  const BookingCardWidget({super.key, required this.e});
   final BookingEntity e;
+  @override
+  State<BookingCardWidget> createState() => _BookingCardWidgetState();
+}
+
+class _BookingCardWidgetState extends State<BookingCardWidget> {
+  late FToast fToast;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    fToast = FToast();
+    // if you want to use context from globally instead of content we need to pass navigatorKey.currentContext!
+    fToast.init(context);
+  }
 
   final ISendMoneyBridge _iSendMoneyBridge =
       Get.put(const SendMoneyBridgeImpl());
@@ -217,7 +235,7 @@ class BookingCardWidget extends StatelessWidget {
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => BookingDetailScreen(
-                  bookingId: e.bookingId,
+                  bookingId: widget.e.bookingId,
                 )));
       },
       child: Container(
@@ -247,7 +265,7 @@ class BookingCardWidget extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.all(14.0),
                         child: Image.asset(
-                          e.serviceType.imgUrl,
+                          widget.e.serviceType.imgUrl,
                           color: colorPrimary,
                         ),
                       ),
@@ -265,7 +283,7 @@ class BookingCardWidget extends StatelessWidget {
                             children: [
                               Expanded(
                                 child: Text(
-                                  e.name ?? "",
+                                  widget.e.name ?? "",
                                   textAlign: TextAlign.start,
                                   style: const TextStyle(
                                     fontWeight: FontWeight.w600,
@@ -286,7 +304,7 @@ class BookingCardWidget extends StatelessWidget {
                                   ),
                                 ),
                                 child: Text(
-                                  e.bookingStatus.name,
+                                  widget.e.bookingStatus.name,
                                   textAlign: TextAlign.end,
                                   style: const TextStyle(
                                     fontWeight: FontWeight.bold,
@@ -301,7 +319,7 @@ class BookingCardWidget extends StatelessWidget {
                             height: 8,
                           ),
                           Text(
-                            e.serviceName,
+                            widget.e.serviceName,
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 14,
@@ -326,7 +344,7 @@ class BookingCardWidget extends StatelessWidget {
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      "${DateFormat('hh:mm a').format(e.serviceTime)}, ${DateFormat('d MMM, y').format(e.bookingCreatedTime)}",
+                      "${DateFormat('hh:mm a').format(widget.e.serviceTime)}, ${DateFormat('d MMM, y').format(widget.e.bookingCreatedTime)}",
                     ),
                   ],
                 ),
@@ -339,11 +357,12 @@ class BookingCardWidget extends StatelessWidget {
                       "Cost: ",
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    Text("${e.price} KS"),
+                    Text("${widget.e.price} KS"),
                     const Spacer(),
                     InkWell(
                       onTap: () {
-                        _handlePressed(context, e.bookingId, e.name);
+                        _handlePressed(
+                            context, widget.e.bookingId, widget.e.name);
                       },
                       child: Image.asset(
                         "assets/bubble-chat.png",
@@ -356,48 +375,13 @@ class BookingCardWidget extends StatelessWidget {
                 const SizedBox(
                   height: 16,
                 ),
-                if (e.bookingStatus == BookingStatus.pendingPayment)
+                if (widget.e.bookingStatus == BookingStatus.pendingPayment)
                   SizedBox(
                     height: 36,
                     width: double.infinity,
                     child: TextButton(
                       onPressed: () async {
-                        await _iSendMoneyBridge
-                            .makePayment(e.price, "9976413584", e.bookingId)
-                            .then(
-                          (value) {
-                            context.read<BookingCubit>().updateStatus(
-                                  e.bookingId,
-                                  BookingStatus.bookingAccepted.name,
-                                );
-                          },
-                        ).catchError((onError) {
-                          if (onError.toString() == "WM-OTHER-003") {
-                            // Get.to(
-                            //   const MainPage(tapIndex: 2),
-                            // );
-                            // final bagProducts = _productController.bagProducts;
-                            // _orderController.createOrder(
-                            //     orderId,
-                            //     bagProducts,
-                            //     addressController.text,
-                            //     "000",
-                            //     wavePay,
-                            //     _productController.totalPrice.value);
-                            // _productController.bagProducts.clear();
-                          } else {
-                            // Get.snackbar(
-                            //   "Error",
-                            //   onError == "WM-OTHER-004"
-                            //       ? "Your payment is not supported yet!"
-                            //       : "Payment Failed!",
-                            //   snackPosition: SnackPosition.BOTTOM,
-                            //   colorText: Colors.white,
-                            //   backgroundColor: Colors.red.shade900,
-                            //   icon: const Icon(Icons.error),
-                            // );
-                          }
-                        });
+                        await doPayment(context);
                       },
                       style: ButtonStyle(
                         backgroundColor:
@@ -419,14 +403,14 @@ class BookingCardWidget extends StatelessWidget {
                       ),
                     ),
                   ),
-                if (e.bookingStatus == BookingStatus.serviceFinished)
+                if (widget.e.bookingStatus == BookingStatus.serviceFinished)
                   SizedBox(
                     height: 36,
                     width: double.infinity,
                     child: TextButton(
                       onPressed: () async {
                         context.read<BookingCubit>().updateStatus(
-                              e.bookingId,
+                              widget.e.bookingId,
                               BookingStatus.completed.name,
                             );
                       },
@@ -465,10 +449,61 @@ class BookingCardWidget extends StatelessWidget {
     );
   }
 
+  Future<void> doPayment(BuildContext context) async {
+    await _iSendMoneyBridge.walletBalance().then((value) async {
+      int walletBalance = value;
+      if (walletBalance >= widget.e.price) {
+        await _iSendMoneyBridge
+            .makePayment(widget.e.price, "9976413584", widget.e.bookingId)
+            .then(
+          (value) {
+            context.read<BookingCubit>().updateStatus(
+                  widget.e.bookingId,
+                  BookingStatus.bookingAccepted.name,
+                );
+          },
+        ).catchError((onError) {
+          dynamic errObj = onError;
+          String errCode = errObj["code"].toString();
+          String errMsg = errObj["message"].toString();
+          showToast(
+            ToastWidget(
+              msg: errMsg,
+            ),
+          );
+        });
+      } else {
+        //TODO insufficient balance
+        showToast(
+          const ToastWidget(
+            msg: "Your Wallet Balance is insufficient!",
+          ),
+        );
+      }
+    }).catchError((onError) {
+      dynamic errObj = onError;
+      String errCode = errObj["code"].toString();
+      String errMsg = errObj["message"].toString();
+      showToast(
+        ToastWidget(
+          msg: errMsg,
+        ),
+      );
+    });
+  }
+
+  void showToast(Widget widget) {
+    fToast.showToast(
+      child: widget,
+      gravity: ToastGravity.BOTTOM,
+      toastDuration: const Duration(seconds: 2),
+    );
+  }
+
   void _handlePressed(
       BuildContext context, String bookingId, String? name) async {
     final navigator = Navigator.of(context);
-    
+
     final room = await FirebaseChatCore.instance.createRoom(
       adminUser,
       roomId: bookingId,

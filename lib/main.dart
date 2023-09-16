@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hakathon_service/presentation/cubit/booking_cubit.dart';
-import 'package:hakathon_service/presentation/pages/home/home_screen.dart';
-import 'package:hakathon_service/presentation/pages/password_page.dart';
 import 'package:hakathon_service/utils/constants.dart';
 
+import 'presentation/pages/password_page.dart';
 import 'services/firebase_service.dart';
 
 void main() async {
@@ -21,6 +21,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
   @override
   void initState() {
     super.initState();
@@ -34,6 +35,8 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
           primarySwatch: MaterialColor(0xff1f467d, color),
           textTheme: const TextTheme()),
+      builder: FToastBuilder(),
+      navigatorKey: navigatorKey,
       // home: const MyHomePage(title: 'Flutter Demo Home Page'),
       // home: ElectronicServiceScreen(
       //   serviceProvider: serviceProviderEntity,

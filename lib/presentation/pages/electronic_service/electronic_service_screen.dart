@@ -9,6 +9,7 @@ import 'package:hakathon_service/utils/constants.dart';
 import 'package:intl/intl.dart';
 
 import '../../../domain/entities/service_provider_type.dart';
+import '../../../services/user_profile_service.dart';
 import '../../widgets/service_provider_select.dart';
 import '../../widgets/total_cost_widget.dart';
 import '../home/home_screen.dart';
@@ -612,6 +613,7 @@ class _ElectronicServiceScreenState extends State<ElectronicServiceScreen> {
     final CollectionReference bookingList =
         FirebaseFirestore.instance.collection(bookingTable);
     BookingEntity booking = BookingEntity(
+       msisdn: UserProfileService.msisdn,
       bookingId: "123",
       name: serviceProviderName,
       serviceType: ServiceProviderType.electronic,

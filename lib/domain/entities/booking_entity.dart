@@ -15,6 +15,7 @@ class BookingEntity {
   final DateTime bookingCreatedTime;
   final String? address;
   final BookingStatus bookingStatus;
+  final String msisdn;
   final double? long;
   final double? lat;
   final double price;
@@ -61,6 +62,7 @@ class BookingEntity {
   final String? freelancerPhoneNumber;
 
   BookingEntity({
+    required this.msisdn,
     required this.bookingId,
     required this.serviceType,
     required this.serviceName,
@@ -104,6 +106,7 @@ class BookingEntity {
   });
   Map<String, dynamic> toJson() {
     return {
+      "msisdn": msisdn,
       "bookingId": bookingId,
       "serviceType": serviceType.name,
       "serviceName": serviceName,
@@ -154,6 +157,7 @@ class BookingEntity {
 
   static BookingEntity fromJson(Map<String, dynamic>? map) {
     return BookingEntity(
+      msisdn: map?["msisdn"],
       bookingId: map?["bookingId"] ?? "",
       name: map?["name"],
       serviceType: ServiceProviderType.getServiceProvider(map?["serviceType"]),
@@ -172,6 +176,9 @@ class BookingEntity {
 
   static BookingEntity fromDoc(QueryDocumentSnapshot<Object?>? doc) {
     return BookingEntity(
+      msisdn: doc?.data().toString().contains("msisdn") ?? false
+          ? doc?.get("msisdn")
+          : "123",
       bookingId: doc?.data().toString().contains("bookingId") ?? false
           ? doc?.get("bookingId")
           : "123",

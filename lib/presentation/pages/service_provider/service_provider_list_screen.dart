@@ -136,14 +136,19 @@ class ServiceProviderCardWidget extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 const Icon(Icons.location_on),
-                                Text(
-                                  service.address,
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 2,
-                                  style: const TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.grey,
-                                      fontWeight: FontWeight.bold),
+                                const SizedBox(
+                                  width: 8,
+                                ),
+                                Flexible(
+                                  child: Text(
+                                    service.address,
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 2,
+                                    style: const TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.grey,
+                                        fontWeight: FontWeight.bold),
+                                  ),
                                 ),
                               ],
                             ),
