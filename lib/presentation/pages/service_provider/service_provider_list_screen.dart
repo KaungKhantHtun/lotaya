@@ -111,24 +111,6 @@ class ServiceProviderCardWidget extends StatelessWidget {
                       },
                     ),
                   ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      RatingBar.builder(
-                        initialRating:
-                            faker.randomGenerator.integer(5).toDouble(),
-                        minRating: 1,
-                        direction: Axis.horizontal,
-                        allowHalfRating: true,
-                        itemCount: 5,
-                        itemSize: 16,
-                        itemPadding: const EdgeInsets.symmetric(horizontal: 1),
-                        itemBuilder: (context, _) => const Icon(
-                          Icons.star,
-                          color: Colors.amber,
                 );
               },
               child: Container(
