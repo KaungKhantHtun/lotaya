@@ -27,13 +27,13 @@ class _ServiceProviderListScreenState extends State<ServiceProviderListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: colorPrimary,
-        title: const Text(
-          "Service Providers",
+        foregroundColor: colorPrimary,
+        backgroundColor: colorPrimaryLight,
+        title: Text(
+          "Service Providers".toUpperCase(),
           style: TextStyle(
-            color: Colors.white,
-            fontSize: 14,
-            fontWeight: FontWeight.w600,
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
           ),
         ),
         centerTitle: true,
@@ -48,10 +48,7 @@ class _ServiceProviderListScreenState extends State<ServiceProviderListScreen> {
               Text(
                 widget.label,
                 style:
-                    const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(
-                height: 16,
+                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               ListView(
                 shrinkWrap: true,
@@ -101,81 +98,18 @@ class ServiceProviderCardWidget extends StatelessWidget {
         children: [
           Container(
             alignment: Alignment.bottomCenter,
-            height: 168,
-            child: Container(
-              height: 160,
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-              decoration: BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.circular(8)),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(
-                        width: 64,
-                        height: 64,
-                      ),
-                      const SizedBox(
-                        width: 16,
-                      ),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              service.serviceName,
-                              style: const TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.w500),
-                            ),
-                            const SizedBox(
-                              height: 4,
-                            ),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                const Icon(Icons.location_on),
-                                const SizedBox(
-                                  width: 8,
-                                ),
-                                Flexible(
-                                  child: Text(
-                                    service.address,
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 2,
-                                    style: const TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.grey,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  const Divider(),
-                  Row(
-                    children: [
-                      Text(
-                        "Specialized: ${service.serviceType.name}",
-                        style: const TextStyle(
-                            fontSize: 14,
-                            color: Colors.grey,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      const Spacer(),
-                      const Text(
-                        "Hourly Rate: 5000 Ks/hr",
-                        style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.grey,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ],
+            height: 198,
+            child: InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ServiceProviderDetailScreen(
+                      service: service,
+                      onChanged: (value) {
+                        onChanged(value);
+                      },
+                    ),
                   ),
                   const SizedBox(
                     height: 8,
@@ -195,65 +129,178 @@ class ServiceProviderCardWidget extends StatelessWidget {
                         itemBuilder: (context, _) => const Icon(
                           Icons.star,
                           color: Colors.amber,
+                );
+              },
+              child: Container(
+                height: 168,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(8)),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(
+                          width: 64,
+                          height: 64,
                         ),
-                        onRatingUpdate: (rating) {
-                          print(rating);
-                        },
-                      ),
-                      Row(
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              onChanged(service);
-                            },
-                            child: const Padding(
-                              padding: EdgeInsets.only(top: 8),
-                              child: Text(
-                                "Select",
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
-                                  color: colorSecondary,
-                                ),
+                        const SizedBox(
+                          width: 16,
+                        ),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                service.serviceName,
+                                style: const TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.w500),
                               ),
-                            ),
+                              const SizedBox(
+                                height: 4,
+                              ),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  const Icon(Icons.location_on),
+                                  Flexible(
+                                    child: Text(
+                                      service.address,
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 2,
+                                      style: const TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.grey,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
-                          const SizedBox(
-                            width: 16,
+                        ),
+                      ],
+                    ),
+                    const Divider(),
+                    Row(
+                      children: [
+                        Text(
+                          "Specialized: ${service.serviceType.name}",
+                          style: const TextStyle(
+                              fontSize: 14,
+                              color: Colors.grey,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        const Spacer(),
+                        const Text(
+                          "Hourly Rate: 5000 Ks/hr",
+                          style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.grey,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        RatingBar.builder(
+                          initialRating:
+                              faker.randomGenerator.integer(5).toDouble(),
+                          minRating: 1,
+                          direction: Axis.horizontal,
+                          allowHalfRating: true,
+                          itemCount: 5,
+                          itemSize: 16,
+                          itemPadding:
+                              const EdgeInsets.symmetric(horizontal: 1),
+                          itemBuilder: (context, _) => const Icon(
+                            Icons.star,
+                            color: Colors.amber,
                           ),
-                          InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      ServiceProviderDetailScreen(
-                                    service: service,
-                                    onChanged: (value) {
-                                      onChanged(value);
-                                    },
+                          onRatingUpdate: (rating) {
+                            print(rating);
+                          },
+                        ),
+                        Row(
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                onChanged(service);
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: colorPrimary,
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: const Padding(
+                                  padding: EdgeInsets.only(
+                                    left: 24,
+                                    right: 24,
+                                    top: 8,
+                                    bottom: 8,
+                                  ),
+                                  child: Text(
+                                    "Select",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),
                                   ),
                                 ),
-                              );
-                            },
-                            child: const Padding(
-                              padding: EdgeInsets.only(top: 8),
-                              child: Text(
-                                "View Details",
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                    color: colorPrimary),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
+                            // const SizedBox(
+                            //   width: 16,
+                            // ),
+                            //   InkWell(
+                            //     onTap: () {
+                            //       Navigator.push(
+                            //         context,
+                            //         MaterialPageRoute(
+                            //           builder: (context) =>
+                            //               ServiceProviderDetailScreen(
+                            //             service: service,
+                            //             onChanged: (value) {
+                            //               onChanged(value);
+                            //             },
+                            //           ),
+                            //         ),
+                            //       );
+                            //     },
+                            //     child: Container(
+                            //       decoration: BoxDecoration(
+                            //         color: colorPrimary,
+                            //         borderRadius: BorderRadius.circular(20),
+                            //       ),
+                            //       child: const Padding(
+                            //         padding: EdgeInsets.only(
+                            //           left: 16,
+                            //           right: 16,
+                            //           top: 8,
+                            //           bottom: 8,
+                            //         ),
+                            //         child: Text(
+                            //           "D",
+                            //           style: TextStyle(
+                            //             color: Colors.white,
+                            //           ),
+                            //         ),
+                            //       ),
+                            //     ),
+                            //   ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

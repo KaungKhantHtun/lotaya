@@ -44,13 +44,13 @@ class _ServiceProviderDetailScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: colorPrimary,
+        foregroundColor: colorPrimary,
+        backgroundColor: colorPrimaryLight,
         title: Text(
-          widget.service.serviceName,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 14,
-            fontWeight: FontWeight.w600,
+          widget.service.serviceName.toUpperCase(),
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
           ),
         ),
         centerTitle: true,
@@ -59,10 +59,13 @@ class _ServiceProviderDetailScreenState
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Image.asset(
-              widget.service.imgUrl,
-              fit: BoxFit.cover,
-              height: 320,
+            Container(
+              margin: EdgeInsets.all(16),
+              child: Image.asset(
+                widget.service.imgUrl,
+                fit: BoxFit.cover,
+                height: 320,
+              ),
             ),
             Padding(
               padding: const EdgeInsets.all(16),
@@ -205,6 +208,9 @@ class _ServiceProviderDetailScreenState
                     height: 16,
                   ),
                   const Divider(),
+                  SizedBox(
+                    height: 16,
+                  ),
                   const Text(
                     "About Us",
                     style: TextStyle(
@@ -212,8 +218,8 @@ class _ServiceProviderDetailScreenState
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(
-                    height: 16,
+                  SizedBox(
+                    height: 24,
                   ),
                   Text(
                     widget.service.about,
@@ -222,8 +228,12 @@ class _ServiceProviderDetailScreenState
                       fontWeight: FontWeight.w500,
                     ),
                   ),
+                  SizedBox(
+                    height: 24,
+                  ),
+                  Divider(),
                   const SizedBox(
-                    height: 20,
+                    height: 24,
                   ),
                   _buildServiceAvailableTime(),
                   const SizedBox(

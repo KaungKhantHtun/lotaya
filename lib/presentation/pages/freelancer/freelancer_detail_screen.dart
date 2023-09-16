@@ -78,14 +78,14 @@ class _FreelacerDetailScreenState extends State<FreelacerDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: colorPrimary,
+        foregroundColor: colorPrimary,
+        backgroundColor: colorPrimaryLight,
         centerTitle: true,
         title: Text(
-          "${widget.freelancer.type.name.toUpperCase()} DETAILS",
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 14,
-            fontWeight: FontWeight.w600,
+          "${widget.freelancer.type.name.toUpperCase()} DETAILS".toUpperCase(),
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
           ),
         ),
       ),
@@ -93,10 +93,16 @@ class _FreelacerDetailScreenState extends State<FreelacerDetailScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Image.network(
-              widget.imgUrl,
-              fit: BoxFit.cover,
-              height: 320,
+            ClipRRect(
+              borderRadius: BorderRadius.circular(16),
+              child: Container(
+                margin: EdgeInsets.all(16),
+                child: Image.network(
+                  widget.imgUrl,
+                  fit: BoxFit.cover,
+                  height: 320,
+                ),
+              ),
             ),
             Padding(
               padding: EdgeInsets.all(16),
@@ -240,6 +246,9 @@ class _FreelacerDetailScreenState extends State<FreelacerDetailScreen> {
                     height: 16,
                   ),
                   Divider(),
+                  SizedBox(
+                    height: 16,
+                  ),
                   Text(
                     "Bio",
                     style: TextStyle(
@@ -248,7 +257,7 @@ class _FreelacerDetailScreenState extends State<FreelacerDetailScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: 16,
+                    height: 24,
                   ),
                   Text(
                     widget.freelancer.bio,
@@ -258,8 +267,12 @@ class _FreelacerDetailScreenState extends State<FreelacerDetailScreen> {
                       fontWeight: FontWeight.w500,
                     ),
                   ),
+                  SizedBox(
+                    height: 24,
+                  ),
+                  Divider(),
                   const SizedBox(
-                    height: 16,
+                    height: 24,
                   ),
                   _buildDatePicker(),
                   const SizedBox(

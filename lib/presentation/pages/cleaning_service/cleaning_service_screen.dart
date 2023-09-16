@@ -86,14 +86,14 @@ class _CleaningServiceScreenState extends State<CleaningServiceScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: colorPrimary,
+        foregroundColor: colorPrimary,
+        backgroundColor: colorPrimaryLight,
         centerTitle: true,
-        title: const Text(
+        title: Text(
           "CLEANING",
           style: TextStyle(
-            color: Colors.white,
-            fontSize: 14,
-            fontWeight: FontWeight.w600,
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
           ),
         ),
       ),

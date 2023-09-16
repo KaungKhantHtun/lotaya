@@ -37,48 +37,48 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12),
-          child: InkWell(
-            onTap: () {
-              Navigator.of(context).pop();
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(
-                  // color: Colors.grey.shade400,
-                  color: colorPrimary,
-                ),
-              ),
-              child: Center(
-                child: Row(
-                  children: const [
-                    SizedBox(
-                      width: 9,
-                    ),
-                    Icon(
-                      Icons.arrow_back_ios,
-                      // color: Colors.white,
-                      color: colorPrimary,
-                      size: 16,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
-        title: const Text(
-          "Registeration",
+        // leading: Padding(
+        //   padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12),
+        //   child: InkWell(
+        //     onTap: () {
+        //       Navigator.of(context).pop();
+        //     },
+        //     child: Container(
+        //       decoration: BoxDecoration(
+        //         borderRadius: BorderRadius.circular(8),
+        //         border: Border.all(
+        //           // color: Colors.grey.shade400,
+        //           color: colorPrimary,
+        //         ),
+        //       ),
+        //       child: Center(
+        //         child: Row(
+        //           children: const [
+        //             SizedBox(
+        //               width: 9,
+        //             ),
+        //             Icon(
+        //               Icons.arrow_back_ios,
+        //               // color: Colors.white,
+        //               color: colorPrimary,
+        //               size: 16,
+        //             ),
+        //           ],
+        //         ),
+        //       ),
+        //     ),
+        //   ),
+        // ),
+        title: Text(
+          "Registration".toUpperCase(),
           style: TextStyle(
-            fontSize: 20,
-            color: colorPrimary,
-            fontWeight: FontWeight.w600,
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
           ),
         ),
         centerTitle: true,
-        backgroundColor: Colors.white,
+        foregroundColor: colorPrimary,
+        backgroundColor: colorPrimaryLight,
       ),
       body: Container(
         padding: const EdgeInsets.only(top: 16, left: 16, right: 16, bottom: 0),
@@ -277,8 +277,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         Positioned(
           child: ClipOval(
             child: imageBytes.isEmpty
-                ? Image.asset("assets/profile.jpg",
-                    width: imageSize, height: imageSize)
+                ? Icon(
+                    Icons.account_circle_rounded,
+                    color: colorPrimary,
+                    size: imageSize,
+                  )
                 : Image.memory(imageBytes, width: imageSize, height: imageSize),
           ),
         ),

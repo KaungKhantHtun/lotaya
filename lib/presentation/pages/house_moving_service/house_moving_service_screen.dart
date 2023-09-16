@@ -107,14 +107,14 @@ class _HouseMovingServiceScreenState extends State<HouseMovingServiceScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: colorPrimary,
+         foregroundColor: colorPrimary,
+        backgroundColor: colorPrimaryLight,
         centerTitle: true,
         title: const Text(
           "HOME MOVING",
           style: TextStyle(
-            color: Colors.white,
-            fontSize: 14,
-            fontWeight: FontWeight.w600,
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
           ),
         ),
       ),
@@ -370,6 +370,7 @@ class _HouseMovingServiceScreenState extends State<HouseMovingServiceScreen> {
   }
 
   List<String> _floorList = const [
+    "Ground Floor",
     "1st Floor",
     "2nd Floor",
     "3rd Floor",
@@ -378,7 +379,7 @@ class _HouseMovingServiceScreenState extends State<HouseMovingServiceScreen> {
         "6th Floor"
         "7th Floor"
   ];
-  String _selectedFloor = "1st Floor";
+  String _selectedFloor = "Ground Floor";
 
   Widget _buildFloorWidget() {
     return Container(

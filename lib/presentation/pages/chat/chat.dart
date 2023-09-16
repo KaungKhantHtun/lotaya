@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
+import 'package:hakathon_service/utils/constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:mime/mime.dart';
@@ -205,9 +206,17 @@ class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          systemOverlayStyle: SystemUiOverlayStyle.light,
-          title: const Text('Chat'),
-          backgroundColor: primaryColor,
+          //systemOverlayStyle: SystemUiOverlayStyle.light,
+          title: Text(
+            'Chat'.toUpperCase(),
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+           centerTitle: true,
+          foregroundColor: colorPrimary,
+          backgroundColor: colorPrimaryLight,
         ),
         body: StreamBuilder<types.Room>(
           initialData: widget.room,

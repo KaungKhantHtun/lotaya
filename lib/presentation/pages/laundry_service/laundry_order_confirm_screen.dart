@@ -69,16 +69,16 @@ class _LaundryOrderConfirmScreenState extends State<LaundryOrderConfirmScreen> {
         //   ),
         // ),
 
-        title: const Text(
-          "Confirm Booking",
+        title:  Text(
+          "Confirm Booking".toUpperCase(),
           style: TextStyle(
-            color: Colors.white,
-            fontSize: 14,
-            fontWeight: FontWeight.w600,
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
           ),
         ),
         centerTitle: true,
-        backgroundColor: colorPrimary,
+        foregroundColor: colorPrimary,
+        backgroundColor: colorPrimaryLight,
         elevation: 0,
       ),
       body: Container(

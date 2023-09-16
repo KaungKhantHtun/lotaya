@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
+import 'package:hakathon_service/utils/constants.dart';
 
 import '../../widgets/loading_widget.dart';
 import 'chat.dart';
@@ -31,11 +32,15 @@ class _RoomsPageState extends State<RoomsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // backgroundColor: colorPrimary,
-        backgroundColor: Colors.white,
-        title: const Text(
-          'Chats',
-          style: TextStyle(color: Colors.black),
+        foregroundColor: colorPrimary,
+        backgroundColor: colorPrimaryLight,
+         centerTitle: true,
+        title: Text(
+          'Chats'.toUpperCase(),
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
       body: StreamBuilder<List<types.Room>>(

@@ -33,8 +33,16 @@ class _BookingInfoScreenState extends State<BookingInfoScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Booking Info Detail"),
-        backgroundColor: colorPrimary,
+        title: Text(
+          "Booking Info Detail".toUpperCase(),
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        centerTitle: true,
+        foregroundColor: colorPrimary,
+        backgroundColor: colorPrimaryLight,
       ),
       body:
           // SingleChildScrollView(

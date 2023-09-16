@@ -73,7 +73,10 @@ class _BookingsScreenAdminState extends State<BookingsScreenAdmin> {
     //   booking2,
     //   booking2,
     // ];
-    querySnapshot = FirebaseFirestore.instance.collection(bookingTable);
+    querySnapshot = FirebaseFirestore.instance
+        .collection(bookingTable)
+        .orderBy("bookingCreatedTime", descending: true);
+    ;
     optionList = serviceTypeList.map((e) => e.name).toList();
     super.initState();
   }
@@ -91,13 +94,14 @@ class _BookingsScreenAdminState extends State<BookingsScreenAdmin> {
             color: colorPrimary,
           ),
         ),
-        backgroundColor: Colors.white,
-        centerTitle: false,
-        title: const Text(
-          "Bookings Request List",
+        foregroundColor: colorPrimary,
+        backgroundColor: colorPrimaryLight,
+        centerTitle: true,
+        title:  Text(
+          "Bookings Request List".toUpperCase(),
           style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.w500,
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
           ),
         ),
         actions: [

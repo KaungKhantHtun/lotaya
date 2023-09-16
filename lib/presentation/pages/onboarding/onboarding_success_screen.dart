@@ -27,10 +27,14 @@ class _OnboardingSuccessScreenState extends State<OnboardingSuccessScreen> {
             color: colorPrimary,
           ),
         ),
-        backgroundColor: Colors.white,
-        title: const Text(
-          "Success",
-          style: TextStyle(color: Colors.black),
+        foregroundColor: colorPrimary,
+        backgroundColor: colorPrimaryLight,
+        title: Text(
+          "Success".toUpperCase(),
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         centerTitle: true,
         elevation: 0,

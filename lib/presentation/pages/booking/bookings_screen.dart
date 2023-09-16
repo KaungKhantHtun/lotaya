@@ -72,8 +72,9 @@ class _BookingsScreenState extends State<BookingsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        centerTitle: false,
+        foregroundColor: colorPrimary,
+        backgroundColor: colorPrimaryLight,
+        centerTitle: true,
         title: GestureDetector(
           onLongPress: () {
             showDialog(
@@ -104,11 +105,11 @@ class _BookingsScreenState extends State<BookingsScreen> {
               },
             );
           },
-          child: const Text(
-            "Bookings",
+          child: Text(
+            "Bookings".toUpperCase(),
             style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.w500,
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
             ),
           ),
         ),
