@@ -48,7 +48,6 @@ dependencies:
   geocoding: ^2.1.0
   get: ^4.6.5
   google_geocoding_api: null
-  # google_maps_directions: ^0.0.3+4
   google_maps_directions: 
     path: ../google_maps_directions-0.0.3+4
     

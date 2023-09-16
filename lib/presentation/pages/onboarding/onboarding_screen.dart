@@ -1,11 +1,16 @@
+import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hakathon_service/domain/entities/user_entity.dart';
 import 'package:hakathon_service/presentation/pages/onboarding/onboarding_success_screen.dart';
 import 'package:hakathon_service/utils/constants.dart';
 
+import '../../../bridge/camera/camera_interface.dart';
+import '../../../bridge/camera/camera_web_impl.dart';
 import '../../../services/user_profile_service.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -261,6 +266,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 
+  late Uint8List bytes;
   double imageSize = 90;
   Widget _buildImagePickerWidget() {
     return Stack(
@@ -272,9 +278,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         ),
         Positioned(
           child: ClipOval(
-            child: Image.asset("assets/profile.jpg",
-                width: imageSize, height: imageSize),
-          ),
+              child: imageBytes == null
+                  ? Image.asset("assets/profile.jpg",
+                      width: imageSize, height: imageSize)
+                  : Image.memory(bytes)),
         ),
         Positioned(
           bottom: 8,
@@ -305,15 +312,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   late File file;
+  late Uint8List imageBytes;
   Future<void> pickImages() async {
-    // FilePickerResult? result = await FilePicker.platform.pickFiles();
-
-    // if (result != null) {
-    //   String path = result.files.single.path ?? "";
-    //   file = File(path);
-    // } else {
-    //   // User canceled the picker
-    // }
+    final ICameraBridge _icameraBridge = Get.put(const CameraBridgeImpl());
+    String base64Image = await _icameraBridge.openCamera();
+    imageBytes = base64.decode(base64Image);
+    setState(() {});
   }
 
   Future<void> updateProfile() async {
