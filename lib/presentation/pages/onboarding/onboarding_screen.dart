@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -311,8 +310,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 
-  late File file;
-  late Uint8List imageBytes;
+  Uint8List? imageBytes;
   Future<void> pickImages() async {
     final ICameraBridge _icameraBridge = Get.put(const CameraBridgeImpl());
     String base64Image = await _icameraBridge.openCamera();
