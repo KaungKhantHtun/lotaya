@@ -19,6 +19,7 @@ import 'package:hakathon_service/utils/constants.dart';
 import 'package:intl/intl.dart';
 import 'package:multiselect/multiselect.dart';
 
+import '../../../services/user_profile_service.dart';
 import '../../widgets/toast_widget.dart';
 import 'booking_detail_screen.dart';
 
@@ -31,12 +32,10 @@ class BookingsScreen extends StatefulWidget {
 
 class _BookingsScreenState extends State<BookingsScreen> {
   List<BookingEntity> bookingList = [];
-//TODO add msisdn
 
   Query<Map<String, dynamic>> querySnapshot = FirebaseFirestore.instance
       .collection(bookingTable)
-      // .where("msisdn", isEqualTo: UserProfileService.msisdn)
-      .limit(10)
+      .where("msisdn", isEqualTo: UserProfileService.msisdn)
       .orderBy("bookingCreatedTime", descending: true);
 
   List<ServiceProviderType> serviceTypeList = const [
