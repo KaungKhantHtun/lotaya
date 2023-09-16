@@ -48,7 +48,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
       child: Scaffold(
         backgroundColor: Colors.white,
         body: Stack(
+          fit: StackFit.expand,
           children: [
+            Positioned(
+              top: -50,
+              right: -200,
+              child: Opacity(
+                opacity: 0.03,
+                child: Image.asset(
+                  "assets/logo.png",
+                  height: 500,
+                  width: 500,
+                ),
+              ),
+            ),
             SingleChildScrollView(
               scrollDirection: Axis.vertical,
               child: Column(
@@ -467,26 +480,38 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             children: [
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(16),
-                                child: Image.asset(
-                                  "assets/discount10.jpeg",
+                                child: SizedBox(
+                                  width: 200,
+                                  child: Image.asset(
+                                    "assets/discount10.jpeg",
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                               ),
                               SizedBox(
                                 width: 8,
                               ),
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(16),
-                                child: Image.asset(
-                                  "assets/discount10.jpeg",
+                              SizedBox(
+                                width: 200,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(16),
+                                  child: Image.asset(
+                                    "assets/sale.jpeg",
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                               ),
                               SizedBox(
                                 width: 8,
                               ),
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(16),
-                                child: Image.asset(
-                                  "assets/discount10.jpeg",
+                              SizedBox(
+                                width: 200,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(16),
+                                  child: Image.asset(
+                                    "assets/sale1.png",
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                               ),
                             ],

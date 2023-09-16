@@ -365,10 +365,13 @@ class _BookingCardWidgetState extends State<BookingCardWidget> {
                         _handlePressed(
                             context, widget.e.bookingId, widget.e.name);
                       },
-                      child: Image.asset(
-                        "assets/bubble-chat.png",
-                        width: 24,
-                        color: colorPrimary,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Image.asset(
+                          "assets/bubble-chat.png",
+                          width: 24,
+                          color: colorPrimary,
+                        ),
                       ),
                     ),
                   ],

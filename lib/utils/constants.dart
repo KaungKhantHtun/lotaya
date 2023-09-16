@@ -535,7 +535,7 @@ final List<FreelancerEntity> coachList = [
       age: 30,
       phoneNumber: "09432100789"),
 ];
-final List<FreelancerEntity> dogWalkerList = [
+final List<FreelancerEntity> nurseList = [
   FreelancerEntity(
       type: FreelancerType.dogWalker,
       imgUrl: "assets/freelancer/f7.png",

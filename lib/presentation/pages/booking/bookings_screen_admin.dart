@@ -97,7 +97,7 @@ class _BookingsScreenAdminState extends State<BookingsScreenAdmin> {
         foregroundColor: colorPrimary,
         backgroundColor: colorPrimaryLight,
         centerTitle: true,
-        title:  Text(
+        title: Text(
           "Bookings Request List".toUpperCase(),
           style: TextStyle(
             fontSize: 18,
@@ -320,10 +320,13 @@ class _BookingsScreenAdminState extends State<BookingsScreenAdmin> {
                                       _handlePressed(
                                           context, e.bookingId, e.name);
                                     },
-                                    child: Image.asset(
-                                      "assets/bubble-chat.png",
-                                      width: 24,
-                                      color: colorPrimary,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Image.asset(
+                                        "assets/bubble-chat.png",
+                                        width: 24,
+                                        color: colorPrimary,
+                                      ),
                                     ),
                                   ),
                                 ],

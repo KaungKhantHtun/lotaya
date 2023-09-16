@@ -60,10 +60,10 @@ class _KiloTaxiScreenState extends State<KiloTaxiScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-           centerTitle: true,
+          centerTitle: true,
           foregroundColor: colorPrimary,
           backgroundColor: colorPrimaryLight,
-          title:  Text(
+          title: Text(
             "Plan a book ride".toUpperCase(),
             style: TextStyle(
               fontSize: 18,
@@ -77,8 +77,9 @@ class _KiloTaxiScreenState extends State<KiloTaxiScreen> {
               child: Column(
                 children: [
                   if (_fromLatLng != null && _toLatLng != null)
-                    SizedBox(
+                    Container(
                       height: 200,
+                      padding: EdgeInsets.only(bottom: 24),
                       child: RouteDirectionMap(
                         from: _fromLatLng!,
                         to: _toLatLng!,
@@ -166,7 +167,7 @@ class _KiloTaxiScreenState extends State<KiloTaxiScreen> {
                       ],
                     ),
                   const SizedBox(
-                    width: 8,
+                    height: 8,
                   ),
                   if (distance != null)
                     Container(

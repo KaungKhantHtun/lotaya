@@ -1,7 +1,10 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
+import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:hakathon_service/bridge/location/location_interface.dart';
+import 'package:hakathon_service/bridge/location/location_web_impl.dart';
 import 'package:hakathon_service/utils/constants.dart';
 import 'package:map_picker/map_picker.dart';
 import 'package:google_geocoding_api/google_geocoding_api.dart';
@@ -17,10 +20,11 @@ class _LocationPageState extends State<LocationPage> {
   final _controller = Completer<GoogleMapController>();
   MapPickerController mapPickerController = MapPickerController();
 
-  CameraPosition cameraPosition = const CameraPosition(
-    target: LatLng(16.8409, 96.1735),
-    zoom: 14.4746,
-  );
+  final ILocationBridge _iLocationBridge = Get.put(const LocationBridgeImpl());
+
+  LatLng _latLng = LatLng(16.8409, 96.1735);
+
+  late CameraPosition cameraPosition;
 
   var textController = TextEditingController();
 
@@ -40,7 +44,23 @@ class _LocationPageState extends State<LocationPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+
+    getLocation();
+  }
+
+  getLocation() async {
+    Location location = await _iLocationBridge.getCurrentLocation();
+    cameraPosition = CameraPosition(
+      target: LatLng(location.latitude, location.longitude),
+      zoom: 14.4746,
+    );
+
     getAddress();
+    Future.delayed(Duration(seconds: 0)).then(
+      (value) {
+        setState(() {});
+      },
+    );
   }
 
   @override
