@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
-import 'package:hakathon_service/utils/constants.dart';
 
 import '../../widgets/loading_widget.dart';
 import 'chat.dart';
@@ -32,8 +31,12 @@ class _RoomsPageState extends State<RoomsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: colorPrimary,
-        title: const Text('Chats'),
+        // backgroundColor: colorPrimary,
+        backgroundColor: Colors.white,
+        title: const Text(
+          'Chats',
+          style: TextStyle(color: Colors.black),
+        ),
       ),
       body: StreamBuilder<List<types.Room>>(
         stream: FirebaseChatCore.instance.rooms(),

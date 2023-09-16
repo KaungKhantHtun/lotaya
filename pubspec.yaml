@@ -48,8 +48,9 @@ dependencies:
   geocoding: ^2.1.0
   get: ^4.6.5
   google_geocoding_api: null
-  google_maps_directions: 
-    path: ../google_maps_directions-0.0.3+4
+  google_maps_directions: ^0.0.3+4
+  # google_maps_directions: 
+  #   path: ../google_maps_directions-0.0.3+4
     
   google_maps_flutter: ^2.3.0
   google_maps_routes: ^1.1.2
@@ -89,6 +90,7 @@ flutter:
     - assets/
     - assets/lottie/
     - assets/clothes/
+    - assets/setting/
     # - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

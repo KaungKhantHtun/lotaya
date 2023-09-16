@@ -1,8 +1,12 @@
 import 'dart:io';
 
-import 'package:file_picker/file_picker.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:hakathon_service/domain/entities/user_entity.dart';
+import 'package:hakathon_service/presentation/pages/onboarding/onboarding_success_screen.dart';
 import 'package:hakathon_service/utils/constants.dart';
+
+import '../../../services/user_profile_service.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -38,7 +42,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: Colors.grey.shade400),
+                border: Border.all(
+                  // color: Colors.grey.shade400,
+                  color: colorPrimary,
+                ),
               ),
               child: Center(
                 child: Row(
@@ -48,7 +55,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ),
                     Icon(
                       Icons.arrow_back_ios,
-                      color: Colors.white,
+                      // color: Colors.white,
+                      color: colorPrimary,
                       size: 16,
                     ),
                   ],
@@ -61,11 +69,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           "Registeration",
           style: TextStyle(
             fontSize: 20,
+            color: colorPrimary,
             fontWeight: FontWeight.w600,
           ),
         ),
         centerTitle: true,
-        backgroundColor: colorPrimary,
+        backgroundColor: Colors.white,
       ),
       body: Container(
         padding: const EdgeInsets.only(top: 16, left: 16, right: 16, bottom: 0),
@@ -100,39 +109,51 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       label: "Phone Number",
                       controller: _phnoController,
                       inputType: TextInputType.phone,
+                      validator: phoneValidator,
                     ),
                     _buildTextFieldWidget(
                       label: "Email",
                       controller: _emailController,
                       inputType: TextInputType.emailAddress,
+                      validator: emailValidator,
                     ),
                     _buildTextFieldWidget(
                       label: "Field (Profession)",
                       controller: _fieldController,
                       inputType: TextInputType.text,
+                      validator: emptyValidator,
                     ),
                     _buildTextFieldWidget(
                       label: "Price Rate/Hr",
                       controller: _rateController,
                       inputType: TextInputType.number,
+                      validator: emptyValidator,
                     ),
                     _buildTextFieldWidget(
                       label: "Location",
                       controller: _locationController,
                       inputType: TextInputType.text,
+                      validator: emptyValidator,
                     ),
                     _buildTextFieldWidget(
                       label: "Description",
                       maxlines: 5,
                       controller: _descriptionController,
                       inputType: TextInputType.multiline,
+                      validator: emptyValidator,
                     ),
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                            backgroundColor: colorPrimary),
-                        onPressed: () {},
+                          backgroundColor: colorPrimary,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
+                        onPressed: () async {
+                          await updateProfile();
+                        },
                         child: const Padding(
                           padding: EdgeInsets.symmetric(vertical: 16),
                           child: Text("Register"),
@@ -152,10 +173,49 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 
+  String? emptyValidator(String? value) {
+    if (value!.isEmpty) {
+      return 'This field cannot be empty';
+    }
+    return null; // Return null for no error
+  }
+
+  String? emailValidator(String? value) {
+    if (value!.isEmpty) {
+      return 'This field cannot be empty';
+    } else if (!isEmailValid(value)) {
+      return 'Email format is incorrect!';
+    }
+    return null; // Return null for no error
+  }
+
+  String? phoneValidator(String? value) {
+    if (value!.isEmpty) {
+      return 'This field cannot be empty';
+    } else if (!isPhoneNumberValid(value)) {
+      return 'Ph number format is incorrect!';
+    }
+    return null; // Return null for no error
+  }
+
+  bool isEmailValid(String email) {
+    final emailRegex = RegExp(r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$');
+
+    return emailRegex.hasMatch(email);
+  }
+
+  bool isPhoneNumberValid(String phoneNumber) {
+    // Regular expression for a 10-digit US phone number
+    final phoneRegex = RegExp(r'^\d{11}$');
+
+    return phoneRegex.hasMatch(phoneNumber);
+  }
+
   Widget _buildTextFieldWidget({
     required String label,
     required TextEditingController controller,
     required TextInputType inputType,
+    required String? Function(String?) validator,
     int? maxlines,
   }) {
     return Column(
@@ -173,9 +233,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           height: 8,
         ),
         TextFormField(
-          controller: _fieldController,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          controller: controller,
           keyboardType: inputType,
           maxLines: maxlines,
+          validator: validator,
           decoration: const InputDecoration(
             border: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(16.0))),
@@ -244,13 +306,41 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   late File file;
   Future<void> pickImages() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    // FilePickerResult? result = await FilePicker.platform.pickFiles();
 
-    if (result != null) {
-      String path = result.files.single.path ?? "";
-      file = File(path);
-    } else {
-      // User canceled the picker
-    }
+    // if (result != null) {
+    //   String path = result.files.single.path ?? "";
+    //   file = File(path);
+    // } else {
+    //   // User canceled the picker
+    // }
+  }
+
+  Future<void> updateProfile() async {
+    if (_formkey.currentState!.validate()) {
+      try {
+        await FirebaseFirestore.instance
+            .collection(profileTable)
+            .doc(UserProfileService.msisdn)
+            .update({
+          "email": _emailController.text,
+          "phno": _phnoController.text,
+          "field": _fieldController.text,
+          "priceRate": int.tryParse(_rateController.text) ?? 0,
+          "location": _locationController.text,
+          "description": _descriptionController.text,
+        });
+        var userDoc = await FirebaseFirestore.instance
+            .collection(profileTable)
+            .doc(UserProfileService.msisdn)
+            .get();
+        UserEntity user = UserEntity.fromDoc(userDoc);
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => OnboardingSuccessScreen(e: user),
+            ));
+      } catch (e) {}
+    } else {}
   }
 }

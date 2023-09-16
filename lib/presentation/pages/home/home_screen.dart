@@ -5,7 +5,7 @@ import '../../../services/user_profile_service.dart';
 import '../booking/bookings_screen.dart';
 import '../chat_screen.dart';
 import '../dashboard_screen.dart';
-import '../profile/profile_screen.dart';
+import '../profile/setting_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key, required this.initialIndex});
@@ -27,7 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
       DashboardScreen(),
       BookingsScreen(),
       ChatListScreen(),
-      ProfileScreen()
+      SettingScreen()
     ];
     currentIndex = widget.initialIndex;
     super.initState();

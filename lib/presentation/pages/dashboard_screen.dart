@@ -11,8 +11,6 @@ import 'package:hakathon_service/presentation/pages/freelancer/freelancer_screen
 import 'package:hakathon_service/presentation/pages/kilo_taxi/kilo_taxi_screen.dart';
 import 'package:hakathon_service/presentation/pages/laundry_service/laundry_service_screen.dart';
 import 'package:hakathon_service/presentation/pages/profile/profile_screen.dart';
-import 'package:intl/intl.dart';
-import 'package:lottie/lottie.dart';
 
 import '../../domain/entities/freelancer_entity.dart';
 import '../../utils/constants.dart';

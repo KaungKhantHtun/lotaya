@@ -8,15 +8,28 @@ class UserEntity {
   final String? gender;
   final String kycStatus;
   final String? dob;
+  final String? email;
+  final String? phno;
+  final String? field;
+  final int? priceRate;
+  final String? location;
+  final String? description;
 
-  UserEntity(
-      {required this.userId,
-      required this.name,
-      this.nrc,
-      required this.msisdn,
-      this.gender,
-      required this.kycStatus,
-      this.dob});
+  UserEntity({
+    required this.userId,
+    required this.name,
+    this.nrc,
+    required this.msisdn,
+    this.gender,
+    required this.kycStatus,
+    this.dob,
+    this.email,
+    this.phno,
+    this.field,
+    this.priceRate,
+    this.location,
+    this.description,
+  });
   Map<String, dynamic> toJson() {
     return {
       "userId": userId,
@@ -25,19 +38,32 @@ class UserEntity {
       "nrc": nrc,
       "msisdn": msisdn,
       "gender": gender, // "Male", "Female"
-      "kyc_status": kycStatus
+      "kyc_status": kycStatus,
+      "email": email,
+      "phno": phno,
+      "field": field,
+      "priceRate": priceRate,
+      "location": location,
+      "description": description,
     };
   }
 
   static UserEntity fromJson(Map<String, dynamic>? map) {
     return UserEntity(
-        userId: map?["userId"],
-        dob: map?["dob"], // "1999-04-28"
-        name: map?["name"],
-        nrc: map?["nrc"],
-        msisdn: map?["msisdn"],
-        gender: map?["gender"], // "Male", "Female"
-        kycStatus: map?["kyc_status"]);
+      userId: map?["userId"],
+      dob: map?["dob"], // "1999-04-28"
+      name: map?["name"],
+      nrc: map?["nrc"],
+      msisdn: map?["msisdn"],
+      gender: map?["gender"], // "Male", "Female"
+      kycStatus: map?["kyc_status"],
+      email: map?["email"],
+      phno: map?["phno"],
+      field: map?["field"],
+      priceRate: map?["priceRate"],
+      location: map?["location"],
+      description: map?["description"],
+    );
   }
   // static BookingEntity fromDoc(QueryDocumentSnapshot<Object?>? doc) {
   //   return BookingEntity(
@@ -67,6 +93,24 @@ class UserEntity {
           : "",
       nrc: doc?.data().toString().contains("nrc") ?? false
           ? doc?.get("nrc")
+          : "",
+      email: doc?.data().toString().contains("email") ?? false
+          ? doc?.get("email")
+          : "",
+      phno: doc?.data().toString().contains("phno") ?? false
+          ? doc?.get("phno")
+          : "",
+      field: doc?.data().toString().contains("field") ?? false
+          ? doc?.get("field")
+          : "",
+      priceRate: doc?.data().toString().contains("priceRate") ?? false
+          ? int.tryParse(doc?.get("priceRate").toString() ?? "") ?? 0
+          : 0,
+      location: doc?.data().toString().contains("location") ?? false
+          ? doc?.get("location")
+          : "",
+      description: doc?.data().toString().contains("description") ?? false
+          ? doc?.get("description")
           : "",
     );
   }

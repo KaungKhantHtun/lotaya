@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../../../domain/entities/user_entity.dart';
 import '../../../services/user_profile_service.dart';
 import '../../../utils/constants.dart';
+import '../../widgets/loading_widget.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -24,8 +25,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
   // );
   Query<Map<String, dynamic>> querySnapshot =
       FirebaseFirestore.instance.collection(profileTable);
+  bool showLoading = true;
   @override
   void initState() {
+    Future.delayed(const Duration(milliseconds: 1500), () {
+      setState(() {
+        showLoading = false;
+      });
+    });
     super.initState();
   }
 
@@ -33,18 +40,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // leading: IconButton(
-        //   onPressed: () {
-        //     Navigator.of(context).pop();
-        //   },
-        //   icon: const Icon(
-        //     Icons.arrow_back,
-        //     color: colorPrimary,
-        //   ),
-        // ),
+        leading: IconButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            color: colorPrimary,
+          ),
+        ),
         backgroundColor: Colors.white,
         title: const Text(
-          "Profile",
+          "Personal Information",
           style: TextStyle(color: Colors.black),
         ),
         centerTitle: true,
@@ -57,7 +64,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
             .doc(UserProfileService.msisdn)
             .snapshots(),
         builder: (BuildContext context, snapshot) {
-          if (!snapshot.hasData) {
+          if (snapshot.connectionState == ConnectionState.waiting ||
+              showLoading) {
+            print("loading data");
+
+            return const LoadingWidget();
+          } else if (!snapshot.hasData) {
             return Container();
           } else {
             final data = snapshot.data;
@@ -135,6 +147,59 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ],
                     ),
                   ),
+                  if (profile.field != null)
+                    Container(
+                      margin: const EdgeInsets.all(16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            "Profession Information",
+                            style: TextStyle(
+                              color: colorPrimary,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 16,
+                          ),
+                          _buildInfoWidget(
+                              title: "Profession/Field",
+                              value: profile.field ?? "-"),
+                          const SizedBox(
+                            height: 16,
+                          ),
+                          _buildInfoWidget(
+                              title: "Fee",
+                              value: "${profile.priceRate ?? "-"} Ks/hr"),
+                          const SizedBox(
+                            height: 16,
+                          ),
+                          _buildInfoWidget(
+                              title: "Bio", value: profile.description ?? "-"),
+                          const SizedBox(
+                            height: 16,
+                          ),
+                          _buildInfoWidget(
+                              title: "Location",
+                              value: profile.location ?? "-"),
+                          const SizedBox(
+                            height: 16,
+                          ),
+                          _buildInfoWidget(
+                              title: "Work Phno", value: profile.phno ?? "-"),
+                          const SizedBox(
+                            height: 16,
+                          ),
+                          _buildInfoWidget(
+                              title: "Email", value: profile.email ?? "-"),
+                        ],
+                      ),
+                    ),
+                  const SizedBox(
+                    height: 16,
+                  )
                 ],
               ),
             );
