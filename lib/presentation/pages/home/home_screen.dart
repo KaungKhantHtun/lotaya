@@ -76,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
               "assets/booking.png",
               width: 20,
               height: 20,
-              color: currentIndex == 1 ? colorPrimary : Colors.black,
+              color: currentIndex == 1 ? colorPrimary : const Color(0xff9F9F9F),
             ),
           ),
           const BottomNavigationBarItem(
@@ -84,8 +84,8 @@ class _HomeScreenState extends State<HomeScreen> {
             icon: Icon(Icons.chat),
           ),
           const BottomNavigationBarItem(
-            label: "Profile",
-            icon: Icon(Icons.person),
+            label: "Setting",
+            icon: Icon(Icons.settings),
           ),
         ],
       ),

@@ -97,18 +97,41 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ),
                   Container(
-                    margin: const EdgeInsets.all(16),
+                    margin: const EdgeInsets.only(
+                        left: 16, top: 16, right: 16, bottom: 16),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          "User Information",
-                          style: TextStyle(
+                        // const Text(
+                        //   "User Information",
+                        //   style: TextStyle(
+                        //     color: colorPrimary,
+                        //     fontSize: 18,
+                        //     fontWeight: FontWeight.bold,
+                        //   ),
+                        // ),
+                        Container(
+                          decoration: BoxDecoration(
                             color: colorPrimary,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: const Padding(
+                            padding: EdgeInsets.only(
+                              left: 16,
+                              right: 16,
+                              top: 8,
+                              bottom: 8,
+                            ),
+                            child: Text(
+                              // "Personal Information",
+                              "User Information",
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
                           ),
                         ),
+
                         const SizedBox(
                           height: 16,
                         ),
@@ -147,56 +170,76 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ],
                     ),
                   ),
-                  if (profile.field != null)
-                    Container(
-                      margin: const EdgeInsets.all(16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            "Profession Information",
-                            style: TextStyle(
-                              color: colorPrimary,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
+                  (profile.field != null && profile.field != "")
+                      ? Container(
+                          margin: const EdgeInsets.only(
+                              left: 16, right: 16, top: 0, bottom: 16),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: colorPrimary,
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    child: const Padding(
+                                      padding: EdgeInsets.only(
+                                        left: 16,
+                                        right: 16,
+                                        top: 8,
+                                        bottom: 8,
+                                      ),
+                                      child: Text(
+                                        "Professional Information",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 16,
+                              ),
+                              _buildInfoWidget(
+                                  title: "Profession/Field",
+                                  value: profile.field ?? "-"),
+                              const SizedBox(
+                                height: 16,
+                              ),
+                              _buildInfoWidget(
+                                  title: "Fee",
+                                  value: "${profile.priceRate ?? "-"} Ks/hr"),
+                              const SizedBox(
+                                height: 16,
+                              ),
+                              _buildInfoWidget(
+                                  title: "Bio",
+                                  value: profile.description ?? "-"),
+                              const SizedBox(
+                                height: 16,
+                              ),
+                              _buildInfoWidget(
+                                  title: "Location",
+                                  value: profile.location ?? "-"),
+                              const SizedBox(
+                                height: 16,
+                              ),
+                              _buildInfoWidget(
+                                  title: "Work Phno",
+                                  value: profile.phno ?? "-"),
+                              const SizedBox(
+                                height: 16,
+                              ),
+                              _buildInfoWidget(
+                                  title: "Email", value: profile.email ?? "-"),
+                            ],
                           ),
-                          const SizedBox(
-                            height: 16,
-                          ),
-                          _buildInfoWidget(
-                              title: "Profession/Field",
-                              value: profile.field ?? "-"),
-                          const SizedBox(
-                            height: 16,
-                          ),
-                          _buildInfoWidget(
-                              title: "Fee",
-                              value: "${profile.priceRate ?? "-"} Ks/hr"),
-                          const SizedBox(
-                            height: 16,
-                          ),
-                          _buildInfoWidget(
-                              title: "Bio", value: profile.description ?? "-"),
-                          const SizedBox(
-                            height: 16,
-                          ),
-                          _buildInfoWidget(
-                              title: "Location",
-                              value: profile.location ?? "-"),
-                          const SizedBox(
-                            height: 16,
-                          ),
-                          _buildInfoWidget(
-                              title: "Work Phno", value: profile.phno ?? "-"),
-                          const SizedBox(
-                            height: 16,
-                          ),
-                          _buildInfoWidget(
-                              title: "Email", value: profile.email ?? "-"),
-                        ],
-                      ),
-                    ),
+                        )
+                      : SizedBox.shrink(),
                   const SizedBox(
                     height: 16,
                   )

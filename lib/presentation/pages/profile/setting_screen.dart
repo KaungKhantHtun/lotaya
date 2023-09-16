@@ -7,6 +7,7 @@ import '../../../domain/entities/user_entity.dart';
 import '../../../services/user_profile_service.dart';
 import '../../../utils/constants.dart';
 import '../../widgets/loading_widget.dart';
+import '../../widgets/tems_and_condition_widget.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({Key? key}) : super(key: key);
@@ -49,6 +50,7 @@ class _SettingScreenState extends State<SettingScreen> {
         child: Container(
           color: Colors.white,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               StreamBuilder(
                 stream: FirebaseFirestore.instance
@@ -141,7 +143,13 @@ class _SettingScreenState extends State<SettingScreen> {
               _buildInfoWidget(
                 title: "Terms & Conditions",
                 imgUrl: "assets/setting/term_condition.png",
-                onPressed: () {},
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return const TermsAndConditonsWidget();
+                      });
+                },
               ),
               const SizedBox(
                 height: 16,

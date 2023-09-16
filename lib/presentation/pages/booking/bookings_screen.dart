@@ -105,10 +105,10 @@ class _BookingsScreenState extends State<BookingsScreen> {
           ),
         ),
         actions: [
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: _buildFilter(),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.all(12.0),
+          //   child: _buildFilter(),
+          // ),
         ],
       ),
       body: BlocProvider(
@@ -468,6 +468,7 @@ class BookingCardWidget extends StatelessWidget {
   void _handlePressed(
       BuildContext context, String bookingId, String? name) async {
     final navigator = Navigator.of(context);
+    
     final room = await FirebaseChatCore.instance.createRoom(
       adminUser,
       roomId: bookingId,
