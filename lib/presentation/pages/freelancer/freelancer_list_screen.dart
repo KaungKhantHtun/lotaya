@@ -68,11 +68,6 @@ class FreelancerCardWidget extends StatelessWidget {
 
   final FreelancerEntity freelancer;
 
-  String fakeImage = "https://i.pravatar.cc/300?u=${faker.person.name()}";
-  String fakeName = faker.person.name();
-  String fakeLocation = faker.address.city();
-  int fakeRate = faker.randomGenerator.integer(100000);
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -89,8 +84,6 @@ class FreelancerCardWidget extends StatelessWidget {
                   MaterialPageRoute(
                     builder: (context) => FreelacerDetailScreen(
                       freelancer: freelancer,
-                      name: fakeName,
-                      imgUrl: fakeImage,
                     ),
                   ),
                 );
@@ -122,7 +115,7 @@ class FreelancerCardWidget extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    " " + fakeName,
+                                    freelancer.name,
                                     style: TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.w500),
@@ -202,10 +195,11 @@ class FreelancerCardWidget extends StatelessWidget {
             left: 0,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(8.0),
-              child: Image.network(
-                fakeImage,
+              child: Image.asset(
+                freelancer.imgUrl,
                 height: 80,
-                width: 80,
+                width: 70,
+                fit: BoxFit.cover,
               ),
             ),
           ),

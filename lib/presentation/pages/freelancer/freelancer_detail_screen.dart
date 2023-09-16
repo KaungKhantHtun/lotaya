@@ -17,13 +17,10 @@ class FreelacerDetailScreen extends StatefulWidget {
   FreelacerDetailScreen({
     super.key,
     required this.freelancer,
-    required this.imgUrl,
-    required this.name,
   });
 
   final FreelancerEntity freelancer;
-  final String name;
-  final String imgUrl;
+
   @override
   State<FreelacerDetailScreen> createState() => _FreelacerDetailScreenState();
 }
@@ -98,8 +95,8 @@ class _FreelacerDetailScreenState extends State<FreelacerDetailScreen> {
               child: Container(
                 margin: EdgeInsets.all(16),
                 child: Image.network(
-                  widget.imgUrl,
-                  fit: BoxFit.cover,
+                  widget.freelancer.imgUrl,
+                  fit:BoxFit.cover,
                   height: 320,
                 ),
               ),
@@ -110,7 +107,7 @@ class _FreelacerDetailScreenState extends State<FreelacerDetailScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    widget.name,
+                    widget.freelancer.name,
                     // TODO
                     // widget.freelancer.name,
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
@@ -261,7 +258,6 @@ class _FreelacerDetailScreenState extends State<FreelacerDetailScreen> {
                   ),
                   Text(
                     widget.freelancer.bio,
-                    // faker.lorem.sentence() * 20,
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
@@ -355,9 +351,7 @@ class _FreelacerDetailScreenState extends State<FreelacerDetailScreen> {
     BookingEntity booking = BookingEntity(
       msisdn: UserProfileService.msisdn,
       bookingId: "123",
-      // TODO
-      name: widget.name,
-      // name: widget.freelancer.name,
+      name: widget.freelancer.name,
       serviceType: ServiceProviderType.freelancer,
       serviceName: widget.freelancer.type.name,
       serviceTime: DateTime(
@@ -375,7 +369,7 @@ class _FreelacerDetailScreenState extends State<FreelacerDetailScreen> {
       price: price,
       note: _noteController.text,
       workingHours: _selectedWorkingHour,
-      freelancerName: widget.name,
+      freelancerName: widget.freelancer.name,
       freelancerType: widget.freelancer.type,
       freelancerPhoneNumber: widget.freelancer.phoneNumber,
     );

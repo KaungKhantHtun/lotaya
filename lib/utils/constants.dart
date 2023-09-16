@@ -231,8 +231,8 @@ bool isAdmin = false;
 final List<ServiceProviderEntity> electronicList = [
   ServiceProviderEntity(
     serviceId: "1",
-    serviceName: "Global Electronics Service",
-    imgUrl: "assets/aircon_service.jpg",
+    serviceName: "Electronic City",
+    imgUrl: "assets/electronic/ec.png",
     about:
         "We pride ourselves on our dedication to customer satisfaction. Your needs are at the heart of everything we do, and we work tirelessly to deliver efficient, cost-effective, and reliable solutions that exceed your expectations.",
     priceRate: 10000,
@@ -243,8 +243,8 @@ final List<ServiceProviderEntity> electronicList = [
   ),
   ServiceProviderEntity(
     serviceId: "2",
-    serviceName: "San Electronics Service",
-    imgUrl: "assets/aircon_service.jpg",
+    serviceName: "Green tree electronics",
+    imgUrl: "assets/electronic/gte.png",
     about:
         "Our team of highly skilled technicians and engineers brings a wealth of knowledge and expertise to every project. Whether it's repairing your favorite gadgets, optimizing your home automation system, or designing custom electronic solutions for your business, we have the skills and experience to get the job done right.",
     priceRate: 10000,
@@ -254,8 +254,8 @@ final List<ServiceProviderEntity> electronicList = [
   ),
   ServiceProviderEntity(
     serviceId: "3",
-    serviceName: "Mon Htay  Electronics Service",
-    imgUrl: "assets/aircon_service.jpg",
+    serviceName: "LG Electronic",
+    imgUrl: "assets/electronic/lg.png",
     about:
         "At Mon Htay, we are your trusted partner for all your electronics service needs. With a passion for innovation and a commitment to excellence, we have been serving customers like you since 2000 Year. ",
     priceRate: 10000,
@@ -265,8 +265,8 @@ final List<ServiceProviderEntity> electronicList = [
   ),
   ServiceProviderEntity(
     serviceId: "4",
-    serviceName: "Khant Khant Gyee",
-    imgUrl: "assets/aircon_service.jpg",
+    serviceName: "Lin Technical Services",
+    imgUrl: "assets/electronic/lin.png",
     about:
         "When you choose Khant Khant Gyee, you're choosing a partner who understands the intricacies of electronics and is committed to delivering top-notch service. We look forward to serving you and helping you make the most of your electronic devices and systems., we have been serving customers like you since 2000 Year. ",
     priceRate: 10000,
@@ -277,8 +277,8 @@ final List<ServiceProviderEntity> electronicList = [
   ),
   ServiceProviderEntity(
     serviceId: "5",
-    serviceName: "Zin Htun and Sons",
-    imgUrl: "assets/aircon_service.jpg",
+    serviceName: "Wai Yan Electronic",
+    imgUrl: "assets/electronic/waiyan.png",
     about:
         "What sets us apart is our unwavering commitment to customer satisfaction. We believe in open communication, transparency, and building long-lasting relationships with our clients. We take the time to understand your goals and work collaboratively to achieve them.",
     priceRate: 10000,
@@ -290,10 +290,10 @@ final List<ServiceProviderEntity> electronicList = [
 final List<ServiceProviderEntity> laundryList = [
   ServiceProviderEntity(
     serviceId: "1",
-    serviceName: "Fresh Clean Laundry Hub",
-    imgUrl: "assets/aircon_service.jpg",
+    serviceName: "Laundry Pro",
+    imgUrl: "assets/laundry/laundry-pro.png",
     about:
-        "At Fresh Clean Laundry Hub, we understand that life can get busy, and laundry can be a daunting chore. That's where we step in. Our commitment to excellence is unwavering, and we take pride in delivering laundry services that meet and exceed your expectations. ",
+        "At Laundry Pro, we understand that life can get busy, and laundry can be a daunting chore. That's where we step in. Our commitment to excellence is unwavering, and we take pride in delivering laundry services that meet and exceed your expectations. ",
     priceRate: 10000,
     serviceType: ServiceProviderType.laundry,
     rating: 5,
@@ -302,8 +302,8 @@ final List<ServiceProviderEntity> laundryList = [
   ),
   ServiceProviderEntity(
     serviceId: "2",
-    serviceName: "LaundryEase ",
-    imgUrl: "assets/aircon_service.jpg",
+    serviceName: "MB Laundry",
+    imgUrl: "assets/laundry/mb-laundry.png",
     about:
         "We know your time is valuable. That's why we've designed our services to be as convenient as possible. With easy online booking, flexible pickup and delivery options, and quick turnaround times, we aim to make laundry day a breeze for you.",
     priceRate: 10000,
@@ -313,10 +313,10 @@ final List<ServiceProviderEntity> laundryList = [
   ),
   ServiceProviderEntity(
     serviceId: "3",
-    serviceName: "LaundryLux",
-    imgUrl: "assets/aircon_service.jpg",
+    serviceName: "Phway Phway Laundry",
+    imgUrl: "assets/laundry/phway-phway.png",
     about:
-        "When you choose LaundryLux, you become part of our growing community of satisfied customers. Your trust is our most valued asset, and we are committed to earning it every day.",
+        "When you choose Phway Phway Laundry, you become part of our growing community of satisfied customers. Your trust is our most valued asset, and we are committed to earning it every day.",
     priceRate: 10000,
     serviceType: ServiceProviderType.laundry,
     rating: 5,
@@ -324,20 +324,20 @@ final List<ServiceProviderEntity> laundryList = [
   ),
   ServiceProviderEntity(
       serviceId: "4",
-      serviceName: "LaundryCare Express",
-      imgUrl: "assets/aircon_service.jpg",
+      serviceName: "Phyu Phway Thant Laundry Services",
+      imgUrl: "assets/laundry/phyu-phway-thant.png",
       about:
-          "Welcome to LaundryCare Express, your trusted partner in laundry solutions. Since 2000, we've been on a mission to redefine the way you experience laundry, making it effortless, convenient, and refreshingly hassle-free. ",
+          "Welcome to Phyu Phway Thant Laundry Services, your trusted partner in laundry solutions. Since 2000, we've been on a mission to redefine the way you experience laundry, making it effortless, convenient, and refreshingly hassle-free. ",
       priceRate: 10000,
       serviceType: ServiceProviderType.laundry,
       rating: 5,
       address: "No. 90, Mingalar Street, Sanchaung Township, Yangon"),
   ServiceProviderEntity(
       serviceId: "5",
-      serviceName: "PurePress Laundry Services",
-      imgUrl: "assets/aircon_service.jpg",
+      serviceName: "Sameday Laundry",
+      imgUrl: "assets/laundry/sameday.png",
       about:
-          "Thank you for choosing PurePress Laundry Services as your laundry partner. We look forward to serving you with the care and dedication you deserve.",
+          "Thank you for choosing Sameday Laundry Laundry Services as your laundry partner. We look forward to serving you with the care and dedication you deserve.",
       priceRate: 10000,
       serviceType: ServiceProviderType.laundry,
       rating: 5,
@@ -346,10 +346,10 @@ final List<ServiceProviderEntity> laundryList = [
 final List<ServiceProviderEntity> homeCleaningList = [
   ServiceProviderEntity(
       serviceId: "1",
-      serviceName: "Fortune Cleasing Services",
-      imgUrl: "assets/aircon_service.jpg",
+      serviceName: "Clean Pro",
+      imgUrl: "assets/cleaning/cleanpro.png",
       about:
-          "At fortune cleasing services , we are dedicated to transforming spaces into pristine havens of cleanliness and hygiene. With a commitment to excellence, unwavering professionalism, and a passion for impeccable sanitation, we have emerged as a trusted name in the industry.",
+          "At Clean Pro cleasing services , we are dedicated to transforming spaces into pristine havens of cleanliness and hygiene. With a commitment to excellence, unwavering professionalism, and a passion for impeccable sanitation, we have emerged as a trusted name in the industry.",
       priceRate: 15000,
       serviceType: ServiceProviderType.homeCleaning,
       rating: 5,
@@ -357,53 +357,42 @@ final List<ServiceProviderEntity> homeCleaningList = [
           "no.(112A), baho road, kauktada township, yangon ,09-96626788210"),
   ServiceProviderEntity(
       serviceId: "2",
-      serviceName: "Flexible  cleasing services ",
-      imgUrl: "assets/aircon_service.jpg",
+      serviceName: "HOMEY Cleasing Service",
+      imgUrl: "assets/cleaning/homey.png",
       about:
-          "Welcome to Flexible  cleasing services, your trusted partner in creating immaculate spaces. With a focus on hygiene, innovation, and a commitment to customer satisfaction, we have been setting the standard for cleanliness in Your Location and beyond",
+          "Welcome to HOMEY cleasing services, your trusted partner in creating immaculate spaces. With a focus on hygiene, innovation, and a commitment to customer satisfaction, we have been setting the standard for cleanliness in Your Location and beyond",
       priceRate: 15000,
       serviceType: ServiceProviderType.homeCleaning,
       rating: 5,
       address: "no.(64B) , pazundaung  township , yangon ,09-76547333"),
   ServiceProviderEntity(
       serviceId: "3",
-      serviceName: "Phyu Sin Cleasing Services",
-      imgUrl: "assets/aircon_service.jpg",
+      serviceName: "Yangon Cleasing Services",
+      imgUrl: "assets/cleaning/yangon.png",
       about:
-          "At phyu sin cleasing services , we are driven by a profound commitment to cleanliness, health, and customer satisfaction. With years of experience and a dedicated team, we have become a trusted name in the cleansing services industry.",
+          "At Yangon cleasing services , we are driven by a profound commitment to cleanliness, health, and customer satisfaction. With years of experience and a dedicated team, we have become a trusted name in the cleansing services industry.",
       priceRate: 15000,
       serviceType: ServiceProviderType.homeCleaning,
       rating: 5,
       address: "no.(7B), insein road, kamaryut township, yangon, 09-440211789"),
   ServiceProviderEntity(
       serviceId: "4",
-      serviceName: " Lucky cleasing services  ",
-      imgUrl: "assets/aircon_service.jpg",
+      serviceName: "YGNBroom",
+      imgUrl: "assets/cleaning/ygnbroom.png",
       about:
-          "At Lucky  cleasing services , we are driven by a profound commitment to cleanliness, health, and customer satisfaction. With years of experience and a dedicated team, we have become a trusted name in the cleansing services industry.",
+          "At YGNBroom cleasing services , we are driven by a profound commitment to cleanliness, health, and customer satisfaction. With years of experience and a dedicated team, we have become a trusted name in the cleansing services industry.",
       priceRate: 15000,
       serviceType: ServiceProviderType.homeCleaning,
       rating: 5,
       address: "no.(7B) ,Hlaing   township , yangon ,09-56780654"),
-  ServiceProviderEntity(
-      serviceId: "5",
-      serviceName: "New Light Cleasing Services",
-      imgUrl: "assets/aircon_service.jpg",
-      about:
-          "Founded in 2005,  new light  was born out of a simple yet powerful vision: to create spaces that inspire well-being and comfort through the art of cleaning. What started as a small local enterprise has now grown into a company known for excellence.",
-      priceRate: 15000,
-      serviceType: ServiceProviderType.homeCleaning,
-      rating: 5,
-      address:
-          "no 45, Anayathar Street ,pazundaung township , Yangon ,09-76090776"),
 ];
 final List<ServiceProviderEntity> houseMovingList = [
   ServiceProviderEntity(
       serviceId: "1",
-      serviceName: "MoveEase Solutions",
-      imgUrl: "assets/aircon_service.jpg",
+      serviceName: "Arr Yone Oo Moving services",
+      imgUrl: "assets/home-moving/dawn.png",
       about:
-          "At House moving services, we understand that moving can be one of life's most stressful experiences. That's why we're here to make it as smooth and hassle-free as possible. With years of experience, a dedicated team, and a passion for helping you transition to your new home, we've become a trusted partner in the moving industry.",
+          "At Arr Yone Oo Moving Services, we understand that moving can be one of life's most stressful experiences. That's why we're here to make it as smooth and hassle-free as possible. With years of experience, a dedicated team, and a passion for helping you transition to your new home, we've become a trusted partner in the moving industry.",
       priceRate: 25000,
       serviceType: ServiceProviderType.houseMoving,
       rating: 5,
@@ -411,10 +400,10 @@ final List<ServiceProviderEntity> houseMovingList = [
           "No. 61, Hdu Par Yone Street, Insein Township, Yangon , Yangon /097653108"),
   ServiceProviderEntity(
       serviceId: "2",
-      serviceName: "HomeTransit Solutions",
-      imgUrl: "assets/aircon_service.jpg",
+      serviceName: "Home Mover",
+      imgUrl: "assets/home-moving/home_mover.png",
       about:
-          "Welcome to HomeTransit Solutions, where our passion for  meets unwavering dedication to customer satisfaction. With a rich history of excellence, a team of skilled professionals, and a commitment to innovation, we are proud to be your trusted partner",
+          "Welcome to Home Mover Services, where our passion for  meets unwavering dedication to customer satisfaction. With a rich history of excellence, a team of skilled professionals, and a commitment to innovation, we are proud to be your trusted partner",
       priceRate: 25000,
       serviceType: ServiceProviderType.houseMoving,
       rating: 5,
@@ -422,35 +411,24 @@ final List<ServiceProviderEntity> houseMovingList = [
           "no.118(A), u htun lin street , kamaryut township , Yangon /0966778899"),
   ServiceProviderEntity(
       serviceId: "3",
-      serviceName: "MoveMaster Services",
-      imgUrl: "assets/aircon_service.jpg",
+      serviceName: "Myanma Pillar Moving services",
+      imgUrl: "assets/home-moving/mm.png",
       about:
-          "Welcome to MoveMaster Services, a beacon of excellence in . With a history rooted in passion, a commitment to unwavering quality, and a vision for [mention your mission or vision, e.g., \"a brighter, more sustainable future\"], we are proud to be your trusted partner.",
+          "Welcome to Myanma Pillar Services, a beacon of excellence in . With a history rooted in passion, a commitment to unwavering quality, and a vision for [mention your mission or vision, e.g., \"a brighter, more sustainable future\"], we are proud to be your trusted partner.",
       priceRate: 25000,
       serviceType: ServiceProviderType.houseMoving,
       rating: 5,
       address: "Danar Yone Quarter, Sagaing City, Mandalay/094440889"),
   ServiceProviderEntity(
       serviceId: "4",
-      serviceName: "Global Moving services ",
-      imgUrl: "assets/aircon_service.jpg",
+      serviceName: "Si Thu Hein Moving services ",
+      imgUrl: "assets/home-moving/sithuhein.png",
       about:
-          "At Global Moving Services ,  we take immense pride in our work and are eager to serve you with dedication, integrity, and a commitment to making your move a breeze. Contact us today to experience the difference in your next home transition.",
+          "At Si Thu Hein Moving Services ,  we take immense pride in our work and are eager to serve you with dedication, integrity, and a commitment to making your move a breeze. Contact us today to experience the difference in your next home transition.",
       priceRate: 25000,
       serviceType: ServiceProviderType.houseMoving,
       rating: 5,
       address: "No.10, 8 mile, Mayangon Township, Yangon/09778886790 "),
-  ServiceProviderEntity(
-      serviceId: "5",
-      serviceName: "Change U Moving Services",
-      imgUrl: "assets/aircon_service.jpg",
-      about:
-          "Welcome to Moving Services, your trusted partner in making moving house a breeze. With a history steeped in reliability, a dedicated team of professionals, and a commitment to turning your relocation into a stress-free experience, we take pride in being the go-to choice for all your home moving needs.",
-      priceRate: 25000,
-      serviceType: ServiceProviderType.houseMoving,
-      rating: 5,
-      address:
-          "No. 61, Hdu Par Yone Street, Insein Township, Yangon/0978654321 "),
 ];
 final Map<ServiceProviderType, List<ServiceProviderEntity>> serviceProviderMap =
     {
@@ -462,277 +440,272 @@ final Map<ServiceProviderType, List<ServiceProviderEntity>> serviceProviderMap =
 
 final List<FreelancerEntity> psychologistList = [
   FreelancerEntity(
-    type: FreelancerType.psychologist,
-    imgUrl: "imageUrl",
-    name: "Dr.Emily Smith",
-    hourlyRate: 5000,
-    location: "Yangon",
-    bio:
-        "Licensed Professional Counsellor,  Sensorimotor Psychotherapist.\n Life can be challenging at times. I am prepared to assist you in transforming the challenges you might be facing into opportunities for self enhancement and personal growth. I am passionate about bringing your best you to surface, in a compassionate and efficient way.",
-    age: 30,
-    phoneNumber: "09753421",
-  ),
+      type: FreelancerType.psychologist,
+      imgUrl: "assets/freelancer/f7.png",
+      name: "Maung Daung",
+      hourlyRate: 15000,
+      location: "Yangon",
+      bio:
+          "Maung Maung  is a leading energy healer and mind-body practitioner dedicated to helping individuals harness the power of their own energy to achieve physical, emotional, and spiritual well-being.  ",
+      age: 25,
+      phoneNumber: " 09767678901"),
   FreelancerEntity(
-    type: FreelancerType.psychologist,
-    imgUrl: "imageUrl",
-    name: "Dr.Benjamin Johnson",
-    hourlyRate: 5000,
-    location: "Yangon",
-    bio: "Licensed Professional Counsellor,  Sensorimotor Psychotherapist.",
-    age: 30,
-    phoneNumber: "0942299309",
-  ),
+      type: FreelancerType.psychologist,
+      imgUrl: "assets/freelancer/f8.png",
+      name: "Ko Ye Aung @James",
+      hourlyRate: 15000,
+      location: "Yangon",
+      bio: "I teah you to heal + conscuiously create a newversion of yourself ",
+      age: 25,
+      phoneNumber: " 09989876541"),
   FreelancerEntity(
-    type: FreelancerType.psychologist,
-    imgUrl: "imageUrl",
-    name: "Dr.Sarah Williams",
-    hourlyRate: 5000,
-    location: "Yangon",
-    bio:
-        "An educational psychologist based in Johannesburg working with children and adolescents from the ages of 4 until 18 years old.",
-    age: 25,
-    phoneNumber: "097842211",
-  ),
+      type: FreelancerType.psychologist,
+      imgUrl: "assets/freelancer/f9.png",
+      name: "Ko Zarni @Leo",
+      hourlyRate: 15000,
+      location: "Yangon",
+      bio: "I am not the King. I am note the God. I am Legend...  ",
+      age: 25,
+      phoneNumber: "09765432180"),
 ];
-
 final List<FreelancerEntity> babySitterList = [
   FreelancerEntity(
     type: FreelancerType.babySitter,
-    imgUrl: "imageUrl",
+    imgUrl: "assets/freelancer/f1.png",
     name: "Pyae Pyae",
-    hourlyRate: 5000,
+    hourlyRate: 15000,
     location: "Yangon",
     bio:
-        "Hello, parents! It's Me, your friendly neighborhood babysitter. I've been providing trusted childcare services for 10 years",
+        "Hello, parents! I'm Pyae, your friendly neighborhood babysitter. I've been providing trusted childcare services for 10 years",
     age: 30,
     phoneNumber: "09753421",
   ),
   FreelancerEntity(
     type: FreelancerType.babySitter,
-    imgUrl: "imageUrl",
+    imgUrl: "assets/freelancer/f7.png",
     name: "Kyaw Kyaw",
-    hourlyRate: 5000,
+    hourlyRate: 15000,
     location: "Yangon",
     bio:
-        "Greetings! It's Me, your reliable and caring babysitter. With a background in early childhood education and 5  years of hands-on experience",
+        "Greetings! I'm Kyaw Kyaw, your reliable and caring babysitter. With a background in early childhood education and 5  years of hands-on experience",
     age: 30,
     phoneNumber: "0942299309",
   ),
   FreelancerEntity(
     type: FreelancerType.babySitter,
-    imgUrl: "imageUrl",
+    imgUrl: "assets/freelancer/f2.png",
     name: "Zin Mar",
-    hourlyRate: 5000,
+    hourlyRate: 15000,
     location: "Yangon",
     bio:
-        "Hey there, families! It's Me , an experienced babysitter with a heart full of love for kids. With 8 years of childcare experience.",
+        "Hey there, families! I'm Zin Mar , an experienced babysitter with a heart full of love for kids. With 8 years of childcare experience.",
     age: 25,
     phoneNumber: "097842211",
   ),
 ];
-
 final List<FreelancerEntity> coachList = [
   FreelancerEntity(
       type: FreelancerType.coach,
-      imgUrl: "imageUrl",
+      imgUrl: "assets/freelancer/f10.png",
       name: "Liam",
-      hourlyRate: 2,
+      hourlyRate: 15000,
       location: "Yangon",
       bio:
-          "Hi, It's Me, a dedicated life coach on a mission to help you unlock your full potential and achieve your dreams. ",
+          "Hi, I'm Liam, a dedicated life coach on a mission to help you unlock your full potential and achieve your dreams. ",
       age: 28,
       phoneNumber: "0977889900"),
   FreelancerEntity(
       type: FreelancerType.coach,
-      imgUrl: "imageUrl",
+      imgUrl: "assets/freelancer/f8.png",
       name: "Leo",
-      hourlyRate: 2,
+      hourlyRate: 15000,
       location: "Yangon",
       bio:
-          "Welcome! It's Me, a certified fitness coach with a passion for health and well-being",
+          "Welcome! I'm Liam, a certified fitness coach with a passion for health and well-being",
       age: 25,
       phoneNumber: "0977619900"),
   FreelancerEntity(
       type: FreelancerType.coach,
-      imgUrl: "imageUrl",
+      imgUrl: "assets/freelancer/f1.png",
       name: "Suzy ",
       hourlyRate: 2,
       location: "Yangon",
       bio:
-          "Greetings! It's Me , a seasoned business coach committed to helping entrepreneurs and small businesses thrive. ",
+          "Greetings! I'm Suzy , a seasoned business coach committed to helping entrepreneurs and small businesses thrive. ",
       age: 30,
       phoneNumber: "09432100789"),
 ];
 final List<FreelancerEntity> nurseList = [
   FreelancerEntity(
       type: FreelancerType.nurse,
-      imgUrl: "imageUrl",
-      name: "Jame",
-      hourlyRate: 10000,
+      imgUrl: "assets/freelancer/f7.png",
+      name: "Aung Thu",
+      hourlyRate: 15000,
       location: "Yangon",
       bio:
-          "Good day, doggie friends! It's Me , an experienced dog walker with a passion for outdoor adventures. ",
+          "I assist busy Personal Injury Attorneys to keep their legal practice running smoothly as well as free up their time to work on the more complex aspects of their current cases so that they can take on larger case volumes.",
       age: 30,
       phoneNumber: "0945566789"),
   FreelancerEntity(
       type: FreelancerType.nurse,
-      imgUrl: "imageUrl",
-      name: "John",
-      hourlyRate: 10000,
+      imgUrl: "assets/freelancer/f8.png",
+      name: "Kyaw Lwin",
+      hourlyRate: 15000,
       location: "Manadalay",
       bio:
-          "Hey there, pet parents! It's Me , your reliable dog walker with 5 years experenice. ",
+          "I am a Registered Nurse here in the Philippines, and the USA, specifically in Texas. I am very keen on details, flexible and I have a strong background in the US Healthcare system. I have extensive experience in Prior Authorizations, including processing requests and reviewing the medical necessity of each request.",
       age: 30,
       phoneNumber: " 09667555678 "),
   FreelancerEntity(
       type: FreelancerType.nurse,
-      imgUrl: "imageUrl",
+      imgUrl: "assets/freelancer/f2.png",
       name: "Su Su ",
-      hourlyRate: 10000,
+      hourlyRate: 15000,
       location: "Manadalay",
       bio:
-          "Greetings, dog lovers! It's Me , a certified dog walker with a passion for pups and a commitment to their well-being. ",
+          "’m licensed nurse in Pakistan with bedside experience of (Surgical and Medical ICU, Cardiac Emergency, Tele Nurse) patient care experience of 2.5 years.",
       age: 30,
       phoneNumber: " 097865310"),
 ];
+
 final List<FreelancerEntity> gardenerList = [
   FreelancerEntity(
-    type: FreelancerType.gardener,
-    imgUrl: "imageUrl",
-    name: "Myat ",
-    hourlyRate: 10000,
-    location: "Yangon",
-    bio:
-        "Hello, green thumbs! It's Me , a passionate gardener with 5  years of experience nurturing nature's beauty.",
-    age: 30,
-    phoneNumber: "09440789061",
-  ),
+      type: FreelancerType.gardener,
+      imgUrl: "assets/freelancer/f3.png",
+      name: "Myat ",
+      hourlyRate: 15000,
+      location: "Yangon",
+      bio:
+          "Hello, green thumbs! I'm Myat , a passionate gardener with 5  years of experience nurturing nature's beauty.",
+      age: 30,
+      phoneNumber: " 09440789061"),
   FreelancerEntity(
-    type: FreelancerType.gardener,
-    imgUrl: "imageUrl",
-    name: "Thazin ",
-    hourlyRate: 10000,
-    location: "Yangon",
-    bio: "Hey there, garden lovers! It's Me , your dedicated gardener.",
-    age: 25,
-    phoneNumber: " 09449876345",
-  ),
+      type: FreelancerType.gardener,
+      imgUrl: "assets/freelancer/f4.png",
+      name: "Thazin ",
+      hourlyRate: 15000,
+      location: "Yangon",
+      bio: "Hey there, garden lovers! I'm Aung , your dedicated gardener.",
+      age: 25,
+      phoneNumber: " 09449876345"),
   FreelancerEntity(
-    type: FreelancerType.gardener,
-    imgUrl: "imageUrl",
-    name: "Aung  ",
-    hourlyRate: 10000,
-    location: "Yangon",
-    bio:
-        "G'day, fellow gardeners! It's Me , an avid horticulturist with a knack for turning soil into art. ",
-    age: 25,
-    phoneNumber: " 09443421789",
-  ),
+      type: FreelancerType.gardener,
+      imgUrl: "assets/freelancer/f8.png",
+      name: "Aung  ",
+      hourlyRate: 15000,
+      location: "Yangon",
+      bio:
+          "G'day, fellow gardeners! I'm Aug , an avid horticulturist with a knack for turning soil into art. ",
+      age: 25,
+      phoneNumber: " 09443421789"),
 ];
 
-//TODO
 final List<FreelancerEntity> driverList = [
   FreelancerEntity(
-    type: FreelancerType.driver,
-    imgUrl: "imageUrl",
-    name: "Myat ",
-    hourlyRate: 10000,
-    location: "Yangon",
-    bio:
-        "Hello, green thumbs! It's Me , a passionate gardener with 5  years of experience nurturing nature's beauty.",
-    age: 30,
-    phoneNumber: "09440789061",
-  ),
+      type: FreelancerType.driver,
+      imgUrl: "assets/freelancer/f10.png",
+      name: "Maung Thein Tan",
+      hourlyRate: 15000,
+      location: "Yangon",
+      bio:
+          "I am a dedicated and experienced driver with a passion for delivering exceptional service and ensuring the safety and satisfaction of passengers.   ",
+      age: 25,
+      phoneNumber: "09878786414"),
   FreelancerEntity(
-    type: FreelancerType.driver,
-    imgUrl: "imageUrl",
-    name: "Thazin ",
-    hourlyRate: 10000,
-    location: "Yangon",
-    bio: "Hey there, garden lovers! It's Me , your dedicated gardener.",
-    age: 25,
-    phoneNumber: " 09449876345",
-  ),
+      type: FreelancerType.driver,
+      imgUrl: "assets/freelancer/f2.png",
+      name: "Ma Chit Thal Po ",
+      hourlyRate: 15000,
+      location: "Yangon",
+      bio:
+          "I am a dedicated and experienced driver with a passion for delivering exceptional service and ensuring the safety and satisfaction of passengers.   ",
+      age: 25,
+      phoneNumber: "09676754321"),
   FreelancerEntity(
-    type: FreelancerType.driver,
-    imgUrl: "imageUrl",
-    name: "Aung  ",
-    hourlyRate: 10000,
-    location: "Yangon",
-    bio:
-        "G'day, fellow gardeners! It's Me , an avid horticulturist with a knack for turning soil into art. ",
-    age: 25,
-    phoneNumber: " 09443421789",
-  ),
+      type: FreelancerType.driver,
+      imgUrl: "assets/freelancer/f7.png",
+      name: "Maung ",
+      hourlyRate: 15000,
+      location: "Yangon",
+      bio:
+          "I am a dedicated and safety-conscious driver with a proven track record of providing reliable transportation services.  ",
+      age: 30,
+      phoneNumber: "09676754541"),
 ];
-
 final List<FreelancerEntity> tutorList = [
   FreelancerEntity(
-    type: FreelancerType.tutor,
-    imgUrl: "imageUrl",
-    name: "Myat ",
-    hourlyRate: 10000,
-    location: "Yangon",
-    bio:
-        "Hello, green thumbs! It's Me , a passionate gardener with 5  years of experience nurturing nature's beauty.",
-    age: 30,
-    phoneNumber: "09440789061",
-  ),
+      type: FreelancerType.tutor,
+      imgUrl: "assets/freelancer/f1.png",
+      name: "Dr. Khin Thant Tint ",
+      hourlyRate: 50000,
+      location: "Yangon",
+      bio:
+          "Dr. Khin Thant Tint is a dedicated math and science tutor with a passion for helping students unlock their potential in these challenging subjects.  ",
+      age: 30,
+      phoneNumber: "09767654891"),
   FreelancerEntity(
-    type: FreelancerType.tutor,
-    imgUrl: "imageUrl",
-    name: "Thazin ",
-    hourlyRate: 10000,
-    location: "Yangon",
-    bio: "Hey there, garden lovers!, It's Me , Your dedicated gardener.",
-    age: 25,
-    phoneNumber: " 09449876345",
-  ),
+      type: FreelancerType.tutor,
+      imgUrl: "assets/freelancer/f2.png",
+      name: "Dr. Than Myint ",
+      hourlyRate: 50000,
+      location: "Yangon",
+      bio:
+          "Dr. Khin Thant Tint is a dedicated math and science tutor with a passion for helping students unlock their potential in these challenging subjects.  ",
+      age: 30,
+      phoneNumber: "09767654891"),
   FreelancerEntity(
-    type: FreelancerType.tutor,
-    imgUrl: "imageUrl",
-    name: "Aung  ",
-    hourlyRate: 10000,
-    location: "Yangon",
-    bio:
-        "G'day, fellow gardeners! It's Me , an avid horticulturist with a knack for turning soil into art. ",
-    age: 25,
-    phoneNumber: " 09443421789",
-  ),
+      type: FreelancerType.tutor,
+      imgUrl: "assets/freelancer/f8.png",
+      name: "U Thein Maung ",
+      hourlyRate: 50000,
+      location: "Yangon",
+      bio:
+          "With over 5 years of teaching experience, John has helped students of all skill levels develop their musical abilities.  ",
+      age: 50,
+      phoneNumber: "09454367819"),
+  FreelancerEntity(
+      type: FreelancerType.tutor,
+      imgUrl: "assets/freelancer/f9.png",
+      name: "Jessica James ",
+      hourlyRate: 25000,
+      location: "Yangon",
+      bio:
+          "As an English teacher,Jessica James believes that literature is a gateway to understanding the world and the human experience.",
+      age: 30,
+      phoneNumber: "0998709873"),
 ];
+
 final List<FreelancerEntity> hairStylistList = [
   FreelancerEntity(
-    type: FreelancerType.hairStylist,
-    imgUrl: "imageUrl",
-    name: "Myat ",
-    hourlyRate: 10000,
-    location: "Yangon",
-    bio:
-        "Hello, green thumbs! It's Me , a passionate gardener with 5  years of experience nurturing nature's beauty.",
-    age: 30,
-    phoneNumber: "09440789061",
-  ),
+      type: FreelancerType.hairStylist,
+      imgUrl: "assets/freelancer/f11.png",
+      name: "Donut ",
+      hourlyRate: 15000,
+      location: "Yangon",
+      bio:
+          "Donut is an experienced hairstylist known for his creative flair and dedication to making her clients look and feel their best",
+      age: 35,
+      phoneNumber: "09767654091"),
   FreelancerEntity(
-    type: FreelancerType.hairStylist,
-    imgUrl: "imageUrl",
-    name: "Thazin ",
-    hourlyRate: 10000,
-    location: "Yangon",
-    bio: "Hey there, garden lovers! It's Me , your dedicated gardener.",
-    age: 25,
-    phoneNumber: " 09449876345",
-  ),
+      type: FreelancerType.hairStylist,
+      imgUrl: "assets/freelancer/f1.png",
+      name: " MAAYAN ",
+      hourlyRate: 25000,
+      location: "Yangon",
+      bio:
+          "MAAYAN  is a renowned celebrity hairstylist known for her artistic vision and transformative hair creations",
+      age: 30,
+      phoneNumber: "09769801091"),
   FreelancerEntity(
-    type: FreelancerType.hairStylist,
-    imgUrl: "imageUrl",
-    name: "Aung  ",
-    hourlyRate: 10000,
-    location: "Yangon",
-    bio:
-        "G'day, fellow gardeners! It's Me , an avid horticulturist with a knack for turning soil into art. ",
-    age: 25,
-    phoneNumber: " 09443421789",
-  ),
+      type: FreelancerType.hairStylist,
+      imgUrl: "assets/freelancer/f2.png",
+      name: " Lucy ",
+      hourlyRate: 30000,
+      location: "Yangon",
+      bio:
+          "Lucy is a talented bridal hairstylist and wedding beauty specialist with a passion for making brides look and feel their most beautiful on their special day.",
+      age: 35,
+      phoneNumber: "09987651093"),
 ];
 final List<Map<String, String>> termsAndConditonList = [
   {

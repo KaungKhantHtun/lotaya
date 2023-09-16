@@ -91,7 +91,12 @@ flutter:
     - assets/
     - assets/lottie/
     - assets/clothes/
+    - assets/freelancer/
     - assets/setting/
+    - assets/cleaning/
+    - assets/electronic/
+    - assets/home-moving/
+    - assets/laundry/
     # - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
