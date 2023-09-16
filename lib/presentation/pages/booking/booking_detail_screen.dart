@@ -42,13 +42,14 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
             color: colorPrimary,
           ),
         ),
-        backgroundColor: Colors.white,
-        centerTitle: false,
-        title: const Text(
-          "Booking Detail",
+        foregroundColor: colorPrimary,
+        backgroundColor: colorPrimaryLight,
+        centerTitle: true,
+        title: Text(
+          "Booking Detail".toUpperCase(),
           style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.w500,
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
           ),
         ),
       ),

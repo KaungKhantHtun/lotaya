@@ -59,8 +59,16 @@ class _KiloTaxiScreenState extends State<KiloTaxiScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: colorPrimary,
-          title: const Text("Plan a book ride"),
+           centerTitle: true,
+          foregroundColor: colorPrimary,
+          backgroundColor: colorPrimaryLight,
+          title:  Text(
+            "Plan a book ride".toUpperCase(),
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ),
         body: SingleChildScrollView(
           child: Container(

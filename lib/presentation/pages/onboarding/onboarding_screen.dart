@@ -69,16 +69,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         //     ),
         //   ),
         // ),
-        title: const Text(
-          "Registration",
+        title: Text(
+          "Registration".toUpperCase(),
           style: TextStyle(
-            fontSize: 20,
-            color: colorPrimary,
-            fontWeight: FontWeight.w600,
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
           ),
         ),
         centerTitle: true,
-        backgroundColor: Colors.white,
+        foregroundColor: colorPrimary,
+        backgroundColor: colorPrimaryLight,
       ),
       body: Container(
         padding: const EdgeInsets.only(top: 16, left: 16, right: 16, bottom: 0),
@@ -277,8 +277,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         Positioned(
           child: ClipOval(
             child: imageBytes.isEmpty
-                ? Image.asset("assets/profile.jpg",
-                    width: imageSize, height: imageSize)
+                ? Icon(
+                    Icons.account_circle_rounded,
+                    color: colorPrimary,
+                    size: imageSize,
+                  )
                 : Image.memory(imageBytes, width: imageSize, height: imageSize),
           ),
         ),

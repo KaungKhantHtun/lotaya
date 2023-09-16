@@ -34,12 +34,13 @@ class _SettingScreenState extends State<SettingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: const Text(
-          "Profile",
+        foregroundColor: colorPrimary,
+        backgroundColor: colorPrimaryLight,
+        title:  Text(
+          "Profile".toUpperCase(),
           style: TextStyle(
-            fontWeight: FontWeight.w600,
-            color: Colors.black,
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
           ),
         ),
         centerTitle: true,
@@ -83,8 +84,11 @@ class _SettingScreenState extends State<SettingScreen> {
                                 height: 24,
                               ),
                               ClipOval(
-                                child: Image.asset("assets/profile.jpg",
-                                    width: 90, height: 90),
+                                child: Icon(
+                                  Icons.account_circle_rounded,
+                                  color: colorPrimary,
+                                  size: 90,
+                                ),
                               ),
                               const SizedBox(
                                 height: 24,

@@ -22,14 +22,14 @@ class _FreelancerListScreenState extends State<FreelancerListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: colorPrimary,
+        foregroundColor: colorPrimary,
+        backgroundColor: colorPrimaryLight,
         centerTitle: true,
         title: Text(
-          "${widget.type.name.toUpperCase()}S",
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 14,
-            fontWeight: FontWeight.w600,
+          "${widget.type.name.toUpperCase()}S".toUpperCase(),
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
           ),
         ),
       ),
@@ -40,10 +40,10 @@ class _FreelancerListScreenState extends State<FreelancerListScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                widget.type.name,
-                style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-              ),
+              // Text(
+              //   widget.type.name,
+              //   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              // ),
               const SizedBox(
                 height: 16,
               ),
@@ -82,129 +82,118 @@ class FreelancerCardWidget extends StatelessWidget {
           Container(
             alignment: Alignment.bottomCenter,
             height: 168,
-            child: Container(
-              height: 156,
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-              decoration: BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.circular(8)),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        width: 64,
-                        height: 64,
-                      ),
-                      SizedBox(
-                        width: 16,
-                      ),
-                      Expanded(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  " " + fakeName,
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                                SizedBox(
-                                  height: 4,
-                                ),
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Icon(Icons.location_on),
-                                    Text(
-                                      freelancer.location,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.grey,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            Flexible(
-                              child: InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          FreelacerDetailScreen(
-                                        freelancer: freelancer,
-                                        name: fakeName,
-                                        imgUrl: fakeImage,
-                                      ),
-                                    ),
-                                  );
-                                },
-                                child: Padding(
-                                  padding: EdgeInsets.only(top: 8),
-                                  child: Text(
-                                    "View Details",
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold,
-                                        color: colorPrimary),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  Divider(),
-                  Row(
-                    children: [
-                      Text(
-                        "Specialized: ${freelancer.type.name}",
-                        style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.grey,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      Spacer(),
-                      Text(
-                        "Hourly Rate: ${freelancer.hourlyRate} Ks",
-                        style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.grey,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  RatingBar.builder(
-                    initialRating: faker.randomGenerator.integer(5).toDouble(),
-                    minRating: 1,
-                    direction: Axis.horizontal,
-                    allowHalfRating: true,
-                    itemCount: 5,
-                    itemSize: 16,
-                    itemPadding: EdgeInsets.symmetric(horizontal: 1),
-                    itemBuilder: (context, _) => Icon(
-                      Icons.star,
-                      color: Colors.amber,
+            child: InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => FreelacerDetailScreen(
+                      freelancer: freelancer,
+                      name: fakeName,
+                      imgUrl: fakeImage,
                     ),
-                    onRatingUpdate: (rating) {
-                      print(rating);
-                    },
                   ),
-                ],
+                );
+              },
+              child: Container(
+                height: 156,
+                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(8)),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          width: 64,
+                          height: 64,
+                        ),
+                        SizedBox(
+                          width: 16,
+                        ),
+                        Expanded(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    " " + fakeName,
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                  SizedBox(
+                                    height: 4,
+                                  ),
+                                  Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Icon(Icons.location_on),
+                                      Text(
+                                        freelancer.location,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.grey,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    Divider(),
+                    Row(
+                      children: [
+                        Text(
+                          "Specialized: ${freelancer.type.name}",
+                          style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.grey,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Spacer(),
+                        Text(
+                          "Hourly Rate: ${freelancer.hourlyRate} Ks",
+                          style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.grey,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    RatingBar.builder(
+                      initialRating:
+                          faker.randomGenerator.integer(5).toDouble(),
+                      minRating: 1,
+                      direction: Axis.horizontal,
+                      allowHalfRating: true,
+                      itemCount: 5,
+                      itemSize: 16,
+                      itemPadding: EdgeInsets.symmetric(horizontal: 1),
+                      itemBuilder: (context, _) => Icon(
+                        Icons.star,
+                        color: Colors.amber,
+                      ),
+                      onRatingUpdate: (rating) {
+                        print(rating);
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

@@ -64,7 +64,8 @@ class _LaundryServiceScreenState extends State<LaundryServiceScreen> {
     return Scaffold(
       backgroundColor: colorPrimary,
       appBar: AppBar(
-        backgroundColor: colorPrimary,
+        foregroundColor: colorPrimary,
+        backgroundColor: colorPrimaryLight,
         // leading: Padding(
         //   padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12),
         //   child: InkWell(
@@ -96,9 +97,8 @@ class _LaundryServiceScreenState extends State<LaundryServiceScreen> {
         title: const Text(
           "LAUNDRY",
           style: TextStyle(
-            color: Colors.white,
-            fontSize: 14,
-            fontWeight: FontWeight.w600,
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
           ),
         ),
         centerTitle: true,

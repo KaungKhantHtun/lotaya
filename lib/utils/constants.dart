@@ -213,14 +213,14 @@ final List<ClothEntity> originalClothList = [
 ];
 
 const currentUser = User(
-  id: "W1",
+  id: "9420265999",
   firstName: "First Name",
   lastName: "Last Name",
   imageUrl: "",
 );
 
 const adminUser = User(
-  id: "Admin1",
+  id: "09401531039",
   firstName: "Admin First Name",
   lastName: "Admin Last Name",
   imageUrl: "",

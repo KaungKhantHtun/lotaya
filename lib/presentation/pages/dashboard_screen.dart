@@ -270,7 +270,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             Text(
                               "Freelance Services",
                               style: TextStyle(
-                                fontSize: 22,
+                                fontSize: 18,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -349,7 +349,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             Text(
                               "Company Services",
                               style: TextStyle(
-                                fontSize: 22,
+                                fontSize: 18,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -452,7 +452,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         Text(
                           "Promotions",
                           style: TextStyle(
-                            fontSize: 22,
+                            fontSize: 18,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -464,7 +464,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           child: ListView(
                             shrinkWrap: true,
                             scrollDirection: Axis.horizontal,
-                            
                             children: [
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(16),

@@ -49,10 +49,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
             color: colorPrimary,
           ),
         ),
-        backgroundColor: Colors.white,
-        title: const Text(
-          "Personal Information",
-          style: TextStyle(color: Colors.black),
+        foregroundColor: colorPrimary,
+        backgroundColor: colorPrimaryLight,
+        title: Text(
+          "Personal Information".toUpperCase(),
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         centerTitle: true,
         elevation: 0,
@@ -91,9 +95,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     color: Colors.white,
                     child: Center(
                       child: ClipOval(
-                        child: Image.asset("assets/profile.jpg",
-                            width: 90, height: 90),
-                      ),
+                          child: Icon(
+                        Icons.account_circle_rounded,
+                        color: colorPrimary,
+                        size: 90,
+                      )),
                     ),
                   ),
                   Container(
@@ -110,27 +116,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         //     fontWeight: FontWeight.bold,
                         //   ),
                         // ),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: colorPrimary,
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: const Padding(
-                            padding: EdgeInsets.only(
-                              left: 16,
-                              right: 16,
-                              top: 8,
-                              bottom: 8,
-                            ),
-                            child: Text(
-                              // "Personal Information",
-                              "User Information",
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
+
+                        // Container(
+                        //   decoration: BoxDecoration(
+                        //     color: colorPrimary,
+                        //     borderRadius: BorderRadius.circular(20),
+                        //   ),
+                        //   child: const Padding(
+                        //     padding: EdgeInsets.only(
+                        //       left: 16,
+                        //       right: 16,
+                        //       top: 8,
+                        //       bottom: 8,
+                        //     ),
+                        //     child: Text(
+                        //       // "Personal Information",
+                        //       "User Information",
+                        //       style: TextStyle(
+                        //         color: Colors.white,
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
 
                         const SizedBox(
                           height: 16,

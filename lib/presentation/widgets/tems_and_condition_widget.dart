@@ -16,7 +16,9 @@ class _TermsAndConditonsWidgetState extends State<TermsAndConditonsWidget> {
       appBar: AppBar(
         elevation: 0,
         leading: null,
-        backgroundColor: Colors.white,
+        backgroundColor: colorPrimaryLight,
+        foregroundColor: colorPrimary,
+        centerTitle: true,
         actions: [
           IconButton(
             onPressed: () {
