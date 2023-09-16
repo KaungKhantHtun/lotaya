@@ -48,7 +48,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
       child: Scaffold(
         backgroundColor: Colors.white,
         body: Stack(
+          fit: StackFit.expand,
           children: [
+            Positioned(
+              top: -50,
+              right: -200,
+              child: Opacity(
+                opacity: 0.03,
+                child: Image.asset(
+                  "assets/logo.png",
+                  height: 500,
+                  width: 500,
+                ),
+              ),
+            ),
             SingleChildScrollView(
               scrollDirection: Axis.vertical,
               child: Column(
