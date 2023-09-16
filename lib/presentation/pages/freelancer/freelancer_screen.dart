@@ -69,9 +69,9 @@ class _FreelancerScreenState extends State<FreelancerScreen> {
                     list: coachList,
                   ),
                   ServiceCategoryWidget(
-                    imgUrl: "assets/dogwalker.png",
-                    type: FreelancerType.dogWalker,
-                    list: dogWalkerList,
+                    imgUrl: "assets/nursing.png",
+                    type: FreelancerType.nurse,
+                    list: nurseList,
                   ),
                   ServiceCategoryWidget(
                     imgUrl: "assets/hairstylist.png",

@@ -63,8 +63,8 @@ class FreelancerEntity {
       case "Coach":
         profession = FreelancerType.coach;
         break;
-      case "Dog Walker":
-        profession = FreelancerType.dogWalker;
+      case "Nurse":
+        profession = FreelancerType.nurse;
         break;
       case "Hair Stylist":
         profession = FreelancerType.hairStylist;
@@ -84,7 +84,7 @@ enum FreelancerType {
   tutor("Tutor"),
   babySitter("Baby Sitter"),
   coach("Coach"),
-  dogWalker("Dog Walker"),
+  nurse("Nurse"),
   hairStylist("Hair Stylist"),
   gardener("Gardener");
 

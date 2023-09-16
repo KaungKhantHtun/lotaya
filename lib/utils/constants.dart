@@ -563,9 +563,9 @@ final List<FreelancerEntity> coachList = [
       age: 30,
       phoneNumber: "09432100789"),
 ];
-final List<FreelancerEntity> dogWalkerList = [
+final List<FreelancerEntity> nurseList = [
   FreelancerEntity(
-      type: FreelancerType.dogWalker,
+      type: FreelancerType.nurse,
       imgUrl: "imageUrl",
       name: "Jame",
       hourlyRate: 10000,
@@ -575,7 +575,7 @@ final List<FreelancerEntity> dogWalkerList = [
       age: 30,
       phoneNumber: "0945566789"),
   FreelancerEntity(
-      type: FreelancerType.dogWalker,
+      type: FreelancerType.nurse,
       imgUrl: "imageUrl",
       name: "John",
       hourlyRate: 10000,
@@ -585,7 +585,7 @@ final List<FreelancerEntity> dogWalkerList = [
       age: 30,
       phoneNumber: " 09667555678 "),
   FreelancerEntity(
-      type: FreelancerType.dogWalker,
+      type: FreelancerType.nurse,
       imgUrl: "imageUrl",
       name: "Su Su ",
       hourlyRate: 10000,
