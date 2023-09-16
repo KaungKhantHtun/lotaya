@@ -8,6 +8,7 @@ import 'package:hakathon_service/domain/entities/wear_type.dart';
 import '../domain/entities/service_provider_entity.dart';
 
 const String bookingTable = "booking";
+const String roomTable = "rooms";
 const String profileTable = "profile";
 const Color colorPrimary = Color(0xff1f467d);
 const Color colorPrimaryLight = Color(0xFFE6F0FD);
@@ -732,4 +733,48 @@ final List<FreelancerEntity> hairStylistList = [
     age: 25,
     phoneNumber: " 09443421789",
   ),
+];
+final List<Map<String, String>> termsAndConditonList = [
+  {
+    "1. Acceptance of Terms":
+        "By using [Your Mobile Money App], you agree to follow these Terms and Conditions of Service. If you don't agree, please do not use the app.",
+  },
+  {
+    "2. Eligibility":
+        "You must be at least [age] years old to use the app. By using it, you confirm that you meet this requirement.",
+  },
+  {
+    "3. Privacy":
+        "Your use of the app is subject to our Privacy Policy, which you can find at [Link to Privacy Policy]. It explains how we handle your data.",
+  },
+  {
+    "4. Account Responsibility":
+        "If you create an account, you're responsible for safeguarding your login information. Please keep it secure.",
+  },
+  {
+    "5. App Usage":
+        "(a) You may use the app for personal purposes only, not for anything illegal or unauthorized.\n(b) Don't share your login info, and don't try to hack the app.",
+  },
+  {
+    "6. User Content":
+        "(a) You own your content but grant us permission to use it within the app.\n(b) You're responsible for your content.",
+  },
+  {
+    "7. Termination":
+        "We can suspend or terminate your access to the app at our discretion.",
+  },
+  {
+    "8. Updates": "We may update or change the app without notice.",
+  },
+  {
+    "9. Disclaimer":
+        "The app is provided as-is, and we can't guarantee it's always error-free.",
+  },
+  {
+    "10. Limitation of Liability":
+        "We're not liable for any indirect, incidental, or consequential damages.",
+  },
+  {
+    "11. Governing Law": "These terms are governed by the laws of government.",
+  }
 ];

@@ -59,21 +59,21 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
                       children: [
-                        InkWell(
-                          onTap: () {
-                            _iSystemBridge.exist();
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Icon(
-                              Icons.close,
-                              color: colorPrimary,
-                            ),
-                          ),
-                        ),
+                        // InkWell(
+                        //   onTap: () {
+                        //     _iSystemBridge.exist();
+                        //   },
+                        // child: Padding(
+                        //   padding: const EdgeInsets.all(8.0),
+                        //   child: Icon(
+                        //     Icons.close,
+                        //     color: colorPrimary,
+                        //   ),
+                        // ),
+                        // ),
                         Image.asset(
                           "assets/logo.png",
-                          height: 32,
+                          height: 48,
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 8.0),

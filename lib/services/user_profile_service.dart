@@ -6,9 +6,10 @@ import '../bridge/user_info/user_info_web_impl.dart';
 import '../utils/constants.dart';
 
 class UserProfileService {
-  static String msisdn = "09401531039";
+  static String? msisdn;
   operateUserProfile() async {
     UserInfo userInfo = await getUserProfile();
+
     bool isNewUser = await checkMsisdn(userInfo.msisdn);
     if (isNewUser) {
       await UserProfileService().createProfile(userInfo);
@@ -41,6 +42,6 @@ class UserProfileService {
     } catch (e) {
       print('Error retrieving data: $e');
     }
-    return snapshot == null;
+    return snapshot.data() == null;
   }
 }
