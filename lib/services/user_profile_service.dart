@@ -9,7 +9,7 @@ class UserProfileService {
   static String? msisdn;
   operateUserProfile() async {
     UserInfo userInfo = await getUserProfile();
-
+    msisdn = userInfo.msisdn;
     bool isNewUser = await checkMsisdn(userInfo.msisdn);
     if (isNewUser) {
       await UserProfileService().createProfile(userInfo);
