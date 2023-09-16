@@ -156,6 +156,9 @@ class _KiloTaxiScreenState extends State<KiloTaxiScreen> {
                         ),
                       ],
                     ),
+                  const SizedBox(
+                    width: 8,
+                  ),
                   if (distance != null)
                     Container(
                       padding: const EdgeInsets.symmetric(
