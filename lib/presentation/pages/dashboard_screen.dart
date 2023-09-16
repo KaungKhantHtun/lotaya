@@ -467,26 +467,38 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             children: [
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(16),
-                                child: Image.asset(
-                                  "assets/discount10.jpeg",
+                                child: SizedBox(
+                                  width: 200,
+                                  child: Image.asset(
+                                    "assets/discount10.jpeg",
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                               ),
                               SizedBox(
                                 width: 8,
                               ),
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(16),
-                                child: Image.asset(
-                                  "assets/discount10.jpeg",
+                              SizedBox(
+                                width: 200,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(16),
+                                  child: Image.asset(
+                                    "assets/sale.jpeg",
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                               ),
                               SizedBox(
                                 width: 8,
                               ),
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(16),
-                                child: Image.asset(
-                                  "assets/discount10.jpeg",
+                              SizedBox(
+                                width: 200,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(16),
+                                  child: Image.asset(
+                                    "assets/sale1.png",
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                               ),
                             ],
