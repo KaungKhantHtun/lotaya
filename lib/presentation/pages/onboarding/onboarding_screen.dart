@@ -265,7 +265,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 
-  late Uint8List bytes;
   double imageSize = 90;
   Widget _buildImagePickerWidget() {
     return Stack(
@@ -277,17 +276,18 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         ),
         Positioned(
           child: ClipOval(
-              child: imageBytes == null
-                  ? Image.asset("assets/profile.jpg",
-                      width: imageSize, height: imageSize)
-                  : Image.memory(bytes, width: imageSize, height: imageSize)),
+            child: imageBytes.isEmpty
+                ? Image.asset("assets/profile.jpg",
+                    width: imageSize, height: imageSize)
+                : Image.memory(imageBytes, width: imageSize, height: imageSize),
+          ),
         ),
         Positioned(
           bottom: 8,
           right: 8,
           child: InkWell(
-            onTap: () {
-              pickImages();
+            onTap: () async {
+              await pickImages();
             },
             child: Container(
               width: 25,
@@ -310,7 +310,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 
-  Uint8List? imageBytes;
+  Uint8List imageBytes = Uint8List.fromList([]);
   Future<void> pickImages() async {
     final ICameraBridge _icameraBridge = Get.put(const CameraBridgeImpl());
     String base64Image = await _icameraBridge.openCamera();
