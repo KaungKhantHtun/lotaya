@@ -276,10 +276,20 @@ class _KiloTaxiScreenState extends State<KiloTaxiScreen> {
       await bookingList.add(booking.toJson()).then((value) {
         bookingList.doc(value.id).update({"bookingId": value.id});
       });
-      Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => const HomeScreen(
-                initialIndex: 1,
-              )));
+
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (BuildContext context) => const HomeScreen(
+            initialIndex: 1,
+          ), // Replace with your new route
+        ),
+        (route) => false, // This pops all routes from the stack
+      );
+      // Navigator.of(context).push(MaterialPageRoute(
+      //     builder: (context) => const HomeScreen(
+      //           initialIndex: 1,
+      //         )));
     } catch (e) {
       print('Error retrieving data: $e');
     }
@@ -347,7 +357,7 @@ class _KiloTaxiScreenState extends State<KiloTaxiScreen> {
           );
         },
         decoration: InputDecoration(
-            hintText: 'Select Destination',
+            hintText: 'Select start destination',
             border: InputBorder.none,
             prefixIcon: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -398,7 +408,7 @@ class _KiloTaxiScreenState extends State<KiloTaxiScreen> {
           });
         },
         decoration: InputDecoration(
-          hintText: 'Select Destination',
+          hintText: 'Select end destination',
           border: InputBorder.none,
           prefixIcon: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),

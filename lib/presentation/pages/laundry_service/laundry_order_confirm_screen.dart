@@ -337,10 +337,20 @@ class _LaundryOrderConfirmScreenState extends State<LaundryOrderConfirmScreen> {
       await bookingList.add(booking.toJson()).then((value) {
         bookingList.doc(value.id).update({"bookingId": value.id});
       });
-      Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => const HomeScreen(
-                initialIndex: 1,
-              )));
+
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (BuildContext context) => const HomeScreen(
+            initialIndex: 1,
+          ), // Replace with your new route
+        ),
+        (route) => false, // This pops all routes from the stack
+      );
+      // Navigator.of(context).push(MaterialPageRoute(
+      //     builder: (context) => const HomeScreen(
+      //           initialIndex: 1,
+      //         )));
     } catch (e) {
       print('Error retrieving data: $e');
     }
