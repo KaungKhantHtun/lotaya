@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hakathon_service/presentation/cubit/booking_cubit.dart';
 import 'package:hakathon_service/utils/constants.dart';
 
+import 'presentation/pages/home/home_screen.dart';
 import 'presentation/pages/password_page.dart';
 import 'services/firebase_service.dart';
 
@@ -55,7 +56,12 @@ class _MyAppState extends State<MyApp> {
       // ),
       // home: TutorialScreen(),
       home: BlocProvider(
-          create: (context) => BookingCubit(), child: PasswordPage()),
+        create: (context) => BookingCubit(),
+        child: HomeScreen(
+          initialIndex: 0,
+        ),
+      ),
+      // ()),
       // home: const HomeScreen(
       //   initialIndex: 0,
       // ),

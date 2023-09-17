@@ -76,33 +76,38 @@ class _BookingsScreenState extends State<BookingsScreen> {
         centerTitle: true,
         title: GestureDetector(
           onLongPress: () {
-            showDialog(
-              context: context,
-              builder: (context) {
-                return AlertDialog(
-                  title: const Text("Enter Password"),
-                  content: Container(
-                    color: Colors.grey.shade100,
-                    child: TextField(
-                      obscureText: true,
-                      decoration: const InputDecoration(
-                          border: InputBorder.none,
-                          contentPadding: EdgeInsets.all(8)),
-                      onSubmitted: (value) {
-                        Navigator.pop(context);
-                        if (value == "HaHaHa") {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => BookingsScreenAdmin(),
-                              ));
-                        }
-                      },
-                    ),
-                  ),
-                );
-              },
-            );
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => BookingsScreenAdmin(),
+                ));
+            // showDialog(
+            //   context: context,
+            //   builder: (context) {
+            //     return AlertDialog(
+            //       title: const Text("Enter Password"),
+            //       content: Container(
+            //         color: Colors.grey.shade100,
+            //         child: TextField(
+            //           obscureText: true,
+            //           decoration: const InputDecoration(
+            //               border: InputBorder.none,
+            //               contentPadding: EdgeInsets.all(8)),
+            //           onSubmitted: (value) {
+            //             Navigator.pop(context);
+            //             if (value == "HaHaHa") {
+            //               Navigator.push(
+            //                   context,
+            //                   MaterialPageRoute(
+            //                     builder: (context) => BookingsScreenAdmin(),
+            //                   ));
+            //             }
+            //           },
+            //         ),
+            //       ),
+            //     );
+            //   },
+            // );
           },
           child: Text(
             "Bookings".toUpperCase(),
