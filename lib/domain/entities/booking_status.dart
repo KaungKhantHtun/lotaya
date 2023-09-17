@@ -16,15 +16,15 @@ enum BookingStatus {
   Color get getColor {
     switch (this) {
       case BookingStatus.serviceRequested:
-        return const Color(0xff3884e9);
+        return const Color(0xffe6f0fd);
       case BookingStatus.bookingAccepted:
-        return const Color(0xff3884e9);
+        return const Color(0xfff3e6fd);
       case BookingStatus.pendingPayment:
-        return const Color(0xffebbd26);
+        return const Color(0xfffdf3e6);
       case BookingStatus.serviceProcessing:
-        return const Color(0xffebbd26);
+        return const Color(0xfff3e6fd);
       case BookingStatus.serviceFinished:
-        return const Color(0xff64be62);
+        return const Color(0xfff0fde6);
       case BookingStatus.completed:
         return const Color(0xff64be62);
       case BookingStatus.rejected:
