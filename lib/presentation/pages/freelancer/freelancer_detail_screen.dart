@@ -94,7 +94,7 @@ class _FreelacerDetailScreenState extends State<FreelacerDetailScreen> {
               borderRadius: BorderRadius.circular(16),
               child: Container(
                 margin: EdgeInsets.all(16),
-                child: Image.network(
+                child: Image.asset(
                   widget.freelancer.imgUrl,
                   fit:BoxFit.cover,
                   height: 320,
